@@ -8,9 +8,11 @@ async function addAdminUser() {
   try {
     await mongoose.connect(MONGO_URI);
     console.log('✅ Connecté à MongoDB Atlas');
+    console.log('📍 Base de données:', mongoose.connection.db.databaseName);
 
     // Supprimer l'ancien utilisateur s'il existe
-    await User.deleteMany({ email: 'admin@omnibox.com' });
+    const deleted = await User.deleteMany({ email: 'admin@omnibox.com' });
+    console.log('🗑️ Utilisateurs supprimés:', deleted.deletedCount);
 
     // Créer un nouvel utilisateur admin
     const adminUser = new User({
@@ -19,10 +21,13 @@ async function addAdminUser() {
       username: 'Admin'
     });
 
-    await adminUser.save();
+    const saved = await adminUser.save();
     console.log('✅ Utilisateur admin créé avec succès');
-    console.log('📧 Email: admin@omnibox.com');
+    console.log('💾 ID:', saved._id);
+    console.log('📧 Email:', saved.email);
+    console.log('👤 Username:', saved.username);
     console.log('🔑 Mot de passe: admin123');
+    console.log('📦 Collection:', User.collection.name);
 
     await mongoose.connection.close();
     console.log('✅ Connexion fermée');
