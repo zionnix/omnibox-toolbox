@@ -88,6 +88,14 @@ const AdminDashboard = () => {
   if (!isAuthenticated) {
     return (
       <div className={styles.loginContainer}>
+        <button 
+          className={styles.backButtonLogin}
+          onClick={() => navigate('/jmd')}
+          title="Retour au site"
+        >
+          ✕
+        </button>
+
         <motion.div
           className={styles.loginBox}
           initial={{ opacity: 0, y: 20 }}
