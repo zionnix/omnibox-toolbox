@@ -93,7 +93,8 @@ const JMDView = () => {
         setSuccessMessage('');
       }, 3000);
     } catch (error) {
-      alert('Erreur lors de l\'envoi de la demande');
+      console.error('Erreur détaillée:', error);
+      alert('Erreur lors de l\'envoi de la demande: ' + (error.message || 'Veuillez réessayer'));
     } finally {
       setSubmitting(false);
     }
@@ -109,11 +110,11 @@ const JMDView = () => {
   ];
 
   const portfolioItems = [
-    { id: 1, title: "Spicy Ramen Campaign" },
-    { id: 2, title: "Halloween Promo" },
-    { id: 3, title: "Conference Digitale" },
-    { id: 4, title: "Promo Automne" },
-    { id: 5, title: "PepeStudio 2025" }
+    { id: 1, title: "Spicy Ramen Campaign", image: "/png/jmd-remake/spicy-ramen.png" },
+    { id: 2, title: "Halloween Promo", image: "/png/jmd-remake/Halloween-Promo.png" },
+    { id: 3, title: "Conference Digitale", image: "/png/jmd-remake/Je-Me-Digitalise-conference.png" },
+    { id: 4, title: "Promo Automne", image: "/png/jmd-remake/Promo-Automne-Chat.png" },
+    { id: 5, title: "PepeStudio 2025", image: "/png/jmd-remake/PepeStudio-2025.png" }
   ];
 
   const stats = [
@@ -295,7 +296,10 @@ const JMDView = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className={styles.portfolioImage}>
+                <div 
+                  className={styles.portfolioImage}
+                  style={{ backgroundImage: `url(${item.image})` }}
+                >
                   <div className={styles.portfolioOverlay}>
                     <h3>{item.title}</h3>
                   </div>
@@ -550,6 +554,7 @@ const JMDView = () => {
 
           <div className={styles.footerBottom}>
             <p>&copy; 2026 Je Me Digitalise. Tous droits réservés.</p>
+            <a href="/jmd/admin" className={styles.adminLink}>Admin</a>
           </div>
         </div>
       </footer>
