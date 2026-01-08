@@ -11,6 +11,7 @@ import WeatherApp from './01-weather/WeatherApp';
 import Clock from './02-SmartClock/Clock';
 import LinkHub from './06-LinkTree/LinkHub';
 import JMDView from './07-JMDRemake/JMDView';
+import AdminDashboard from './07-JMDRemake/AdminDashboard';
 // Importe les autres ici au fur et à mesure...
 
 // Composant pour animer chaque page
@@ -37,6 +38,7 @@ const AnimatedRoutes = () => {
         <Route path="/clock" element={<PageWrapper><Clock /></PageWrapper>} />
         <Route path="/links" element={<PageWrapper><LinkHub /></PageWrapper>} />
         <Route path="/jmd" element={<PageWrapper><JMDView /></PageWrapper>} />
+        <Route path="/jmd/admin" element={<PageWrapper><AdminDashboard /></PageWrapper>} />
         {/* Ajoute tes autres routes ici */}
       </Routes>
     </AnimatePresence>

@@ -1,0 +1,391 @@
+$color-bg: #0a0a1a;
+$color-primary: #16213e;
+$color-highlight: #e94560;
+$color-text: #f1f1f1;
+$color-border: rgba(255, 255, 255, 0.1);
+
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 2rem;
+$spacing-lg: 3rem;
+
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 20px;
+
+$transition-base: all 0.3s ease;
+
+// Login
+.loginContainer {
+  min-height: 100vh;
+  background: $color-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md;
+}
+
+.loginBox {
+  background: $color-primary;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginIcon {
+  font-size: 4rem;
+  margin-bottom: $spacing-md;
+}
+
+.loginTitle {
+  font-size: 2rem;
+  color: $color-text;
+  margin-bottom: $spacing-xs;
+}
+
+.loginSubtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: $spacing-lg;
+}
+
+.loginForm {
+  .formGroup {
+    margin-bottom: $spacing-md;
+    text-align: left;
+
+    label {
+      display: block;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: $spacing-xs;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(26, 26, 46, 0.8);
+      border: 1px solid $color-border;
+      border-radius: $border-radius-sm;
+      padding: $spacing-sm;
+      color: $color-text;
+      font-size: 1rem;
+      transition: $transition-base;
+
+      &:focus {
+        outline: none;
+        border-color: $color-highlight;
+        box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+      }
+    }
+  }
+}
+
+.error {
+  background: rgba(245, 34, 45, 0.1);
+  border: 1px solid #f5222d;
+  color: #ff4d4f;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  margin-bottom: $spacing-md;
+}
+
+.loginButton {
+  width: 100%;
+  background: linear-gradient(135deg, $color-highlight 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  padding: $spacing-sm;
+  border-radius: $border-radius-lg;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+  }
+}
+
+// Dashboard
+.dashboard {
+  min-height: 100vh;
+  background: $color-bg;
+  color: $color-text;
+  padding: $spacing-lg;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.logoutButton {
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid $color-highlight;
+  color: $color-highlight;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: $transition-base;
+
+  &:hover {
+    background: $color-highlight;
+    color: white;
+  }
+}
+
+// Stats Grid
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.statCard {
+  background: rgba(22, 33, 62, 0.6);
+  border: 2px solid;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  text-align: center;
+  transition: $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  margin-bottom: $spacing-sm;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+// Filters
+.filters {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  flex-wrap: wrap;
+
+  button {
+    background: rgba(26, 26, 46, 0.6);
+    border: 1px solid $color-border;
+    color: rgba(255, 255, 255, 0.7);
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    transition: $transition-base;
+
+    &:hover {
+      border-color: $color-highlight;
+      color: $color-text;
+    }
+
+    &.filterActive {
+      background: $color-highlight;
+      border-color: $color-highlight;
+      color: white;
+    }
+  }
+}
+
+// Appointments List
+.appointmentsList {
+  background: rgba(22, 33, 62, 0.3);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+}
+
+.listTitle {
+  font-size: 1.5rem;
+  margin-bottom: $spacing-lg;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: $spacing-lg;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.appointmentCard {
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  transition: $transition-base;
+
+  &:hover {
+    border-color: $color-highlight;
+  }
+}
+
+.appointmentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $color-border;
+}
+
+.appointmentName {
+  font-size: 1.3rem;
+  margin-bottom: $spacing-xs;
+}
+
+.appointmentEmail {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.badge {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  &.pending {
+    background: rgba(255, 169, 64, 0.2);
+    color: #ffa940;
+    border: 1px solid #ffa940;
+  }
+
+  &.validated {
+    background: rgba(82, 196, 26, 0.2);
+    color: #52c41a;
+    border: 1px solid #52c41a;
+  }
+
+  &.refused {
+    background: rgba(245, 34, 45, 0.2);
+    color: #f5222d;
+    border: 1px solid #f5222d;
+  }
+}
+
+.appointmentDetails {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.detailIcon {
+  font-size: 1.2rem;
+}
+
+.appointmentMessage {
+  background: rgba(10, 10, 26, 0.5);
+  padding: $spacing-md;
+  border-radius: $border-radius-sm;
+  margin-bottom: $spacing-md;
+
+  strong {
+    display: block;
+    margin-bottom: $spacing-xs;
+    color: $color-highlight;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+  }
+}
+
+.appointmentActions {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+
+  button {
+    padding: $spacing-xs $spacing-md;
+    border: none;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    font-weight: 600;
+    transition: $transition-base;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.validateButton {
+  background: #52c41a;
+  color: white;
+
+  &:hover {
+    background: #389e0d;
+  }
+}
+
+.refuseButton {
+  background: #f5222d;
+  color: white;
+
+  &:hover {
+    background: #cf1322;
+  }
+}
+
+.resetButton {
+  background: #ffa940;
+  color: white;
+
+  &:hover {
+    background: #fa8c16;
+  }
+}
+
+.deleteButton {
+  background: rgba(245, 34, 45, 0.2);
+  color: #f5222d;
+  border: 1px solid #f5222d;
+
+  &:hover {
+    background: #f5222d;
+    color: white;
+  }
+}

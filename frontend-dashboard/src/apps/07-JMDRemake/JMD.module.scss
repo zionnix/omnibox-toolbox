@@ -683,10 +683,156 @@ $transition-base: all 0.3s ease;
   transition: $transition-base;
   margin-top: $spacing-md;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: $shadow-glow;
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.successMessage {
+  background: rgba(82, 196, 26, 0.2);
+  border: 1px solid #52c41a;
+  color: #52c41a;
+  padding: $spacing-md;
+  border-radius: $border-radius-sm;
+  margin-bottom: $spacing-md;
+  text-align: center;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: $spacing-xs;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: $spacing-sm;
+  background: rgba(10, 10, 26, 0.5);
+  border-radius: $border-radius-sm;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-highlight;
+    border-radius: 4px;
+  }
+}
+
+.dateButton {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm;
+  color: $color-text;
+  cursor: pointer;
+  transition: $transition-base;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  &:hover {
+    border-color: $color-highlight;
+    transform: translateY(-2px);
+  }
+
+  &.selected {
+    background: $color-highlight;
+    border-color: $color-highlight;
+    color: white;
+  }
+}
+
+.dateDayName {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.dateDayNum {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.dateMonth {
+  font-size: 0.7rem;
+  text-transform: capitalize;
+  opacity: 0.7;
+}
+
+.timeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: $spacing-xs;
+  padding: $spacing-sm;
+  background: rgba(10, 10, 26, 0.5);
+  border-radius: $border-radius-sm;
+  max-height: 250px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-highlight;
+    border-radius: 4px;
+  }
+}
+
+.timeButton {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm;
+  color: $color-text;
+  cursor: pointer;
+  transition: $transition-base;
+  font-weight: 600;
+  position: relative;
+
+  &:hover:not(.booked) {
+    border-color: $color-highlight;
+    transform: translateY(-2px);
+  }
+
+  &.selected {
+    background: $color-highlight;
+    border-color: $color-highlight;
+    color: white;
+  }
+
+  &.booked {
+    background: rgba(245, 34, 45, 0.2);
+    border-color: #f5222d;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+}
+
+.bookedMark {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 0.7rem;
+  color: #f5222d;
 }
 
 .contactInfo {

@@ -1,0 +1,346 @@
+.loginContainer {
+  min-height: 100vh;
+  background: #0a0a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.loginBox {
+  background: #16213e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginIcon {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+}
+
+.loginTitle {
+  font-size: 2rem;
+  color: #f1f1f1;
+  margin-bottom: 0.5rem;
+}
+
+.loginSubtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 3rem;
+}
+
+.loginForm .formGroup {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+.loginForm .formGroup label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.loginForm .formGroup input {
+  width: 100%;
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  color: #f1f1f1;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.loginForm .formGroup input:focus {
+  outline: none;
+  border-color: #e94560;
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+}
+
+.error {
+  background: rgba(245, 34, 45, 0.1);
+  border: 1px solid #f5222d;
+  color: #ff4d4f;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.loginButton {
+  width: 100%;
+  background: linear-gradient(135deg, #e94560 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.loginButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+}
+
+.dashboard {
+  min-height: 100vh;
+  background: #0a0a1a;
+  color: #f1f1f1;
+  padding: 3rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.logoutButton {
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid #e94560;
+  color: #e94560;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.logoutButton:hover {
+  background: #e94560;
+  color: white;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: rgba(22, 33, 62, 0.6);
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.statIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+.filters button {
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.filters button:hover {
+  border-color: #e94560;
+  color: #f1f1f1;
+}
+.filters button.filterActive {
+  background: #e94560;
+  border-color: #e94560;
+  color: white;
+}
+
+.appointmentsList {
+  background: rgba(22, 33, 62, 0.3);
+  border-radius: 12px;
+  padding: 3rem;
+}
+
+.listTitle {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.appointmentCard {
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+.appointmentCard:hover {
+  border-color: #e94560;
+}
+
+.appointmentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.appointmentName {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.appointmentEmail {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.badge.pending {
+  background: rgba(255, 169, 64, 0.2);
+  color: #ffa940;
+  border: 1px solid #ffa940;
+}
+.badge.validated {
+  background: rgba(82, 196, 26, 0.2);
+  color: #52c41a;
+  border: 1px solid #52c41a;
+}
+.badge.refused {
+  background: rgba(245, 34, 45, 0.2);
+  color: #f5222d;
+  border: 1px solid #f5222d;
+}
+
+.appointmentDetails {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.detailIcon {
+  font-size: 1.2rem;
+}
+
+.appointmentMessage {
+  background: rgba(10, 10, 26, 0.5);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+.appointmentMessage strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #e94560;
+}
+.appointmentMessage p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.appointmentActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.appointmentActions button {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.appointmentActions button:hover {
+  transform: translateY(-2px);
+}
+
+.validateButton {
+  background: #52c41a;
+  color: white;
+}
+.validateButton:hover {
+  background: #389e0d;
+}
+
+.refuseButton {
+  background: #f5222d;
+  color: white;
+}
+.refuseButton:hover {
+  background: #cf1322;
+}
+
+.resetButton {
+  background: #ffa940;
+  color: white;
+}
+.resetButton:hover {
+  background: #fa8c16;
+}
+
+.deleteButton {
+  background: rgba(245, 34, 45, 0.2);
+  color: #f5222d;
+  border: 1px solid #f5222d;
+}
+.deleteButton:hover {
+  background: #f5222d;
+  color: white;
+}/*# sourceMappingURL=AdminDashboard.module.css.map */

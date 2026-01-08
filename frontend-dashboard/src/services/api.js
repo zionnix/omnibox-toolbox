@@ -79,4 +79,56 @@ export const isAuthenticated = () => {
   return !!localStorage.getItem('user');
 };
 
+// --- SERVICES POUR RENDEZ-VOUS ---
+
+export const getAppointments = async () => {
+  try {
+    const response = await api.get('/appointments');
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des rendez-vous:", error);
+    throw error;
+  }
+};
+
+export const getBookedSlots = async () => {
+  try {
+    const response = await api.get('/appointments/booked');
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des créneaux réservés:", error);
+    throw error;
+  }
+};
+
+export const createAppointment = async (appointmentData) => {
+  try {
+    const response = await api.post('/appointments', appointmentData);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la création du rendez-vous:", error);
+    throw error;
+  }
+};
+
+export const updateAppointmentStatus = async (id, status) => {
+  try {
+    const response = await api.patch(`/appointments/${id}/status`, { status });
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du statut:", error);
+    throw error;
+  }
+};
+
+export const deleteAppointment = async (id) => {
+  try {
+    const response = await api.delete(`/appointments/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la suppression du rendez-vous:", error);
+    throw error;
+  }
+};
+
 export default api;

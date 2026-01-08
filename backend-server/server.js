@@ -17,6 +17,7 @@ app.use(express.json());
 // On branche tes fichiers de routes ici
 app.use('/api/links', require('./routes/linkRoutes'));
 app.use('/api/auth', require('./routes/authRoutes')); // Ajouté : Ta route login/register
+app.use('/api/appointments', require('./routes/appointmentRoutes')); // Ajouté : Gestion rendez-vous
 
 // Route de test
 app.get('/', (req, res) => {

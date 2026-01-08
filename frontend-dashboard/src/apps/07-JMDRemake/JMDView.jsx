@@ -1,10 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createAppointment, getBookedSlots } from '../../services/api';
 import styles from './JMD.module.scss';
 
 const JMDView = () => {
   const [showModal, setShowModal] = useState(true);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const timeSlots = [
+    '10:00', '10:30', '11:00', '11:30', 
+    '12:00', '12:30', '13:00', '13:30',
+    '14:00', '14:30', '15:00', '15:30',
+    '16:00', '16:30', '17:00', '17:30',
+    '18:00', '18:30', '19:00', '19:30', '20:00'
+  ];
+
+  useEffect(() => {
+    if (showContactForm) {
+      loadBookedSlots();
+    }
+  }, [showContactForm]);
+
+  const loadBookedSlots = async () => {
+    try {
+      const slots = await getBookedSlots();
+      setBookedSlots(slots);
+    } catch (error) {
+      console.error('Error loading booked slots:', error);
+    }
+  };
+
+  const generateCalendarDays = () => {
+    const today = new Date();
+    const days = [];
+    
+    for (let i = 0; i < 60; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      
+      // Skip if Sunday
+      if (date.getDay() === 0) continue;
+      
+      days.push(date);
+    }
+    
+    return days;
+  };
+
+  const isTimeSlotBooked = (date, time) => {
+    if (!date) return false;
+    const dateStr = date.toISOString().split('T')[0];
+    return bookedSlots.some(slot => {
+      const slotDate = new Date(slot.date).toISOString().split('T')[0];
+      return slotDate === dateStr && slot.time === time;
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!selectedDate || !selectedTime) {
+      alert('Veuillez sélectionner une date et une heure');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await createAppointment({
+        ...formData,
+        date: selectedDate.toISOString(),
+        time: selectedTime
+      });
+      
+      setSuccessMessage('Votre demande de rendez-vous a été envoyée avec succès !');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      setSelectedDate(null);
+      setSelectedTime('');
+      
+      setTimeout(() => {
+        setShowContactForm(false);
+        setSuccessMessage('');
+      }, 3000);
+    } catch (error) {
+      alert('Erreur lors de l\'envoi de la demande');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const services = [
     { icon: '📱', title: 'Gestion Réseaux Sociaux', description: 'Stratégie de contenu, création de posts, planification et analyses pour maximiser votre présence sur Facebook, Instagram, TikTok et LinkedIn.' },
@@ -263,29 +356,110 @@ const JMDView = () => {
                 {/* Contact Form */}
                 <div className={styles.contactForm}>
                   <h2 className={styles.contactFormTitle}>Contactez-moi</h2>
-                  <form>
+                  
+                  {successMessage && (
+                    <div className={styles.successMessage}>
+                      ✅ {successMessage}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>
                       <label>Nom complet *</label>
-                      <input type="text" placeholder="Votre nom" required />
+                      <input 
+                        type="text" 
+                        placeholder="Votre nom" 
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div className={styles.formGroup}>
                       <label>Email *</label>
-                      <input type="email" placeholder="votre@email.com" required />
+                      <input 
+                        type="email" 
+                        placeholder="votre@email.com" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div className={styles.formGroup}>
                       <label>Téléphone</label>
-                      <input type="tel" placeholder="+32 XXX XX XX XX" />
+                      <input 
+                        type="tel" 
+                        placeholder="+32 XXX XX XX XX" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      />
                     </div>
                     <div className={styles.formGroup}>
                       <label>Message</label>
-                      <textarea placeholder="Décrivez brièvement votre projet..." rows="4"></textarea>
+                      <textarea 
+                        placeholder="Décrivez brièvement votre projet..." 
+                        rows="4"
+                        value={formData.message}
+                        onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      ></textarea>
                     </div>
+                    
                     <div className={styles.formGroup}>
                       <label>Choisissez une date *</label>
-                      <input type="date" required />
+                      <div className={styles.calendarGrid}>
+                        {generateCalendarDays().map((date, index) => {
+                          const isSelected = selectedDate && 
+                            date.toDateString() === selectedDate.toDateString();
+                          const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
+                          const dayNum = date.getDate();
+                          const month = date.toLocaleDateString('fr-FR', { month: 'short' });
+                          
+                          return (
+                            <button
+                              key={index}
+                              type="button"
+                              className={`${styles.dateButton} ${isSelected ? styles.selected : ''}`}
+                              onClick={() => setSelectedDate(date)}
+                            >
+                              <div className={styles.dateDayName}>{dayName}</div>
+                              <div className={styles.dateDayNum}>{dayNum}</div>
+                              <div className={styles.dateMonth}>{month}</div>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <button type="submit" className={styles.submitButton}>
-                      Envoyer la demande
+
+                    {selectedDate && (
+                      <div className={styles.formGroup}>
+                        <label>Choisissez une heure *</label>
+                        <div className={styles.timeGrid}>
+                          {timeSlots.map((time) => {
+                            const isBooked = isTimeSlotBooked(selectedDate, time);
+                            const isSelected = selectedTime === time;
+                            
+                            return (
+                              <button
+                                key={time}
+                                type="button"
+                                className={`${styles.timeButton} ${isSelected ? styles.selected : ''} ${isBooked ? styles.booked : ''}`}
+                                onClick={() => !isBooked && setSelectedTime(time)}
+                                disabled={isBooked}
+                              >
+                                {time}
+                                {isBooked && <span className={styles.bookedMark}>✕</span>}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    <button 
+                      type="submit" 
+                      className={styles.submitButton}
+                      disabled={submitting || !selectedDate || !selectedTime}
+                    >
+                      {submitting ? 'Envoi en cours...' : 'Envoyer la demande'}
                     </button>
                   </form>
                 </div>
