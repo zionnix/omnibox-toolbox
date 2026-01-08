@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables
 $bg-primary: #0a0a0a;
 $bg-secondary: #1a1a1a;
@@ -172,7 +174,7 @@ $accent-blue: #00A8FF;
       border-radius: 5px;
       
       &:hover {
-        background: lighten($accent-green, 10%);
+        background: color.adjust($accent-green, $lightness: 10%);
         box-shadow: 0 0 20px rgba(0, 255, 135, 0.5);
         transform: scale(1.05);
       }
