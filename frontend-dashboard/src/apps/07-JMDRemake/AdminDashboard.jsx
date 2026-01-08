@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { getAppointments, updateAppointmentStatus, deleteAppointment } from '../../services/api';
 import styles from './AdminDashboard.module.scss';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -128,6 +130,14 @@ const AdminDashboard = () => {
 
   return (
     <div className={styles.dashboard}>
+      <button 
+        className={styles.backButton}
+        onClick={() => navigate('/jmd')}
+        title="Retour au site"
+      >
+        ✕
+      </button>
+
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>📋 Tableau de bord</h1>
