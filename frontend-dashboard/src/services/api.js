@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// URL du backend LinkTree sur Render
-const API_URL = import.meta.env.VITE_API_URL || 'https://linktree-k2t6.onrender.com/api';
+// URL du backend sur Render
+const API_URL = import.meta.env.VITE_API_URL || 'https://omnibox-toolbox.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
