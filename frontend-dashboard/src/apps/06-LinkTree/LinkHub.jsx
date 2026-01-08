@@ -92,8 +92,16 @@ const LinkHub = () => {
     <div className={`${styles.container} ${styles[theme]}`}>
       {/* Animations de pétales de sakura */}
       <div className={styles.sakuraBackground}>
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className={styles.sakuraPetal} style={{ animationDelay: `${i * 2}s`, left: `${i * 12}%` }}></div>
+        {[...Array(20)].map((_, i) => (
+          <div 
+            key={i} 
+            className={styles.sakuraPetal} 
+            style={{ 
+              animationDelay: `${Math.random() * 15}s`, 
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${12 + Math.random() * 6}s`
+            }}
+          ></div>
         ))}
       </div>
 
