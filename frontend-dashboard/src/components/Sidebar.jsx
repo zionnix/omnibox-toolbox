@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   CloudSun, Clock, Link as LinkIcon, 
-  Scissors, Gamepad2, Sun, LayoutDashboard, Settings 
+  Scissors, Gamepad2, Sun, LayoutDashboard, Settings, Briefcase 
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -15,6 +15,7 @@ const Sidebar = () => {
     { name: 'Sonic Morph', icon: <Scissors size={22}/>, path: '/converter', color: 'text-orange-400' },
     { name: 'Rogue-Like', icon: <Gamepad2 size={22}/>, path: '/game', color: 'text-red-400' },
     { name: 'Solar System', icon: <Sun size={22}/>, path: '/solar', color: 'text-yellow-400' },
+    { name: 'JMD Remake', icon: <Briefcase size={22}/>, path: '/jmd', color: 'text-purple-400' },
   ];
 
   return (
