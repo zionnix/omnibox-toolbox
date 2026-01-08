@@ -27,7 +27,7 @@ const LinkHub = () => {
     fetchLinks();
     setIsAdmin(isAuthenticated());
   }, []);
-
+ 
   const handleLinkClick = async (id, url) => {
     await trackClick(id);
     window.open(url, '_blank');
