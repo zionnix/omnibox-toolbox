@@ -1,13 +1,18 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './JMD.module.scss';
 
 const JMDView = () => {
+  const [showModal, setShowModal] = useState(true);
+  const [showContactForm, setShowContactForm] = useState(false);
+
   const services = [
-    { icon: '📱', title: 'Social Media Management', description: 'Stratégie de contenu et gestion complète de vos réseaux sociaux pour booster votre visibilité' },
-    { icon: '📊', title: 'Marketing Digital', description: 'Campagnes publicitaires optimisées sur Meta Ads (Facebook & Instagram) pour maximiser votre ROI' },
-    { icon: '🎬', title: 'Montage Vidéo / Photo', description: 'Création de contenus visuels impactants adaptés aux publicités digitales' },
-    { icon: '✍️', title: 'Copywriting', description: 'Rédaction de textes publicitaires percutants pour capter l\'attention et convaincre' }
+    { icon: '📱', title: 'Gestion Réseaux Sociaux', description: 'Stratégie de contenu, création de posts, planification et analyses pour maximiser votre présence sur Facebook, Instagram, TikTok et LinkedIn.' },
+    { icon: '🎨', title: 'Création Visuelle', description: 'Design graphique percutant pour vos campagnes publicitaires, stories engageantes et contenus visuels.' },
+    { icon: '📊', title: 'Publicité Digitale', description: 'Campagnes Meta Ads et Google Ads optimisées pour maximiser votre ROI et atteindre votre audience cible.' },
+    { icon: '💡', title: 'Stratégie Marketing', description: 'Audit, conseil et accompagnement personnalisé pour développer votre présence digitale et atteindre vos objectifs.' },
+    { icon: '🎬', title: 'Montage Vidéo / Photo', description: 'Création de contenus visuels impactants adaptés aux publicités digitales pour maximiser l\'engagement et la conversion sur vos campagnes publicitaires.' },
+    { icon: '✍️', title: 'Copywriting', description: 'Rédaction de textes publicitaires percutants pour capter l\'attention, convaincre et inciter votre audience à passer à l\'action par l\'impact de votre objectif publicitaire.' }
   ];
 
   const portfolioItems = [
@@ -27,6 +32,51 @@ const JMDView = () => {
 
   return (
     <div className={styles.jmd}>
+      {/* Modal Pop-up */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            className={styles.modalBackdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              className={styles.modal}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className={styles.modalIcon}>⚠️</div>
+              <h2 className={styles.modalTitle}>Information importante</h2>
+              <p className={styles.modalText}>
+                Ce site web est une <span className={styles.modalHighlight}>refonte</span> d'un site d'un ami, réalisée avec son autorisation.
+              </p>
+              <p className={styles.modalSubtext}>Le véritable site web est le suivant :</p>
+              <a 
+                href="https://nice-jemedigitalise.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.modalLink}
+              >
+                https://nice-jemedigitalise.com/
+              </a>
+              <p className={styles.modalNote}>
+                Si vous avez besoin de services, passez <span className={styles.modalHighlight}>UNIQUEMENT</span> par son site web officiel.
+              </p>
+              <button 
+                onClick={() => setShowModal(false)}
+                className={styles.modalButton}
+              >
+                J'ai compris, continuer
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroBackground}></div>
@@ -176,11 +226,159 @@ const JMDView = () => {
           <p className={styles.ctaDescription}>
             Discutons de votre projet et voyons comment je peux vous aider
           </p>
-          <a href="mailto:jules_benoit@outlook.com" className={styles.ctaButton}>
-            Contactez-moi
-          </a>
+          <button 
+            onClick={() => setShowContactForm(true)}
+            className={styles.ctaButton}
+          >
+            Discutons de votre projet
+          </button>
         </motion.div>
       </section>
+
+      {/* Contact Form Modal */}
+      <AnimatePresence>
+        {showContactForm && (
+          <motion.div
+            className={styles.contactBackdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowContactForm(false)}
+          >
+            <motion.div
+              className={styles.contactModal}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                className={styles.closeButton}
+                onClick={() => setShowContactForm(false)}
+              >
+                ✕
+              </button>
+
+              <div className={styles.contactGrid}>
+                {/* Contact Form */}
+                <div className={styles.contactForm}>
+                  <h2 className={styles.contactFormTitle}>Contactez-moi</h2>
+                  <form>
+                    <div className={styles.formGroup}>
+                      <label>Nom complet *</label>
+                      <input type="text" placeholder="Votre nom" required />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Email *</label>
+                      <input type="email" placeholder="votre@email.com" required />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Téléphone</label>
+                      <input type="tel" placeholder="+32 XXX XX XX XX" />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Message</label>
+                      <textarea placeholder="Décrivez brièvement votre projet..." rows="4"></textarea>
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Choisissez une date *</label>
+                      <input type="date" required />
+                    </div>
+                    <button type="submit" className={styles.submitButton}>
+                      Envoyer la demande
+                    </button>
+                  </form>
+                </div>
+
+                {/* Contact Info */}
+                <div className={styles.contactInfo}>
+                  <h3 className={styles.contactInfoTitle}>Informations de contact</h3>
+                  
+                  <div className={styles.contactInfoItem}>
+                    <span className={styles.contactInfoIcon}>📧</span>
+                    <div>
+                      <p className={styles.contactInfoLabel}>Email</p>
+                      <a href="mailto:jules_benoit@outlook.com" className={styles.contactInfoValue}>
+                        jules_benoit@outlook.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className={styles.contactInfoItem}>
+                    <span className={styles.contactInfoIcon}>📱</span>
+                    <div>
+                      <p className={styles.contactInfoLabel}>Téléphone</p>
+                      <p className={styles.contactInfoValue}>+32 498 84 66 36</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.contactInfoItem}>
+                    <span className={styles.contactInfoIcon}>🕒</span>
+                    <div>
+                      <p className={styles.contactInfoLabel}>Horaires</p>
+                      <p className={styles.contactInfoValue}>
+                        Lundi - vendredi : 17h - 20h<br />
+                        Weekend : 10h - 18h<br />
+                        Jours fériés : 10h - 18h
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className={styles.socialLinks}>
+                    <p className={styles.socialTitle}>Suivez-moi</p>
+                    <div className={styles.socialButtons}>
+                      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialButton}>
+                        Instagram
+                      </a>
+                      <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className={styles.socialButton}>
+                        TikTok
+                      </a>
+                      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className={styles.socialButton}>
+                        YouTube
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerContent}>
+            <div className={styles.footerBrand}>
+              <h3 className={styles.footerLogo}>Je Me Digitalise</h3>
+              <p className={styles.footerTagline}>Votre partenaire digital</p>
+            </div>
+
+            <div className={styles.footerLinks}>
+              <a href="#accueil" className={styles.footerLink}>Accueil</a>
+              <a href="#services" className={styles.footerLink}>Services</a>
+              <a href="#portfolio" className={styles.footerLink}>Portfolio</a>
+              <button onClick={() => setShowContactForm(true)} className={styles.footerLink}>Contact</button>
+            </div>
+
+            <div className={styles.footerSocial}>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.footerSocialLink}>
+                Instagram
+              </a>
+              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className={styles.footerSocialLink}>
+                TikTok
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className={styles.footerSocialLink}>
+                YouTube
+              </a>
+            </div>
+          </div>
+
+          <div className={styles.footerBottom}>
+            <p>&copy; 2026 Je Me Digitalise. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

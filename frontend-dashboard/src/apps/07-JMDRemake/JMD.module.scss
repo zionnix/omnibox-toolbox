@@ -40,6 +40,106 @@ $transition-base: all 0.3s ease;
   min-height: 100vh;
 }
 
+// Modal Pop-up
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: $spacing-md;
+}
+
+.modal {
+  background: linear-gradient(135deg, $color-primary 0%, rgba(22, 33, 62, 0.95) 100%);
+  border: 2px solid $color-highlight;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 60px rgba(233, 69, 96, 0.5);
+}
+
+.modalIcon {
+  font-size: 4rem;
+  margin-bottom: $spacing-md;
+}
+
+.modalTitle {
+  font-family: $font-display;
+  font-size: 2rem;
+  color: $color-text;
+  margin-bottom: $spacing-md;
+}
+
+.modalText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: $spacing-md;
+}
+
+.modalHighlight {
+  color: $color-highlight;
+  font-weight: 700;
+}
+
+.modalSubtext {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: $spacing-sm;
+}
+
+.modalLink {
+  display: inline-block;
+  background: rgba(233, 69, 96, 0.2);
+  color: $color-highlight;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-sm;
+  text-decoration: none;
+  margin: $spacing-md 0;
+  transition: $transition-base;
+  border: 1px solid rgba(233, 69, 96, 0.5);
+
+  &:hover {
+    background: rgba(233, 69, 96, 0.3);
+    border-color: $color-highlight;
+  }
+}
+
+.modalNote {
+  background: rgba(233, 69, 96, 0.1);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  border-radius: $border-radius-sm;
+  padding: $spacing-md;
+  margin: $spacing-md 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.modalButton {
+  background: linear-gradient(135deg, $color-highlight 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-lg;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: $transition-base;
+  margin-top: $spacing-md;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-glow;
+  }
+}
+
 // Hero Section
 .hero {
   min-height: 100vh;
@@ -437,10 +537,11 @@ $transition-base: all 0.3s ease;
     padding: $spacing-sm $spacing-lg;
     background: linear-gradient(135deg, $color-highlight 0%, #ff6b9d 100%);
     color: white;
+    border: none;
     border-radius: $border-radius-lg;
     font-weight: 600;
     font-size: 1.1rem;
-    text-decoration: none;
+    cursor: pointer;
     transition: $transition-base;
     box-shadow: $shadow-glow;
 
@@ -448,5 +549,328 @@ $transition-base: all 0.3s ease;
       transform: translateY(-3px);
       box-shadow: 0 0 40px rgba(233, 69, 96, 0.5);
     }
+  }
+}
+
+// Contact Form Modal
+.contactBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  padding: $spacing-md;
+  overflow-y: auto;
+}
+
+.contactModal {
+  background: $color-primary;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-lg;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: $shadow-md;
+}
+
+.closeButton {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid $color-highlight;
+  color: $color-highlight;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: $transition-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+
+  &:hover {
+    background: $color-highlight;
+    color: white;
+    transform: rotate(90deg);
+  }
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xl;
+  padding: $spacing-xl;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contactForm {
+  padding-right: $spacing-md;
+
+  @media (max-width: 768px) {
+    padding-right: 0;
+  }
+}
+
+.contactFormTitle {
+  font-family: $font-display;
+  font-size: 2rem;
+  margin-bottom: $spacing-lg;
+  color: $color-text;
+}
+
+.formGroup {
+  margin-bottom: $spacing-md;
+
+  label {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: $spacing-xs;
+    font-weight: 500;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid $color-border;
+    border-radius: $border-radius-sm;
+    padding: $spacing-sm;
+    color: $color-text;
+    font-family: $font-primary;
+    font-size: 1rem;
+    transition: $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $color-highlight;
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+.submitButton {
+  width: 100%;
+  background: linear-gradient(135deg, $color-highlight 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  padding: $spacing-sm;
+  border-radius: $border-radius-lg;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: $transition-base;
+  margin-top: $spacing-md;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-glow;
+  }
+}
+
+.contactInfo {
+  background: rgba(26, 26, 46, 0.6);
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+}
+
+.contactInfoTitle {
+  font-family: $font-display;
+  font-size: 1.5rem;
+  margin-bottom: $spacing-lg;
+  color: $color-text;
+}
+
+.contactInfoItem {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-lg;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.contactInfoIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.contactInfoLabel {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-bottom: $spacing-xs;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contactInfoValue {
+  color: $color-text;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-decoration: none;
+  
+  &:hover {
+    color: $color-highlight;
+  }
+}
+
+.socialLinks {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $color-border;
+}
+
+.socialTitle {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: $spacing-md;
+  font-weight: 600;
+}
+
+.socialButtons {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.socialButton {
+  background: rgba(233, 69, 96, 0.1);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  color: $color-highlight;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-sm;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: $transition-base;
+
+  &:hover {
+    background: rgba(233, 69, 96, 0.2);
+    border-color: $color-highlight;
+    transform: translateY(-2px);
+  }
+}
+
+// Footer
+.footer {
+  background: rgba(10, 10, 26, 0.95);
+  border-top: 1px solid $color-border;
+  padding: $spacing-xl 0 $spacing-md;
+}
+
+.footerContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.footerContent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.footerBrand {
+  .footerLogo {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    color: $color-highlight;
+    margin-bottom: $spacing-xs;
+  }
+
+  .footerTagline {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+}
+
+.footerLinks {
+  display: flex;
+  gap: $spacing-md;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.footerLink {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: $font-primary;
+  font-size: 1rem;
+  transition: $transition-base;
+
+  &:hover {
+    color: $color-highlight;
+  }
+}
+
+.footerSocial {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.footerSocialLink {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  padding: $spacing-xs $spacing-sm;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  font-size: 0.9rem;
+  transition: $transition-base;
+
+  &:hover {
+    color: $color-highlight;
+    border-color: $color-highlight;
+    transform: translateY(-2px);
+  }
+}
+
+.footerBottom {
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border;
+  text-align: center;
+
+  p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
   }
 }
