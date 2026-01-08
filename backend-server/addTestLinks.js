@@ -31,7 +31,7 @@ const testLinks = [
     icon: "📸",
     order: 4,
     clicks: 0
-  }
+  }                                                                                 
 ];
 
 async function addTestLinks() {
