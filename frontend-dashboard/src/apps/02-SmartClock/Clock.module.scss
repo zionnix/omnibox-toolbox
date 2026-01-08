@@ -1,0 +1,426 @@
+// Variables
+$bg-primary: #0a0a0a;
+$bg-secondary: #1a1a1a;
+$text-primary: #ffffff;
+$text-secondary: #888888;
+$accent-red: #FF3366;
+$accent-green: #00FF87;
+$accent-blue: #00A8FF;
+
+// Mixins
+@mixin glass-morphism {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.smartClock {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, $bg-secondary 0%, $bg-primary 100%);
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  position: relative;
+  z-index: 1;
+  
+  .title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, $accent-blue, $accent-green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.mainContent {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 40px;
+  padding: 20px 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  align-items: center;
+}
+
+// Section gauche - Température
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  
+  .temperatureCircle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    @include glass-morphism;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $accent-red, $accent-blue);
+      opacity: 0.3;
+      z-index: -1;
+      filter: blur(10px);
+    }
+    
+    .tempValue {
+      font-size: 3.5rem;
+      font-weight: 300;
+      background: linear-gradient(135deg, $accent-red, $accent-blue);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+  
+  .cityName {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: $text-primary;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  .changeCityBtn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: $text-primary;
+    font-family: inherit;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border-radius: 5px;
+    
+    &:hover {
+      background: rgba(30, 30, 30, 0.9);
+      border-color: $accent-blue;
+      box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+  
+  .cityInputForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+    
+    .cityInputRow {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .cityInput {
+      padding: 10px 15px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: $text-primary;
+      font-family: inherit;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      outline: none;
+      transition: all 0.3s ease;
+      flex: 1;
+      border-radius: 5px;
+      
+      &:focus {
+        border-color: $accent-green;
+        box-shadow: 0 0 15px rgba(0, 255, 135, 0.2);
+      }
+      
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+    
+    .submitBtn {
+      padding: 10px 20px;
+      background: $accent-green;
+      border: none;
+      color: $bg-primary;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+      
+      &:hover {
+        background: lighten($accent-green, 10%);
+        box-shadow: 0 0 20px rgba(0, 255, 135, 0.5);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Section centrale - Horloge
+.centerSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .clockContainer {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+    
+    .clockSvg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 30px rgba(0, 168, 255, 0.2));
+      
+      .arcAnimation {
+        transition: stroke-dasharray 0.3s ease-out;
+      }
+    }
+    
+    .timeDisplay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      .timeNumbers {
+        display: flex;
+        align-items: center;
+        font-size: 3rem;
+        gap: 8px;
+        
+        .hours {
+          color: $accent-blue;
+          text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+          animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .minutes {
+          color: $accent-green;
+          text-shadow: 0 0 20px rgba(0, 255, 135, 0.5);
+          animation: pulse 2s ease-in-out infinite 0.1s;
+        }
+        
+        .seconds {
+          color: $accent-red;
+          text-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+          animation: pulse 1s ease-in-out infinite;
+        }
+        
+        .separator {
+          color: rgba(255, 255, 255, 0.5);
+          animation: blink 1s ease-in-out infinite;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.3;
+  }
+}
+
+// Section droite - Calendrier
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  
+  .dateDisplay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    @include glass-morphism;
+    padding: 30px 40px;
+    border-radius: 10px;
+    
+    .day {
+      font-size: 4rem;
+      font-weight: 300;
+      color: $accent-blue;
+      line-height: 1;
+    }
+    
+    .month {
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      color: $text-primary;
+      text-transform: uppercase;
+    }
+    
+    .year {
+      font-size: 1rem;
+      letter-spacing: 2px;
+      color: $text-secondary;
+    }
+  }
+  
+  .weekDisplay {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    
+    .dayItem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      
+      .dayInitial {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: $text-primary;
+        font-weight: 300;
+      }
+      
+      .dayIndicator {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(60, 60, 60, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        
+        &.completed {
+          background: rgba(0, 255, 135, 0.2);
+          border-color: $accent-green;
+          box-shadow: 0 0 20px rgba(0, 255, 135, 0.3);
+          
+          svg {
+            animation: checkmark 0.5s ease-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0) rotate(-45deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+// Responsive
+@media (max-width: 1200px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    padding: 20px;
+  }
+  
+  .leftSection,
+  .rightSection {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .header .title {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+  }
+  
+  .leftSection .temperatureCircle {
+    width: 140px;
+    height: 140px;
+    
+    .tempValue {
+      font-size: 2.5rem;
+    }
+  }
+  
+  .centerSection .clockContainer .timeDisplay .timeNumbers {
+    font-size: 2rem;
+    gap: 0;
+  }
+  
+  .rightSection {
+    .dateDisplay {
+      padding: 20px 30px;
+      
+      .day {
+        font-size: 3rem;
+      }
+      
+      .month {
+        font-size: 1.1rem;
+      }
+    }
+    
+    .weekDisplay {
+      gap: 10px;
+      
+      .dayItem {
+        .dayInitial {
+          font-size: 1rem;
+        }
+        
+        .dayIndicator {
+          width: 28px;
+          height: 28px;
+        }
+      }
+    }
+  }
+}

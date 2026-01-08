@@ -1,0 +1,486 @@
+/* LinkTree - Esthétique japonaise inspirée du papier washi et des sakura */
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+
+:root {
+  --washi: #fdfaf1;
+  --ink: #2c2c2c;
+  --sakura: #ffb7c5;
+  --crimson: #bc2f32;
+  --gold: #d4af37;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+.container {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Ma Shan Zheng', 'Segoe UI', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.container.light {
+  background: linear-gradient(135deg, var(--washi) 0%, #f5e6d3 100%);
+  color: var(--ink);
+}
+
+.container.dark {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+  color: var(--washi);
+}
+
+/* Pattern seigaiha (vagues japonaises) */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  background: radial-gradient(circle at 100% 150%, transparent 24%, var(--ink) 25%, var(--ink) 28%, transparent 29%, transparent 36%, var(--ink) 36%, var(--ink) 39%, transparent 40%, transparent),
+              radial-gradient(circle at 0 150%, transparent 24%, var(--ink) 25%, var(--ink) 28%, transparent 29%, transparent 36%, var(--ink) 36%, var(--ink) 39%, transparent 40%, transparent),
+              radial-gradient(circle at 50% 100%, var(--ink) 10%, transparent 10.5%);
+  background-size: 80px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animations de pétales de sakura */
+.sakuraBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.sakuraPetal {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: var(--sakura);
+  border-radius: 50% 0 50% 0;
+  opacity: 0.6;
+  animation: fall 15s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 183, 197, 0.5);
+}
+
+@keyframes fall {
+  0% {
+    top: -10%;
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(100px) rotate(180deg);
+  }
+  100% {
+    top: 110%;
+    transform: translateX(0) rotate(360deg);
+  }
+}
+
+/* Header */
+.header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hinomaru {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--crimson), #d04446);
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(188, 47, 50, 0.3),
+              inset 0 -2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--gold);
+  position: relative;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 32px rgba(188, 47, 50, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 48px rgba(188, 47, 50, 0.5);
+  }
+}
+
+.kanji {
+  font-size: 3rem;
+  color: var(--washi);
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--crimson);
+  text-shadow: 2px 2px 4px var(--shadow);
+  letter-spacing: 2px;
+}
+
+.container.dark .title {
+  color: var(--sakura);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.themeToggle,
+.loginBtn,
+.addBtn,
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--crimson);
+  border-radius: 25px;
+  background: transparent;
+  color: var(--crimson);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Ma Shan Zheng', sans-serif;
+}
+
+.container.dark .themeToggle,
+.container.dark .loginBtn,
+.container.dark .addBtn,
+.container.dark .logoutBtn {
+  border-color: var(--sakura);
+  color: var(--sakura);
+}
+
+.themeToggle:hover,
+.loginBtn:hover,
+.addBtn:hover,
+.logoutBtn:hover {
+  background: var(--crimson);
+  color: var(--washi);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(188, 47, 50, 0.3);
+}
+
+.container.dark .themeToggle:hover,
+.container.dark .loginBtn:hover,
+.container.dark .addBtn:hover,
+.container.dark .logoutBtn:hover {
+  background: var(--sakura);
+  color: var(--ink);
+}
+
+/* Forms */
+.loginForm,
+.addForm {
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--crimson);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.container.dark .loginForm,
+.container.dark .addForm {
+  background: rgba(44, 44, 44, 0.95);
+  border-color: var(--sakura);
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid rgba(188, 47, 50, 0.3);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: 'Ma Shan Zheng', sans-serif;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.container.dark .input {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--washi);
+  border-color: rgba(255, 183, 197, 0.3);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(188, 47, 50, 0.1);
+}
+
+.container.dark .input:focus {
+  border-color: var(--sakura);
+  box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.1);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--crimson);
+  color: var(--washi);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Ma Shan Zheng', sans-serif;
+}
+
+.submitBtn:hover {
+  background: #a02729;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(188, 47, 50, 0.4);
+}
+
+/* Links Grid */
+.linksGrid {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.cyberCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid var(--crimson);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.container.dark .cyberCard {
+  background: rgba(44, 44, 44, 0.9);
+  border-color: var(--sakura);
+}
+
+.cyberCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(188, 47, 50, 0.2);
+  border-color: var(--gold);
+}
+
+.container.dark .cyberCard:hover {
+  box-shadow: 0 8px 32px rgba(255, 183, 197, 0.3);
+}
+
+.linkButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.linkContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.linkIcon {
+  font-size: 2rem;
+  min-width: 2.5rem;
+  text-align: center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.linkTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+}
+
+.container.dark .linkTitle {
+  color: var(--washi);
+}
+
+.linkMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.cyberCard:hover .linkMeta {
+  opacity: 1;
+}
+
+.externalIcon {
+  color: var(--crimson);
+}
+
+.container.dark .externalIcon {
+  color: var(--sakura);
+}
+
+.linkClicks {
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.container.dark .linkClicks {
+  color: var(--washi);
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--crimson);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(188, 47, 50, 0.3);
+}
+
+.cyberCard:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: #8b0000;
+  transform: scale(1.1);
+}
+
+/* Empty state */
+.empty {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  opacity: 0.6;
+}
+
+.empty p {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptySubtext {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Loading */
+.loading {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+}
+
+.loading p {
+  font-size: 1.5rem;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .hinomaru {
+    width: 90px;
+    height: 90px;
+  }
+
+  .kanji {
+    font-size: 2.2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .linksGrid {
+    padding: 0 1rem 2rem;
+  }
+
+  .linkTitle {
+    font-size: 1rem;
+  }
+
+  .controls {
+    gap: 0.5rem;
+  }
+
+  .loginBtn,
+  .addBtn,
+  .logoutBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
