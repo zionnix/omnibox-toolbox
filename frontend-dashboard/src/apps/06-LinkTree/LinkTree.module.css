@@ -59,6 +59,7 @@
 
 .sakuraPetal {
   position: absolute;
+  top: -10%;
   width: 15px;
   height: 15px;
   background: var(--sakura);

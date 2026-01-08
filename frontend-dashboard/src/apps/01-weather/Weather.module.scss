@@ -22,6 +22,11 @@ $shadow: 0 8px 30px rgba(2, 6, 23, 0.45);
   box-shadow: $shadow;
 }
 
+@mixin container-max {
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
 @mixin btn-base {
   padding: 10px 16px;
   border-radius: 8px;
@@ -42,6 +47,7 @@ $shadow: 0 8px 30px rgba(2, 6, 23, 0.45);
 
 // ---------- Global ----------
 .weatherApp {
+  @include container-max;
   position: relative;
   min-height: 100vh;
   width: 100%;
