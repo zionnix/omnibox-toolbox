@@ -138,22 +138,19 @@ const SolarSystem = () => {
 
         {/* Planètes avec orbites */}
         {planets.map((planet, index) => {
-          const angle = paused ? calculatePlanetPosition(planet) : calculatePlanetPosition(planet);
-          const angleRad = (angle * Math.PI) / 180;
+          const angle = calculatePlanetPosition(planet);
           
           return (
             <div
               key={planet}
               className={`${styles.systemOrbit} ${styles[`systemOrbit${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedOrbit : ''}`}
+              style={{
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`
+              }}
             >
               <div
                 className={`${styles.systemPlanet} ${styles[`systemPlanet${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedPlanet : ''}`}
                 onClick={() => selectPlanet(planet)}
-                style={{
-                  transform: `rotate(${angle}deg) translateX(calc(50% - 12px)) rotate(-${angle}deg) translateY(-50%)`,
-                  left: '50%',
-                  top: '50%'
-                }}
               >
                 <img src={`/png/solar-system/${planet}.png`} alt={planetData[planet].name} />
               </div>
