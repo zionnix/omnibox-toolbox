@@ -158,8 +158,8 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 100%;
   transform: translate(-50%, -50%);
-  animation: spin infinite linear both;
   pointer-events: none;
+  /* Animation désactivée - position calculée en temps réel */
 }
 
 .systemOrbitSun {
@@ -176,55 +176,46 @@
 .systemOrbitMercury {
   width: 15%;
   height: 15%;
-  animation-duration: 1s;
 }
 
 .systemOrbitVenus {
   width: 25%;
   height: 25%;
-  animation-duration: 2.6s;
 }
 
 .systemOrbitEarth {
   width: 35%;
   height: 35%;
-  animation-duration: 4.1s;
 }
 
 .systemOrbitMars {
   width: 45%;
   height: 45%;
-  animation-duration: 7.8s;
 }
 
 .systemOrbitJupiter {
   width: 55%;
   height: 55%;
-  animation-duration: 49.8s;
 }
 
 .systemOrbitSaturn {
   width: 65%;
   height: 65%;
-  animation-duration: 120.3s;
 }
 
 .systemOrbitUranus {
   width: 75%;
   height: 75%;
-  animation-duration: 348.4s;
 }
 
 .systemOrbitNeptune {
   width: 85%;
   height: 85%;
-  animation-duration: 684.4s;
 }
 
 .systemOrbitPluto {
   width: 95%;
   height: 95%;
-  animation-duration: 1028.6s;
 }
 
 /* Planètes */
@@ -239,13 +230,10 @@
   pointer-events: auto;
   cursor: pointer;
   transition: transform 0.3s ease;
-}
-
-.systemPlanet:hover {
-  transform: translateY(-50%) scale(1.3);
-}
-
-.systemPlanet img {
+}width: 25px;
+  height: 25px;
+  border-radius: 100%
+.systemPlanetscale(1.4) !important
   width: 100%;
   height: 100%;
   border-radius: 50%;

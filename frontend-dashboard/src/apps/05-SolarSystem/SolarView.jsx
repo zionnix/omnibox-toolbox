@@ -33,6 +33,32 @@ const SolarSystem = () => {
     });
   };
 
+  // Périodes orbitales en jours terrestres
+  const orbitalPeriods = {
+    mercury: 88,
+    venus: 225,
+    earth: 365.25,
+    mars: 687,
+    jupiter: 4333, // 11.9 ans
+    saturn: 10759, // 29.5 ans
+    uranus: 30687, // 84 ans
+    neptune: 60190, // 165 ans
+    pluto: 90560 // 248 ans
+  };
+
+  // Calculer la position réelle de chaque planète
+  const calculatePlanetPosition = (planet) => {
+    // Date de référence : 1er janvier 2000, 12h00 UTC
+    const referenceDate = new Date('2000-01-01T12:00:00Z');
+    const daysSinceReference = (currentTime - referenceDate) / (1000 * 60 * 60 * 24);
+    
+    // Calculer l'angle en fonction de la période orbitale
+    const period = orbitalPeriods[planet];
+    const angle = ((daysSinceReference / period) * 360) % 360;
+    
+    return angle;
+  };
+
   const planetData = {
     mercury: { name: "Mercure", temp: "167°C", year: "88 jours", sunDistance: "57,9 millions km", earthDistance: "91,7 millions km", rotation: "58,6 jours" },
     venus: { name: "Vénus", temp: "464°C", year: "225 jours", sunDistance: "108,2 millions km", earthDistance: "41,4 millions km", rotation: "243 jours" },
@@ -111,20 +137,29 @@ const SolarSystem = () => {
         </div>
 
         {/* Planètes avec orbites */}
-        {planets.map((planet, index) => (
-          <div
-            key={planet}
-            className={`${styles.systemOrbit} ${styles[`systemOrbit${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedOrbit : ''}`}
-            style={{ animationPlayState: paused ? 'paused' : 'running' }}
-          >
+        {planets.map((planet, index) => {
+          const angle = paused ? calculatePlanetPosition(planet) : calculatePlanetPosition(planet);
+          const angleRad = (angle * Math.PI) / 180;
+          
+          return (
             <div
-              className={`${styles.systemPlanet} ${styles[`systemPlanet${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedPlanet : ''}`}
-              onClick={() => selectPlanet(planet)}
+              key={planet}
+              className={`${styles.systemOrbit} ${styles[`systemOrbit${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedOrbit : ''}`}
             >
-              <img src={`/png/solar-system/${planet}.png`} alt={planetData[planet].name} />
+              <div
+                className={`${styles.systemPlanet} ${styles[`systemPlanet${planet.charAt(0).toUpperCase() + planet.slice(1)}`]} ${activePlanet === planet ? styles.selectedPlanet : ''}`}
+                onClick={() => selectPlanet(planet)}
+                style={{
+                  transform: `rotate(${angle}deg) translateX(calc(50% - 12px)) rotate(-${angle}deg) translateY(-50%)`,
+                  left: '50%',
+                  top: '50%'
+                }}
+              >
+                <img src={`/png/solar-system/${planet}.png`} alt={planetData[planet].name} />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Display de planète à droite */}
