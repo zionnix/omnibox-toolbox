@@ -640,8 +640,8 @@ Si la lumière s'éteint, tout s'éteint avec elle.</p>
           <h1 className="game-title">LASTLIGHT</h1>
           <p className="subtitle">Choisis ta classe</p>
           <div className="class-grid">
-            <div className="class-card" data-class="archer">
-              <div className="classIcon archerIcon"></div>
+            <div className="classCard" data-class="archer">
+              <div className="class-icon archer-icon"></div>
               <h3>Archer</h3>
               <div className="class-stats">
                 <p>🎯 Portée infinie</p>
@@ -650,8 +650,8 @@ Si la lumière s'éteint, tout s'éteint avec elle.</p>
                 <p>💥 Dégâts faibles</p>
               </div>
             </div>
-            <div className="class-card" data-class="knight">
-              <div className="classIcon knightIcon"></div>
+            <div className="classCard" data-class="knight">
+              <div className="class-icon knight-icon"></div>
               <h3>Chevalier</h3>
               <div className="class-stats">
                 <p>⚔️ Attaque moyenne</p>
@@ -660,8 +660,8 @@ Si la lumière s'éteint, tout s'éteint avec elle.</p>
                 <p>📏 Portée: 1 case</p>
               </div>
             </div>
-            <div className="class-card" data-class="tank">
-              <div className="classIcon tankIcon"></div>
+            <div className="classCard" data-class="tank">
+              <div className="class-icon tank-icon"></div>
               <h3>Bouclier</h3>
               <div className="class-stats">
                 <p>🛡️ Attaque lente</p>
@@ -670,8 +670,8 @@ Si la lumière s'éteint, tout s'éteint avec elle.</p>
                 <p>👊 Corps à corps</p>
               </div>
             </div>
-            <div className="class-card" data-class="mage">
-              <div className="classIcon mageIcon"></div>
+            <div className="classCard" data-class="mage">
+              <div className="class-icon mage-icon"></div>
               <h3>Magicien</h3>
               <div className="class-stats">
                 <p>✨ Attaque lente</p>
@@ -682,7 +682,7 @@ Si la lumière s'éteint, tout s'éteint avec elle.</p>
               </div>
             </div>
           </div>
-          <button id="class-back-btn" className="menuBtn backBtn">⬅️ Retour</button>
+          <button id="class-back-btn" className="menu-btn back-btn">⬅️ Retour</button>
         </div>
       </div>
 
