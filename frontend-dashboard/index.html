@@ -5,11 +5,11 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OmniBox - Dashboard</title>
-    <!-- Script pour Cross-Origin Isolation (nécessaire pour FFmpeg.wasm) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/coi-serviceworker/0.1.7/coi-serviceworker.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Service Worker pour Cross-Origin Isolation (nécessaire pour FFmpeg.wasm) -->
+    <script src="/coi-serviceworker.js"></script>
     <script type="module" src="/src/apps/main.jsx"></script>
   </body>
 </html>
