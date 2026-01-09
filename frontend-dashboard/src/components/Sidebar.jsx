@@ -86,7 +86,7 @@ const Sidebar = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] max-h-[80vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] overflow-hidden"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] max-h-[90vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] overflow-hidden"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/10">
@@ -103,7 +103,7 @@ const Sidebar = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(80vh-80px)]">
+              <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(90vh-80px)]">
                 {/* À propos */}
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-brand-blue">
