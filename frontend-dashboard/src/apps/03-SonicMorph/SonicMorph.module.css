@@ -1,0 +1,539 @@
+/* Home Container */
+.homeContainer {
+  min-height: 100vh;
+  background-color: #000000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.backgroundGradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 20, 35, 1) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+.glowEffect {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 80%;
+  height: 60%;
+  background-color: rgba(6, 182, 212, 0.1);
+  filter: blur(120px);
+  border-radius: 50%;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.mainTitle {
+  font-size: clamp(3rem, 10vw, 9rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  text-align: center;
+  z-index: 10;
+  letter-spacing: -0.05em;
+}
+
+.titleGradient {
+  background: linear-gradient(to right, #22d3ee, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  z-index: 10;
+}
+
+@media (min-width: 640px) {
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .categoryGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.categoryCard {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 3rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+}
+
+.categoryCard:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.categoryContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.categoryIcon {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.categoryCard:hover .categoryIcon {
+  background-color: #22d3ee;
+  color: black;
+}
+
+.categoryLabel {
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+/* Converter Container */
+.converterContainer {
+  min-height: 100vh;
+  background-color: #000000;
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+@media (min-width: 768px) {
+  .converterContainer {
+    padding: 1.5rem;
+  }
+}
+
+.converterMain {
+  width: 100%;
+  max-width: 48rem;
+  background-color: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .converterMain {
+    border-radius: 4rem;
+    padding: 3.5rem;
+  }
+}
+
+.backButton {
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  color: #22d3ee;
+}
+
+.uploadSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.dropZone {
+  border: 4px dashed rgba(255, 255, 255, 0.05);
+  border-radius: 2.5rem;
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.dropZone:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+.fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.uploadIcon {
+  margin: 0 auto 1rem;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 0.3s ease;
+}
+
+.dropZone:hover .uploadIcon {
+  color: #22d3ee;
+}
+
+.uploadTitle {
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .uploadTitle {
+    font-size: 1.875rem;
+  }
+}
+
+.fileName {
+  margin-top: 1rem;
+  color: #22d3ee;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.videoPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+@media (min-width: 768px) {
+  .videoPreview {
+    padding: 2rem;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.videoPlayer {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  aspect-ratio: 16 / 9;
+  background-color: black;
+}
+
+.videoControls {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.controlLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.labelIcon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #22d3ee;
+}
+
+.controlGroup:nth-child(2) .labelIcon {
+  color: #a855f7;
+}
+
+.timeDisplay {
+  font-family: 'Courier New', monospace;
+  font-size: 1.25rem;
+  color: #22d3ee;
+  background-color: rgba(34, 211, 238, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.controlGroup:nth-child(2) .timeDisplay {
+  color: #a855f7;
+  background-color: rgba(168, 85, 247, 0.1);
+}
+
+.rangeSlider {
+  width: 100%;
+  height: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.rangeSlider::-webkit-slider-thumb {
+  appearance: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #22d3ee;
+}
+
+.rangeSlider::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #22d3ee;
+}
+
+.formatGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .formatGrid {
+    gap: 0.75rem;
+  }
+}
+
+.formatButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .formatButton {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+  }
+}
+
+.formatButton:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.formatButtonActive {
+  background-color: white;
+  color: black;
+  border-color: white;
+  transform: scale(1.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.convertButton {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to right, #22d3ee, #a855f7);
+  color: black;
+  border-radius: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .convertButton {
+    padding: 2rem;
+  }
+}
+
+.convertButton:hover:not(:disabled) {
+  box-shadow: 0 0 40px #22d3ee;
+}
+
+.convertButton:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.convertButton:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.convertingText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.resultsSection {
+  text-align: center;
+  padding: 1rem 0;
+  animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.successIcon {
+  margin: 0 auto 2rem;
+  color: #22c55e;
+}
+
+.successTitle {
+  font-size: 1.875rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  letter-spacing: -0.05em;
+}
+
+.resultsGrid {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.resultCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 900;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.resultName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 1rem;
+}
+
+.downloadButton {
+  padding: 1rem;
+  background-color: white;
+  color: black;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.downloadButton:hover {
+  background-color: #22d3ee;
+}
+
+.resetButton {
+  color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-decoration: underline;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  color: white;
+}

@@ -25,6 +25,10 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true, // Ouvre le navigateur automatiquement au démarrage
+    headers: {
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'Cross-Origin-Opener-Policy': 'same-origin',
+    },
     proxy: {
       // Redirige les appels API vers ton backend local pendant le développement
       '/api': {
