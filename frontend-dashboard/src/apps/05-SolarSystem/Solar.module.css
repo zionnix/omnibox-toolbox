@@ -282,11 +282,11 @@
   background-color: #e3d2ec;
 }
 
-/* Bouton paramètres en bas à gauche */
+/* Bouton paramètres en bas à droite */
 .settingsButton {
   position: fixed;
   bottom: 30px;
-  left: 30px;
+  right: 30px;
   width: 60px;
   height: 60px;
   border: none;
@@ -297,7 +297,7 @@
   font-size: 2.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 15;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,9 +311,8 @@
 /* Menu des paramètres */
 .settingsMenu {
   position: fixed;
-  top: 50%;
-  left: 30px;
-  transform: translateY(-50%);
+  bottom: 100px;
+  right: 30px;
   width: 350px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.12);
@@ -321,7 +320,7 @@
   border-radius: 10px;
   color: #fff;
   font-family: 'Orbitron', sans-serif;
-  z-index: 25;
+  z-index: 50;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -540,14 +539,13 @@
     height: 50px;
     font-size: 2rem;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
   }
 
   .settingsMenu {
     width: 280px;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 20px;
+    bottom: 80px;
   }
 
   .settingsTitle {
