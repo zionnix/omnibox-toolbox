@@ -193,7 +193,8 @@ const Sidebar = () => {
                   <p>Développé avec ⚡ React + Vite + Tailwind CSS</p>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>
