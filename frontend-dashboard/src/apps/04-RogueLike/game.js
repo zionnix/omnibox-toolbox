@@ -7242,6 +7242,8 @@ class Game {
         // Vérifications de sécurité
         if (!this.dungeon || !this.player) {
             console.error('Dungeon ou Player non initialisé!');
+            console.log('Dungeon:', this.dungeon);
+            console.log('Player:', this.player);
             return;
         }
         
@@ -7249,6 +7251,8 @@ class Game {
             console.error('Dungeon.grid non initialisé!');
             return;
         }
+        
+        console.log('Render called - Player pos:', this.player.x, this.player.y, 'Enemies:', this.enemies.length);
         
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
@@ -7417,7 +7421,7 @@ class Game {
                     const sprite = enemySprites[enemy.combatType][enemy.spriteIndex];
                     const offsetSize = (CONFIG.CELL_SIZE - CONFIG.SPRITE_SIZE) / 2;
 
-                    if (sprite && sprite.complete) {
+                    if (sprite && sprite.complete && sprite.naturalWidth > 0) {
                         ctx.save();
                         ctx.imageSmoothingEnabled = false;
                         ctx.drawImage(
@@ -7464,7 +7468,7 @@ class Game {
                 const bossSprite = this.bossSprites[boss.zone];
                 const bossSize = CONFIG.CELL_SIZE * 2;
 
-                if (bossSprite && bossSprite.complete) {
+                if (bossSprite && bossSprite.complete && bossSprite.naturalWidth > 0) {
                     ctx.save();
                     ctx.imageSmoothingEnabled = false;
                     ctx.drawImage(bossSprite, bx, by, bossSize, bossSize);
@@ -7498,7 +7502,7 @@ class Game {
         const playerSpriteOffset = (CONFIG.SPRITE_SIZE - CONFIG.CELL_SIZE) / 2;
         
         const sprite = this.sprites[this.player.classType];
-        if (sprite && sprite.complete) {
+        if (sprite && sprite.complete && sprite.naturalWidth > 0) {
             ctx.imageSmoothingEnabled = false;
             ctx.drawImage(
                 sprite,
