@@ -7,7 +7,7 @@ const SolarSystem = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showDisplay, setShowDisplay] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [realTimeMode, setRealTimeMode] = useState(false);
+  const [realTimeMode, setRealTimeMode] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [speedMultiplier, setSpeedMultiplier] = useState(100000);
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
