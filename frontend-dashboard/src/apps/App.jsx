@@ -7,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Layout from '../components/Layout';
 
 // Importation de tes dossiers projets
-import Home from './Home';
+import Home from '../pages/Home';
 import WeatherApp from './01-weather/WeatherApp';
 import Clock from './02-SmartClock/Clock';
 import SonicMorph from './03-SonicMorph/SonicMorph';

@@ -114,16 +114,38 @@ const Home = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16 bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
         >
-          <div className="flex items-center gap-4 mb-6">
-            <Code2 size={32} className="text-blue-400" />
-            <h2 className="text-3xl font-bold">À propos</h2>
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-6">
+            {/* Photo de profil */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex-shrink-0"
+            >
+              <div className="relative w-48 h-48 rounded-2xl overflow-hidden border-4 border-blue-500/30 shadow-2xl shadow-blue-500/20">
+                <img 
+                  src="/images/profile.jpg" 
+                  alt="Profile" 
+                  className="w-full h-full object-cover object-center"
+                  style={{ objectPosition: '50% 30%' }}
+                />
+              </div>
+            </motion.div>
+
+            {/* Texte À propos */}
+            <div className="flex-1">
+              <div className="flex items-center gap-4 mb-6">
+                <Code2 size={32} className="text-blue-400" />
+                <h2 className="text-3xl font-bold">À propos</h2>
+              </div>
+              
+              <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                Je suis un <span className="text-blue-400 font-semibold">jeune développeur web full-stack</span> passionné 
+                par la création d'applications modernes et performantes. J'utilise les technologies les plus récentes pour 
+                construire des expériences utilisateur fluides et intuitives.
+              </p>
+            </div>
           </div>
-          
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            Je suis un <span className="text-blue-400 font-semibold">jeune développeur web full-stack</span> passionné 
-            par la création d'applications modernes et performantes. J'utilise les technologies les plus récentes pour 
-            construire des expériences utilisateur fluides et intuitives.
-          </p>
 
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-4">
