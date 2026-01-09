@@ -7,6 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Layout from '../components/Layout';
 
 // Importation de tes dossiers projets
+import Home from './Home';
 import WeatherApp from './01-weather/WeatherApp';
 import Clock from './02-SmartClock/Clock';
 import SonicMorph from './03-SonicMorph/SonicMorph';
@@ -36,7 +37,7 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><div className="text-white p-10"><h1>Bienvenue dans OmniBox</h1><p>Sélectionne un outil dans le menu.</p></div></PageWrapper>} />
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/weather" element={<PageWrapper><WeatherApp /></PageWrapper>} />
         <Route path="/clock" element={<PageWrapper><Clock /></PageWrapper>} />
         <Route path="/sonic-morph" element={<PageWrapper><SonicMorph /></PageWrapper>} />

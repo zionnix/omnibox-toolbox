@@ -24,9 +24,9 @@ const Sidebar = () => {
       animate={{ x: 0, opacity: 1 }}
       className="w-20 hover:w-64 transition-all duration-300 group h-screen bg-brand-gray border-r border-white/10 flex flex-col items-center py-8 z-50"
     >
-      <div className="mb-10 text-brand-blue">
+      <Link to="/" className="mb-10 text-brand-blue hover:text-blue-400 transition-colors">
         <LayoutDashboard size={32} />
-      </div>
+      </Link>
 
       <nav className="flex-1 w-full px-3 space-y-4">
         {menuItems.map((item) => {
