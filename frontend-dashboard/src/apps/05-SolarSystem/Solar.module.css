@@ -64,7 +64,7 @@
 .panel {
   position: fixed;
   top: 50%;
-  left: 20px;
+  left: 110px;
   transform: translateY(-50%);
   width: 300px;
   padding: 25px;
