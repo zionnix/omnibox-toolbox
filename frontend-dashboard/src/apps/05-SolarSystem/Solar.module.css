@@ -1,0 +1,364 @@
+/* Global Container */
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url(/png/solar-system/stars.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  z-index: 20;
+}
+
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 5rem;
+  color: #fff;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #fff;
+}
+
+/* Panel gauche */
+.panel {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 300px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 10;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.titrePanel {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.planetList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.planetList li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  transition: background 0.2s;
+  margin-bottom: 5px;
+}
+
+.planetList li:hover,
+.planetList li.selected {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.infoBox {
+  display: block;
+  margin-top: 15px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  text-align: left;
+}
+
+.infoBox.active {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.infoBox p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* Système solaire */
+.system {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding-top: 100%;
+}
+
+@media (min-width: 700px) {
+  .system {
+    padding-top: 700px;
+  }
+}
+
+.systemIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.systemIconSun {
+  width: 60px;
+  height: 60px;
+}
+
+.systemOrbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  animation: spin infinite linear both;
+  pointer-events: none;
+}
+
+.systemOrbitSun {
+  width: 60px;
+  height: 60px;
+  border: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Orbites pour chaque planète */
+.systemOrbitMercury {
+  width: 10%;
+  height: 10%;
+  animation-duration: 1s;
+}
+
+.systemOrbitVenus {
+  width: 20%;
+  height: 20%;
+  animation-duration: 2.6s;
+}
+
+.systemOrbitEarth {
+  width: 30%;
+  height: 30%;
+  animation-duration: 4.1s;
+}
+
+.systemOrbitMars {
+  width: 40%;
+  height: 40%;
+  animation-duration: 7.8s;
+}
+
+.systemOrbitJupiter {
+  width: 50%;
+  height: 50%;
+  animation-duration: 49.8s;
+}
+
+.systemOrbitSaturn {
+  width: 60%;
+  height: 60%;
+  animation-duration: 120.3s;
+}
+
+.systemOrbitUranus {
+  width: 70%;
+  height: 70%;
+  animation-duration: 348.4s;
+}
+
+.systemOrbitNeptune {
+  width: 80%;
+  height: 80%;
+  animation-duration: 684.4s;
+}
+
+.systemOrbitPluto {
+  width: 90%;
+  height: 90%;
+  animation-duration: 1028.6s;
+}
+
+/* Planètes */
+.systemPlanet {
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.systemPlanet:hover {
+  transform: translateY(-50%) scale(1.3);
+}
+
+.systemPlanet img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* Selection styling */
+.selectedOrbit,
+.selectedPlanet {
+  border: 2px solid white !important;
+}
+
+/* Animation spin */
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+/* Bouton pause */
+.toggleButton {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #511F67;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 10;
+}
+
+.toggleButton:hover {
+  background-color: #e3d2ec;
+}
+
+/* Planet Display à droite */
+.planetDisplay {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 10;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.planetDisplay.active {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.planetDisplayImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  animation: rotatePlanet 20s linear infinite;
+}
+
+@keyframes rotatePlanet {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media queries */
+@media (max-width: 600px) {
+  .panel {
+    width: 220px;
+    padding: 15px;
+    left: 10px;
+  }
+
+  .titrePanel {
+    font-size: 1.6rem;
+  }
+
+  .planetList li {
+    font-size: 1.2rem;
+    padding: 6px 10px;
+  }
+
+  .infoBox {
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+
+  .toggleButton {
+    font-size: 1.4rem;
+    padding: 8px 16px;
+  }
+
+  .planetDisplay {
+    width: 120px;
+    height: 120px;
+    right: 10px;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+}
+
+/* Scroll bar styling */
+.panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

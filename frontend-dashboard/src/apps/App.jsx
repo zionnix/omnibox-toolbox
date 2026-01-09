@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import WeatherApp from './01-weather/WeatherApp';
 import Clock from './02-SmartClock/Clock';
 import SonicMorph from './03-SonicMorph/SonicMorph';
+import SolarSystem from './05-SolarSystem/SolarView';
 import LinkHub from './06-LinkTree/LinkHub';
 import JMDView from './07-JMDRemake/JMDView';
 import AdminDashboard from './07-JMDRemake/AdminDashboard';
@@ -38,6 +39,7 @@ const AnimatedRoutes = () => {
         <Route path="/weather" element={<PageWrapper><WeatherApp /></PageWrapper>} />
         <Route path="/clock" element={<PageWrapper><Clock /></PageWrapper>} />
         <Route path="/sonic-morph" element={<PageWrapper><SonicMorph /></PageWrapper>} />
+        <Route path="/solar-system" element={<PageWrapper><SolarSystem /></PageWrapper>} />
         <Route path="/links" element={<PageWrapper><LinkHub /></PageWrapper>} />
         <Route path="/jmd" element={<PageWrapper><JMDView /></PageWrapper>} />
         <Route path="/jmd/admin" element={<PageWrapper><AdminDashboard /></PageWrapper>} />
