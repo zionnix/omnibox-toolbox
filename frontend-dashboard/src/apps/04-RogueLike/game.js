@@ -6006,10 +6006,34 @@ class Game {
     }
     
     showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => {
-            s.classList.remove('active');
+        // Liste de tous les IDs d'écrans
+        const screenIds = [
+            'main-menu', 'lore-screen', 'lore-screen-2', 'credits-screen',
+            'class-selection', 'perk-selection', 'zone-dialogue',
+            'second-life-screen', 'second-life-dialogue', 'boss-dialogue',
+            'game-screen', 'game-over', 'victory'
+        ];
+        
+        // Cacher tous les écrans
+        screenIds.forEach(id => {
+            const screen = document.getElementById(id);
+            if (screen) {
+                screen.style.display = 'none';
+                screen.style.pointerEvents = 'none';
+                screen.style.opacity = '0';
+            }
         });
-        document.getElementById(screenId).classList.add('active');
+        
+        // Afficher l'écran demandé
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.style.display = 'flex';
+            targetScreen.style.pointerEvents = 'all';
+            targetScreen.style.opacity = '1';
+            console.log(`✅ Showing screen: ${screenId}`);
+        } else {
+            console.error(`❌ Screen not found: ${screenId}`);
+        }
 
         // Gérer les musiques en fonction de l'écran
         if (screenId === 'main-menu' || screenId === 'lore-screen' || screenId === 'lore-screen-2' || screenId === 'credits-screen') {

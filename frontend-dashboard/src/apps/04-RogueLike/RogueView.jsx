@@ -48,7 +48,7 @@ const RogueView = () => {
   return (
     <div id="game-container" className={styles.gameContainer}>
       {/* Menu principal */}
-      <div id="main-menu" className={`${styles.screen} ${styles.active}`}>
+      <div id="main-menu" className={styles.screen} style={{display: 'flex', opacity: 1, pointerEvents: 'all'}}>
         <div className={styles.titleScreen}>
           <h1 className={styles.gameTitle}>LASTLIGHT</h1>
           <p className={`${styles.subtitle} ${styles.welcomeText}`}>Bienvenue sur LASTLIGHT !</p>
