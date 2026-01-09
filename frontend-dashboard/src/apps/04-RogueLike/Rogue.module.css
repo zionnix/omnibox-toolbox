@@ -1,0 +1,747 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Variables */
+:root {
+  --pixel-size: 32px;
+  --bg-dark: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-glow: #00ff00;
+  --health-color: #ff0000;
+  --xp-color: #00ffff;
+  --gold: #ffd700;
+}
+
+/* Reset & Base */
+.gameContainer {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Press Start 2P', cursive;
+  overflow: hidden;
+  position: relative;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.gameContainer * {
+  box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Screens */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+/* Title Screen */
+.titleScreen {
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.gameTitle {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  text-shadow: 4px 4px 0 #ff0000, 8px 8px 0 #000000;
+  animation: titlePulse 2s infinite;
+  letter-spacing: 0.5rem;
+}
+
+@keyframes titlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: var(--text-glow);
+  text-shadow: 0 0 10px var(--text-glow);
+}
+
+.welcomeText {
+  animation: textGlow 2s infinite;
+}
+
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 10px var(--text-glow); }
+  50% { text-shadow: 0 0 20px var(--text-glow), 0 0 30px var(--text-glow); }
+}
+
+/* Buttons */
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.menuBtn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  background: #2a2a2a;
+  color: var(--text-primary);
+  border: 4px solid #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 4px 4px 0 #000000;
+  min-width: 300px;
+}
+
+.menuBtn:hover {
+  background: var(--text-glow);
+  color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000000;
+}
+
+.menuBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.quitBtn {
+  border-color: #ff0000;
+  background: #4a1a1a;
+}
+
+.quitBtn:hover {
+  background: #ff0000;
+  color: #ffffff;
+}
+
+/* Class Selection */
+.classGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.classCard {
+  background: #2a2a2a;
+  border: 4px solid #ffffff;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.classCard:hover {
+  transform: scale(1.05);
+  border-color: var(--text-glow);
+  background: #3a3a3a;
+  box-shadow: 0 0 20px var(--text-glow);
+}
+
+.classCard h3 {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.classIcon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.archerIcon {
+  background-image: url('/pixel_art/hero/archer_down.png');
+}
+
+.knightIcon {
+  background-image: url('/pixel_art/hero/knight_down.png');
+}
+
+.tankIcon {
+  background-image: url('/pixel_art/hero/tank_down.png');
+}
+
+.mageIcon {
+  background-image: url('/pixel_art/hero/mage_down.png');
+}
+
+/* Lore & Credits */
+.loreContainer,
+.creditsContainer {
+  max-width: 900px;
+  width: 90%;
+  padding: 2rem;
+  background: rgba(26, 26, 26, 0.95);
+  border: 4px solid var(--text-glow);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.loreHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.loreHeader h1 {
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.loreNavigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.creditsScroll {
+  text-align: center;
+  animation: creditsScroll 20s linear infinite;
+}
+
+@keyframes creditsScroll {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+.creditsContent h1 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--gold);
+}
+
+/* Perk Selection */
+.perkSelectionContainer {
+  max-width: 1000px;
+  width: 90%;
+  padding: 2rem;
+  background: rgba(26, 26, 26, 0.95);
+  border: 4px solid var(--gold);
+}
+
+.perkHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.levelUpTitle {
+  font-size: 2rem;
+  color: var(--gold);
+  animation: levelUpPulse 1s infinite;
+}
+
+@keyframes levelUpPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.perkGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.perkCard {
+  background: #2a2a2a;
+  border: 3px solid #ffffff;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.perkCard:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+}
+
+.perkCard h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--gold);
+}
+
+.perkCard p {
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: #cccccc;
+}
+
+/* Dialogues */
+.dialogueContainer,
+.secondDialogueContainer {
+  max-width: 1000px;
+  width: 90%;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(26, 26, 26, 0.95);
+  border: 4px solid var(--text-glow);
+}
+
+.dialogueHero,
+.dialogueAngel,
+.dialogueSecondHero,
+.dialogueBoss {
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.dialogueHero img,
+.dialogueAngel img,
+.dialogueSecondHero img,
+.dialogueBoss img {
+  width: 128px;
+  height: 128px;
+  image-rendering: pixelated;
+  border: 3px solid var(--text-glow);
+}
+
+.dialogueSpeakerName {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-glow);
+}
+
+.dialogueContent,
+.dialogueSecondContent {
+  flex: 1;
+}
+
+.dialogueZoneTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  text-align: center;
+}
+
+.dialogueBubble {
+  background: #1a1a1a;
+  border: 3px solid #ffffff;
+  padding: 1.5rem;
+  position: relative;
+  min-height: 150px;
+}
+
+.dialogueBubble p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.dialogueCursor {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.dialogueBtn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* Second Life */
+.secondLifeContainer {
+  text-align: center;
+  animation: secondLifeAppear 2s ease-out;
+}
+
+@keyframes secondLifeAppear {
+  0% { opacity: 0; transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.secondLifeHero img {
+  width: 256px;
+  height: 256px;
+  image-rendering: pixelated;
+  margin-bottom: 2rem;
+}
+
+.secondLifeHeart {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  animation: heartBeat 1s infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.secondLifeText {
+  font-size: 2rem;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold);
+}
+
+/* Game Screen */
+.hud {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(26, 26, 26, 0.9);
+  border-bottom: 3px solid var(--text-glow);
+}
+
+.hudSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hudSection.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.playerInfo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.playerAvatar {
+  width: 64px;
+  height: 64px;
+  background: url('/pixel_art/hero/archer_down.png') center/contain no-repeat;
+  border: 2px solid var(--text-glow);
+  image-rendering: pixelated;
+}
+
+.playerStats {
+  flex: 1;
+}
+
+.playerStats h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+}
+
+.statBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  width: 30px;
+}
+
+.bar {
+  flex: 1;
+  height: 16px;
+  background: #1a1a1a;
+  border: 2px solid #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.healthBar .barFill {
+  background: linear-gradient(90deg, #ff0000, #ff6666);
+}
+
+.xpBar .barFill {
+  background: linear-gradient(90deg, #00ffff, #66ffff);
+}
+
+.statBar span:last-child {
+  font-size: 0.6rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.levelInfo {
+  text-align: center;
+}
+
+.levelInfo h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+}
+
+.levelInfo p {
+  font-size: 0.8rem;
+  color: var(--text-glow);
+}
+
+.combatLog {
+  background: #1a1a1a;
+  border: 2px solid var(--text-glow);
+  padding: 0.5rem;
+  height: 80px;
+  overflow-y: auto;
+  font-size: 0.6rem;
+  line-height: 1.5;
+}
+
+.combatLog p {
+  margin: 0.25rem 0;
+}
+
+.secondLifeIndicator {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 215, 0, 0.2);
+  border: 2px solid var(--gold);
+  text-align: center;
+}
+
+.secondLifeIndicator span {
+  font-size: 0.7rem;
+  color: var(--gold);
+}
+
+/* Canvas */
+.gameCanvasContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+.gameCanvas {
+  border: 4px solid var(--text-glow);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+  background: #000000;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Boss Health Bar */
+.bossHealthBar {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  min-width: 400px;
+}
+
+.bossHealthContainer {
+  background: rgba(26, 26, 26, 0.95);
+  border: 3px solid #ff0000;
+  padding: 1rem;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+}
+
+.bossNameLabel {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  color: #ff0000;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px #ff0000;
+}
+
+.bossHealthBarOuter {
+  width: 100%;
+  height: 24px;
+  background: #1a1a1a;
+  border: 2px solid #ff0000;
+  position: relative;
+  overflow: hidden;
+}
+
+.bossHealthBarInner {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000, #ff6666);
+  transition: width 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.bossHealthText {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  color: #ffffff;
+}
+
+/* Upgrades Bar */
+.upgradesBar {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26, 26, 26, 0.95);
+  border: 3px solid var(--gold);
+  padding: 0.5rem 1rem;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.upgradesBar h3 {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+  text-align: center;
+}
+
+/* Game Over / Victory */
+.gameOverContent,
+.victoryContent {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(26, 26, 26, 0.95);
+  border: 4px solid #ff0000;
+  max-width: 600px;
+}
+
+.victoryContent {
+  border-color: var(--gold);
+}
+
+.gameOverContent h1,
+.victoryContent h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  animation: endScreenPulse 2s infinite;
+}
+
+.gameOverContent h1 {
+  color: #ff0000;
+  text-shadow: 0 0 20px #ff0000;
+}
+
+.victoryContent h1 {
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold);
+}
+
+@keyframes endScreenPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.thanksMessage {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: var(--text-glow);
+}
+
+/* Menu button on game screen */
+.gameMenuBtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  min-width: 100px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+}
+
+.backBtn {
+  margin-top: 2rem;
+}
+
+/* Scrollbar */
+.loreContainer::-webkit-scrollbar,
+.creditsContainer::-webkit-scrollbar,
+.combatLog::-webkit-scrollbar {
+  width: 8px;
+}
+
+.loreContainer::-webkit-scrollbar-track,
+.creditsContainer::-webkit-scrollbar-track,
+.combatLog::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.loreContainer::-webkit-scrollbar-thumb,
+.creditsContainer::-webkit-scrollbar-thumb,
+.combatLog::-webkit-scrollbar-thumb {
+  background: var(--text-glow);
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .gameTitle {
+    font-size: 3rem;
+  }
+  
+  .hud {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .classGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .gameTitle {
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+  }
+  
+  .menuBtn {
+    font-size: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    min-width: 250px;
+  }
+  
+  .dialogueContainer,
+  .secondDialogueContainer {
+    flex-direction: column;
+  }
+  
+  .bossHealthBar {
+    min-width: 300px;
+  }
+}

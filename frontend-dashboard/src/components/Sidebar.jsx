@@ -13,7 +13,7 @@ const Sidebar = () => {
     { name: 'Horloge', icon: <Clock size={22}/>, path: '/clock', color: 'text-emerald-400' },
     { name: 'LinkTree', icon: <LinkIcon size={22}/>, path: '/links', color: 'text-pink-400' },
     { name: 'Sonic Morph', icon: <Scissors size={22}/>, path: '/sonic-morph', color: 'text-cyan-400' },
-    { name: 'Rogue-Like', icon: <Gamepad2 size={22}/>, path: '/game', color: 'text-red-400' },
+    { name: 'Rogue-Like', icon: <Gamepad2 size={22}/>, path: '/rogue-like', color: 'text-red-400' },
     { name: 'Solar System', icon: <Sun size={22}/>, path: '/solar-system', color: 'text-yellow-400' },
     { name: 'JMD Remake', icon: <Briefcase size={22}/>, path: '/jmd', color: 'text-purple-400' },
   ];
