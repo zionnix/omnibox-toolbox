@@ -180,11 +180,13 @@ const Home = () => {
 
   const handleProjectClick = (e, project) => {
     e.preventDefault();
+    console.log('Project clicked:', project.name, 'showModal:', project.showModal);
     
     // Si le projet doit afficher un modal, on l'ouvre
     if (project.showModal) {
       setSelectedProject(project);
       setIsModalOpen(true);
+      console.log('Modal should open now');
     } else {
       // Sinon, navigation directe (pour Rogue Like et JMD Remake)
       navigate(project.path);

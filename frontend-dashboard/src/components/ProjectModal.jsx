@@ -1,11 +1,12 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Code, Zap, Target } from 'lucide-react';
 
 const ProjectModal = ({ isOpen, onClose, project, onContinue }) => {
   if (!project) return null;
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <>
@@ -15,7 +16,7 @@ const ProjectModal = ({ isOpen, onClose, project, onContinue }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999]"
           />
 
           {/* Modal */}
@@ -24,7 +25,7 @@ const ProjectModal = ({ isOpen, onClose, project, onContinue }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
             onClick={onClose}
           >
             <div
@@ -146,6 +147,9 @@ const ProjectModal = ({ isOpen, onClose, project, onContinue }) => {
       )}
     </AnimatePresence>
   );
+
+  // Utiliser un portail pour rendre le modal au niveau du body
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default ProjectModal;
