@@ -114,6 +114,34 @@ const Clock = () => {
   const vowels = ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'];
   const preposition = city && vowels.includes(city[0]) ? "d'" : 'de ';
 
+  // Génération du calendrier du mois
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    
+    // Ajuster pour que lundi soit le premier jour (0)
+    const firstDayAdjusted = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+    
+    const days = [];
+    
+    // Ajouter les jours vides au début
+    for (let i = 0; i < firstDayAdjusted; i++) {
+      days.push(null);
+    }
+    
+    // Ajouter tous les jours du mois
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push(i);
+    }
+    
+    return days;
+  };
+
+  const calendarDays = getDaysInMonth(time);
+  const currentDay = time.getDate();
+
   return (
     <div className={styles.smartClock}>
       <header className={styles.header}>
@@ -243,6 +271,7 @@ const Clock = () => {
             <span className={styles.month}>{month}</span>
             <span className={styles.year}>{year}</span>
           </div>
+          
           <div className={styles.weekDisplay}>
             {daysOfWeek.map((dayLetter, index) => (
               <div key={index} className={styles.dayItem}>
@@ -263,6 +292,29 @@ const Clock = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Calendrier mensuel */}
+          <div className={styles.monthCalendar}>
+            <div className={styles.calendarHeader}>
+              {daysOfWeek.map((dayLetter, index) => (
+                <div key={index} className={styles.calendarHeaderDay}>
+                  {dayLetter}
+                </div>
+              ))}
+            </div>
+            <div className={styles.calendarGrid}>
+              {calendarDays.map((dayNum, index) => (
+                <div
+                  key={index}
+                  className={`${styles.calendarDay} ${
+                    dayNum === currentDay ? styles.currentDay : ''
+                  } ${dayNum === null ? styles.emptyDay : ''}`}
+                >
+                  {dayNum !== null && dayNum}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </main>

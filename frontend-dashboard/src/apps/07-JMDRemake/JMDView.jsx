@@ -41,21 +41,63 @@ const JMDView = () => {
     }
   };
 
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
   const generateCalendarDays = () => {
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Premier jour du mois
+    const firstDay = new Date(year, month, 1);
+    // Dernier jour du mois
+    const lastDay = new Date(year, month + 1, 0);
+    
+    // Jour de la semaine du premier jour (0 = dimanche, 1 = lundi, etc.)
+    let firstDayOfWeek = firstDay.getDay();
+    // Ajuster pour que lundi soit 0
+    firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+    
     const days = [];
     
-    for (let i = 0; i < 60; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
+    // Ajouter les jours vides au début
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // Ajouter tous les jours du mois
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const date = new Date(year, month, day);
+      const dayOfWeek = date.getDay();
       
-      // Skip if Sunday
-      if (date.getDay() === 0) continue;
-      
-      days.push(date);
+      // Skip dimanche (0)
+      if (dayOfWeek !== 0 && date >= today) {
+        days.push(date);
+      } else if (dayOfWeek === 0) {
+        days.push(null); // Dimanche = case vide
+      } else {
+        days.push(null); // Jours passés = case vide
+      }
     }
     
     return days;
+  };
+
+  const nextMonth = () => {
+    const next = new Date(currentMonth);
+    next.setMonth(next.getMonth() + 1);
+    setCurrentMonth(next);
+  };
+
+  const prevMonth = () => {
+    const prev = new Date(currentMonth);
+    prev.setMonth(prev.getMonth() - 1);
+    // Ne pas revenir avant le mois actuel
+    const today = new Date();
+    if (prev >= new Date(today.getFullYear(), today.getMonth(), 1)) {
+      setCurrentMonth(prev);
+    }
   };
 
   const isTimeSlotBooked = (date, time) => {
@@ -457,24 +499,52 @@ const JMDView = () => {
                     
                     <div className={styles.formGroup}>
                       <label>Choisissez une date *</label>
+                      
+                      <div className={styles.calendarHeader}>
+                        <button 
+                          type="button"
+                          className={styles.monthNavButton}
+                          onClick={prevMonth}
+                        >
+                          ←
+                        </button>
+                        <h3 className={styles.monthTitle}>
+                          {currentMonth.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                        </h3>
+                        <button 
+                          type="button"
+                          className={styles.monthNavButton}
+                          onClick={nextMonth}
+                        >
+                          →
+                        </button>
+                      </div>
+
+                      <div className={styles.calendarWeekDays}>
+                        {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day, i) => (
+                          <div key={i} className={styles.weekDay}>{day}</div>
+                        ))}
+                      </div>
+
                       <div className={styles.calendarGrid}>
                         {generateCalendarDays().map((date, index) => {
+                          if (!date) {
+                            return <div key={index} className={styles.emptyDay}></div>;
+                          }
+
                           const isSelected = selectedDate && 
                             date.toDateString() === selectedDate.toDateString();
-                          const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
                           const dayNum = date.getDate();
-                          const month = date.toLocaleDateString('fr-FR', { month: 'short' });
+                          const hasBookedSlots = timeSlots.some(time => isTimeSlotBooked(date, time));
                           
                           return (
                             <button
                               key={index}
                               type="button"
-                              className={`${styles.dateButton} ${isSelected ? styles.selected : ''}`}
+                              className={`${styles.dateButton} ${isSelected ? styles.selected : ''} ${hasBookedSlots ? styles.hasBookings : ''}`}
                               onClick={() => setSelectedDate(date)}
                             >
-                              <div className={styles.dateDayName}>{dayName}</div>
-                              <div className={styles.dateDayNum}>{dayNum}</div>
-                              <div className={styles.dateMonth}>{month}</div>
+                              {dayNum}
                             </button>
                           );
                         })}
