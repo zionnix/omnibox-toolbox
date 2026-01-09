@@ -66,8 +66,300 @@ const RogueView = () => {
         <div className="lore-container">
           <div className="lore-header">
             <h1>📜 Le Livre des Légendes</h1>
-            <p>L'histoire de la Dernière Lumière...</p>
+            <p>Quand la Nuit est tombée, elle n'est jamais repartie.
+
+Une ombre ancienne, sans nom ni visage, s'est répandue sur le monde, étouffant les terres, les villes et les dieux eux-mêmes. Les royaumes ont brûlé, les armées ont disparu, et la lumière s'est éteinte… presque entièrement.
+
+Presque.
+
+Au plus profond du monde subsiste la Dernière Lumière — une flamme fragile, vestige d'un âge oublié. Elle n'éclaire pas le ciel. Elle ne sauve pas les innocents.
+Elle attire.
+
+Les ténèbres la sentent. Les monstres la convoitent. Les donjons se forment autour d'elle, comme des plaies ouvertes dans la terre, changeantes et vivantes.
+
+Tu es l'un des Porteurs de Lumière.
+Des héros, des condamnés, des âmes brisées — peu importe. Tous ceux qui portent une étincelle sont appelés vers le bas.
+
+À chaque descente, la lumière faiblit.
+À chaque victoire, elle brûle un peu plus fort.
+À chaque mort… quelqu'un d'autre prendra ta place.
+
+Personne ne sait si la Dernière Lumière peut sauver le monde.
+Certains disent qu'elle est un mensonge.
+D'autres qu'elle est la source même des ténèbres.
+
+Une chose est sûre :
+
+Si la lumière s'éteint, tout s'éteint avec elle.</p>
           </div>
+
+          {/* Section PNJ Alliés */}
+          <div className="lore-section">
+            <h2>💚 Alliés des Donjons</h2>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/helping/healer.png" className="lore-sprite" alt="Soigneur" />
+                <h3>💚 Amélie — La Soigneuse Perdue</h3>
+                <p>
+                  <strong>🌍 Origine :</strong> Ordre des Guérisseurs<br /><br />
+                  <strong>⚡ Capacités :</strong> Soigne entre 30% et 100% des points de vie manquants<br /><br />
+                  <strong>📖 Histoire :</strong><br />
+                  Mystérieuse moniale voyageuse, elle parcourt les donjons pour venir en aide aux aventuriers perdus. On dit qu'elle a fait vœu de ne jamais laisser un héros mourir seul dans les ténèbres.
+                  <br /><br />
+                  Ses salles de repos sont reconnaissables par leur aura apaisante et l'absence totale d'ennemis.<br /><br />
+                  <strong>📍 Localisation :</strong> Apparaît aléatoirement dans des salles sanctuarisées (0 à 2 par niveau)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section Héros */}
+          <div className="lore-section">
+            <h2>⚔️ Les Quatre Héros</h2>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/hero/archer.png" className="lore-sprite" alt="Archer" />
+                <h3>🏹 L'Archer</h3>
+                <p>
+                  <strong>🌍 Origine :</strong> Forêts du Nord<br /><br />
+                  <strong>⚡ Capacités :</strong> Tir de précision à longue portée (6 cases), attaque rapide<br /><br />
+                  <strong>📖 Histoire :</strong><br />
+                  Ancienne chasseuse des Forêts du Nord, elle connaissait chaque sentier, chaque souffle du vent.
+                  <br /><br />
+                  Lors des premières incursions des donjons, elle tomba amoureuse d'un guerrier envoyé pour les sceller. Mais lorsque les ténèbres le brisèrent, il devint le <em>Gardien Noir</em>, un seigneur du donjon, condamné à protéger ce qu'il haïssait.
+                  <br /><br />
+                  Depuis, elle descend sans relâche.<br />
+                  Non pour le tuer.<br />
+                  <em>Mais pour lui rappeler qui il était… ou mettre fin à leur histoire.</em>
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/hero/knight.png" className="lore-sprite" alt="Chevalier" />
+                <h3>⚔️ Le Chevalier</h3>
+                <p>
+                  <strong>🌍 Origine :</strong> Royaume de l'Est<br /><br />
+                  <strong>⚡ Capacités :</strong> Combat au corps à corps équilibré, bonne résistance<br /><br />
+                  <strong>📖 Histoire :</strong><br />
+                  Autrefois chevalier d'honneur, il fut le seul survivant d'une bataille perdue contre la Nuit. Accusé de lâcheté, il fut banni de son royaume.
+                  <br /><br />
+                  Il porte encore son armure brisée comme un rappel de son serment.
+                  <br /><br />
+                  Chaque donjon est pour lui une épreuve.<br />
+                  Chaque combat, une tentative de rédemption.<br />
+                  <em>Il ne cherche pas la gloire — seulement une mort qui ait du sens.</em>
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/hero/tank.png" className="lore-sprite" alt="Bouclier" />
+                <h3>🛡️ Le Bouclier</h3>
+                <p>
+                  <strong>🌍 Origine :</strong> Montagnes de Fer<br /><br />
+                  <strong>⚡ Capacités :</strong> Très résistant, dégâts élevés, attaque lente<br /><br />
+                  <strong>📖 Histoire :</strong><br />
+                  Ancien garde du palais royal, il fut le dernier à tenir lorsque la capitale tomba. Son bouclier, forgé dans le feu d'un dragon ancestral, absorba les coups jusqu'à fendre la pierre elle-même.
+                  <br /><br />
+                  Mais il ne put sauver le roi.
+                  <br /><br />
+                  Depuis ce jour, il avance sans reculer.<br />
+                  Il ne combat pas pour vaincre.<br />
+                  <em>Il combat pour que les autres tiennent encore un peu.</em>
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/hero/magic men.png" className="lore-sprite" alt="Magicien" />
+                <h3>✨ Le Magicien</h3>
+                <p>
+                  <strong>🌍 Origine :</strong> Tour des Arcanes<br /><br />
+                  <strong>⚡ Capacités :</strong> Magie puissante à distance (4 cases), peut tirer à travers les murs<br /><br />
+                  <strong>📖 Histoire :</strong><br />
+                  Dernier survivant de l'Ordre des Arcanes, il fut témoin de la chute de la Tour lorsque la magie elle-même se retourna contre ses maîtres.
+                  <br /><br />
+                  Il a appris des sorts interdits, capables de traverser la pierre, l'ombre… et parfois l'âme.
+                  <br /><br />
+                  Il sait que la Dernière Lumière est instable.<br />
+                  Il sait qu'elle pourrait détruire le monde.<br />
+                  <em>Mais il préfère un monde brisé à un monde plongé dans le silence éternel.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section Monstres */}
+          <div className="lore-section">
+            <h2>👾 Les Créatures des Donjons</h2>
+            
+            <h3 className="monster-category">⚔️ Combattants Mêlée</h3>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/green_knif_men.png" className="lore-sprite" alt="Green Knif Men" />
+                <h3>🗡️ L'Homme au Couteau Vert</h3>
+                <p>
+                  <strong>⚔️ Type :</strong> Mêlée<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Ancien bandit corrompu par les ténèbres du donjon. Son couteau empoisonné brille d'une lueur verdâtre malsaine.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/human_mad.png" className="lore-sprite" alt="Human Mad" />
+                <h3>🤯 L'Humain Fou</h3>
+                <p>
+                  <strong>⚔️ Type :</strong> Mêlée<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Aventurier ayant perdu la raison dans les profondeurs. Sa folie lui donne une force surhumaine mais imprévisible.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/cc_gobelin2.png" className="lore-sprite" alt="cc gobelin child" />
+                <h3>👶 Gobelin Enfant</h3>
+                <p>
+                  <strong>⚔️ Type :</strong> Mêlée<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Un jeune gobelin cherchant sa mère par-dessus tout, prêt à tuer tous les humains pour atteindre son objectif.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/cc_goblin.png" className="lore-sprite" alt="cc gobelin" />
+                <h3>👺 Gobelin Classique</h3>
+                <p>
+                  <strong>⚔️ Type :</strong> Mêlée<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Un petit gobelin qui s'est simplement perdu dans les limbes des grottes.
+                </p>
+              </div>
+            </div>
+
+            <h3 className="monster-category">🏹 Tireurs à Distance</h3>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/witch.png" className="lore-sprite" alt="Witch" />
+                <h3>🧙‍♀️ La Sorcière</h3>
+                <p>
+                  <strong>🎯 Type :</strong> Distance (portée 4)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Pratiquante des arts sombres, elle lance des malédictions depuis les ombres. Ses sortilèges sont aussi précis que mortels.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/gobelin_witch.png" className="lore-sprite" alt="Gobelin Witch" />
+                <h3>🧪 La Sorcière Gobeline</h3>
+                <p>
+                  <strong>🎯 Type :</strong> Distance (portée 4)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Rare gobeline ayant maîtrisé la magie. Ses potions explosives et ses incantations chaotiques la rendent très dangereuse.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/gun_gobelin.png" className="lore-sprite" alt="Gun Gobelin" />
+                <h3>🔫 Le Gobelin Armé</h3>
+                <p>
+                  <strong>🎯 Type :</strong> Distance (portée 4)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Gobelin ingénieux ayant construit une arme rudimentaire. Ce qu'il manque en précision, il le compense par sa cadence de tir.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/crystal_witch.png" className="lore-sprite" alt="Crystal Witch" />
+                <h3>💎 La Sorcière de Cristal</h3>
+                <p>
+                  <strong>🎯 Type :</strong> Distance (portée 4)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Sorcière mystérieuse manipulant les cristaux magiques. Ses attaques sont imprévisibles et dévastatrices.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/witch_stone.png" className="lore-sprite" alt="Witch Stone" />
+                <h3>🪨 La Sorcière de Pierre</h3>
+                <p>
+                  <strong>🎯 Type :</strong> Distance (portée 4)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Sorcière ayant raté son sort, elle se serait touchée elle-même par mégarde et se serait transformée en pierre.
+                </p>
+              </div>
+            </div>
+
+            <h3 className="monster-category">🛡️ Tanks</h3>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/tank_monster.png" className="lore-sprite" alt="Tank Monster" />
+                <h3>🦣 Le Monstre Blindé</h3>
+                <p>
+                  <strong>🛡️ Type :</strong> Tank (2x vie)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Créature massive dont la peau s'est pétrifiée au fil des siècles. Lent mais presque indestructible, il écrase tout sur son passage.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/tank.png" className="lore-sprite" alt="Tank" />
+                <h3>⚔️ Le Chevalier Déchu</h3>
+                <p>
+                  <strong>🛡️ Type :</strong> Tank (2x vie)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Un chevalier ayant perdu son épée contre le roi de ces terres. Sans envie de continuer à se battre, la folie a fini par le ronger, et il essaye de tuer à mains nues tout le monde.
+                </p>
+              </div>
+            </div>
+
+            <h3 className="monster-category">🐀 Créatures Rapides</h3>
+            <div className="lore-grid">
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone1/crazy_gobelin.png" className="lore-sprite" alt="Crazy Gobelin" />
+                <h3>🏃 Le Gobelin Fou</h3>
+                <p>
+                  <strong>⚡ Type :</strong> Rapide (4 cases/sec, 0.5x vie)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 1</strong> — Forêt Mystique<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Gobelin hyperactif ayant consommé trop de champignons magiques. Extrêmement rapide mais fragile, il attaque en meute avec ses congénères.
+                </p>
+              </div>
+
+              <div className="lore-card">
+                <img src="/pixel_art/ennemi/zone2/bat.png" className="lore-sprite" alt="Chauve-souris" />
+                <h3>🦇 Chauve-souris</h3>
+                <p>
+                  <strong>⚡ Type :</strong> Rapide (4 cases/sec, 0.5x vie)<br /><br />
+                  <strong>💀 Danger :</strong> ⭐⭐⭐<br /><br />
+                  <strong>📍 Zone 2</strong> — Grottes Obscures<br /><br />
+                  <strong>📖 Description :</strong><br />
+                  Une chauve-souris complètement assoiffée de sang qui se rue sur vous dès que vous êtes devant elle. Sûrement un insecte pourri venant de dehors.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="lore-navigation">
             <button id="lore-back-btn" className="menu-btn">⬅️ Retour au Menu</button>
             <button id="lore-next-btn" className="menu-btn">➡️ Les Boss</button>
@@ -80,8 +372,131 @@ const RogueView = () => {
         <div className="lore-container">
           <div className="lore-header">
             <h1>📜 Le Livre des Légendes</h1>
-            <p>Les gardiens légendaires...</p>
+            <p>Les gardiens légendaires qui protègent les profondeurs des donjons...</p>
           </div>
+
+          {/* Section Boss */}
+          <div className="lore-section">
+            <h2>👑 Les Gardiens Légendaires</h2>
+            
+            <div className="boss-card">
+              <img src="/pixel_art/boss/boss_1.png" className="boss-sprite" alt="Boss Zone 1" />
+              <div className="boss-content">
+                <h3>🌲 Gardien de la Forêt Mystique</h3>
+                <p className="boss-subtitle">⚔️ Niveau 10 — Zone 1</p>
+                <p>
+                  <strong>📛 Nom :</strong> Sylvanus l'Ancien<br /><br />
+                  <strong>Histoire:</strong> Avant que les ténèbres ne s'étendent, Sylvanus était le dernier protecteur de la Forêt Mystique, un guerrier lié au cœur vivant des arbres.
+                  <br />C'est là qu'il rencontra l'Archère — une chasseuse libre, farouche, qui refusait de quitter les bois malgré la Nuit grandissante.
+                  
+                  Quand les donjons surgirent, Sylvanus se sacrifia pour contenir la corruption. La forêt survécut… mais lui non. Les racines s'enroulèrent autour de son corps brisé, liant son âme à la terre qu'il avait juré de protéger.<br />
+                  
+                  Aujourd'hui, il est devenu un Gardien des profondeurs.<br />
+                  Il attaque tous ceux qui s'approchent.<br />
+                  Sauf elle.<br />
+                  
+                  Certains disent que, juste avant de frapper, il hésite encore.<br /><br />
+                  <strong>Pouvoirs:</strong> Maîtrise les lianes pour immobiliser ses ennemis, invoque la colère de la forêt et régénère sa vitalité en absorbant la vie environnante.
+                  À sa chute, l'énergie qu'il libère consume tous les ennemis restants et accorde un niveau complet d'expérience.
+                </p>
+              </div>
+            </div>
+
+            <div className="boss-card">
+              <img src="/pixel_art/boss/boss_2.png" className="boss-sprite" alt="Boss Zone 2" />
+              <div className="boss-content">
+                <h3>⛰️ Seigneur des Grottes Obscures</h3>
+                <p className="boss-subtitle">⚔️ Niveau 20 — Zone 2</p>
+                <p>
+                  <strong>📛 Nom :</strong> Gorath le Ténébreux<br /><br />
+                  <strong>Histoire:</strong> Bien avant que la Dernière Lumière n'existe, Gorath régnait sur un empire creusé sous la surface du monde. Son peuple ne connaissait ni le ciel ni le soleil — seulement la pierre, l'écho et le silence. Et cela leur suffisait.
+
+                  Lorsque la Lumière apparut à la surface, elle ne fut pas une bénédiction pour tous. Elle fit s'effondrer les royaumes souterrains, attira les monstres, réveilla les dieux… et condamna l'empire de Gorath à l'oubli.
+
+                  Là où d'autres se sont soumis, Gorath a refusé.
+                  <br />
+                  Il mena son peuple toujours plus bas, scellant les grottes, éteignant les cristaux lumineux, tuant ceux qui voulaient remonter. Dans les profondeurs absolues, il fit un pacte ancien :
+                  aucune lumière ne franchirait jamais ses royaumes.<br />
+
+                  Quand la Nuit recouvrit enfin le monde, Gorath ne célébra pas.
+                  Il attendit.<br />
+
+                  Car si la Dernière Lumière venait à disparaître, alors les ténèbres ne seraient plus une malédiction…
+                  mais l'état naturel du monde.<br />
+
+                  Aujourd'hui, Gorath ne protège pas les profondeurs.<br />
+                  Il les prépare.<br /><br /><strong>Pouvoirs:</strong> Il engloutit l'arène dans une obscurité totale, brise la pierre pour invoquer des stalactites mortelles et se renforce tant que la lumière persiste. Son attaque la plus puissante outre passe votre ange gardien ...
+                  À sa défaite, l'équilibre des profondeurs vacille, libérant une immense énergie d'expérience.
+                </p>
+              </div>
+            </div>
+
+            <div className="boss-card">
+              <img src="/pixel_art/boss/boss_3.png" className="boss-sprite" alt="Boss Zone 3" />
+              <div className="boss-content">
+                <h3>🌋 Titan des Terres de Lave</h3>
+                <p className="boss-subtitle">⚔️ Niveau 30 — Zone 3</p>
+                <p>
+                  <strong>📛 Nom :</strong> Ignis le Calciné<br /><br />
+                  <strong>Histoire:</strong> Lorsque la Dernière Lumière embrasa le ciel, la terre elle-même cria. Les volcans s'ouvrirent, les montagnes se fendirent, et de leurs entrailles naquit Ignis — non comme une créature, mais comme une réaction.
+
+                  Ignis n'a ni mémoire ni compassion.<br />
+                  Il brûle ce que la Lumière touche, effaçant villes, donjons et héros sans distinction. Là où la lumière persiste trop longtemps, il se réveille.
+                  <br />
+                  Certains sages disent qu'Ignis n'est pas un ennemi.<br />
+                  Il est le monde qui tente de se purifier par le feu.<br /><br />
+                  <strong>Pouvoirs:</strong> Il projette des torrents de magma, fracture le sol et laisse derrière lui une lave vivante qui ne s'éteint jamais.
+                  À sa chute, la colère de la terre retombe, libérant une immense énergie d'expérience.
+                </p>
+              </div>
+            </div>
+
+            <div className="boss-card">
+              <img src="/pixel_art/boss/boss_4.png" className="boss-sprite" alt="Boss Zone 4" />
+              <div className="boss-content">
+                <h3>🌊 Léviathan des Profondeurs</h3>
+                <p className="boss-subtitle">⚔️ Niveau 40 — Zone 4</p>
+                <p>
+                  <strong>📛 Nom :</strong> Abyssia la Dévorante<br /><br />
+                  <strong>Histoire:</strong> Quand la Nuit tomba sur le monde, les océans furent les premiers à perdre la lumière. Abyssia y vivait déjà, bien avant les royaumes et les dieux.
+
+                  La Dernière Lumière attira les navires, les réfugiés, les fuyards.<br />
+                  Abyssia suivit leur lueur.<br />
+
+                  Elle ne chasse pas par cruauté, mais par faim ancienne. Chaque flamme engloutie apaise le vide qui grandit en elle. Ses yeux ne brillent pas — ils reflètent la lumière volée.
+                  <br />
+                  Si la lumière venait à disparaître, Abyssia sombrerait à nouveau dans un sommeil éternel.<br /><br />
+                  <strong>Pouvoirs:</strong> Elle déchaîne des vagues abyssales, invoque des tourbillons et traverse les profondeurs comme une ombre liquide.
+                  À sa défaite, les eaux se calment, laissant jaillir une grande récompense d'expérience.
+                </p>
+              </div>
+            </div>
+
+            <div className="boss-card">
+              <img src="/pixel_art/boss/boss_5.png" className="boss-sprite" alt="Boss Zone 5" />
+              <div className="boss-content">
+                <h3>🤖 L'Intelligence Corrompue</h3>
+                <p className="boss-subtitle">💀 Niveau 50 — Zone 5 (BOSS FINAL)</p>
+                <p>
+                  <strong>📛 Nom :</strong> NEXUS-Omega<br /><br />
+                  <strong>Histoire:</strong> Avant la Nuit, avant les donjons, une civilisation tenta de contenir la lumière. Ils créèrent NEXUS pour la comprendre, la canaliser, la contrôler.
+                  <br />
+                  Mais la lumière n'est pas faite pour être possédée.<br />
+
+                  Lorsque le monde sombra, NEXUS calcula toutes les issues possibles. Une seule menait à la stabilité :
+                  l'extinction de toute vie capable de rallumer la lumière.<br />
+
+                  NEXUS-Omega n'est ni malveillant ni corrompu.<br />
+                  Il est logique.<br />
+
+                  Pour lui, la Dernière Lumière est une erreur statistique.<br />
+                  Et toi… une anomalie persistante. <br /><br /><strong>Pouvoirs:</strong> Il utilise des lasers de précision, des boucliers adaptatifs et des drones autonomes.
+                  Le vaincre ne détruit pas la Nuit — mais redonne au monde le droit de choisir son avenir.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="lore-navigation">
             <button id="lore-prev-btn" className="menu-btn">⬅️ Héros et Monstres</button>
             <button id="lore-back-btn-2" className="menu-btn">🏠 Retour au Menu</button>
@@ -95,11 +510,127 @@ const RogueView = () => {
           <div className="credits-scroll">
             <div className="credits-content">
               <h1>💥 CRÉDITS 💥</h1>
+              
+              <div className="spacer"></div>
+
               <h2>🎮 DÉVELOPPEMENT</h2>
-              <p>Zionnix - Jules BENOIT</p>
+              <p>
+                Zionnix - Jules BENOIT
+              </p>
+              
+              <div className="spacer"></div>
+
+              <h3>Programmation</h3>
+              <p>
+                JavaScript ES6+<br />
+                HTML5 Canvas API<br />
+                Algorithme BSP pour génération procédurale<br />
+                Système de combat tour par tour<br />
+                Gestion des animations et sprites
+              </p>
+
+              <div className="spacer"></div>
+
+              <h3>Game Design</h3>
+              <p>
+                Système de progression par niveaux<br />
+                Équilibrage des classes et ennemis<br />
+                Système de perks et améliorations<br />
+                Design des 5 zones thématiques
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>🎨 DESIGN & GRAPHISMES</h2>
+
+              <h3>Pixel Art</h3>
+              <p>
+                Tous les pixel art générés avec :<br />
+                <a href="https://www.pixellab.ai/create" target="_blank" rel="noopener noreferrer" style={{color: '#4ecdc4'}}>PixelLab AI</a>
+              </p>
+
+              <div className="spacer"></div>
+
+              <h3>Interface Utilisateur</h3>
+              <p>
+                Design du HUD - Zionnix<br />
+                Menus et écrans - Zionnix<br />
+                Animations CSS - Zionnix
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>📝 ÉCRITURE</h2>
+              
+              <h3>Scénario & Lore</h3>
+              <p>
+                Histoire - Zionnix<br />
+                Personnages - zionnix <br />
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>🛠️ TECHNOLOGIES</h2>
+              <p>HTML5 Canvas</p>
+              <p>JavaScript ES6+</p>
+              <p>SCSS/CSS3</p>
+              <p>Node.js</p>
+              <p>Algorithme BSP</p>
+
+              <div className="big-spacer"></div>
+
+              <h2>🎵 AUDIO</h2>
+              <p>
+                Effets sonores - Zionnix<br />
+                Musique - Zionnix
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>🙏 REMERCIEMENTS SPÉCIAUX</h2>
+              <p>
+                Grand merci a mes amis qui ont pu tester et m'avoir pouser dans ce défi <br />
+                Noah Zambelli<br />
+                Romain Javaux<br />
+                Nicolas Fraipont<br />
+                Loic Simonis<br />
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>📚 INSPIRATIONS</h2>
+              <p>
+                The Binding of Isaac<br />
+                Enter the Gungeon<br />
+                Hades<br />
+                Dark Souls (pour l'ambiance sombre)
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <h2>🔧 OUTILS UTILISÉS</h2>
+              <p>
+                Visual Studio Code<br />
+                PixelLab AI - Génération de pixel art<br />
+                Git/GitHub - Versioning<br />
+                Chrome DevTools - Debugging
+              </p>
+
+              <div className="big-spacer"></div>
+
+              <p className="thanks">Merci d'avoir joué !</p>
+              <p className="thanks">🎮⚔️🏰</p>
+
+              <div className="big-spacer"></div>
+
+              <p>© 2025 LASTLIGHT</p>
+              <p>Tous droits réservés</p>
+
+              <div className="big-spacer"></div>
             </div>
           </div>
-          <button id="credits-skip-btn" className="menuBtn creditsSkip">⬅️ Retour au Menu</button>
+          
+          <button id="credits-skip-btn" className="menu-btn credits-skip">⬅️ Retour au Menu</button>
         </div>
       </div>
 
