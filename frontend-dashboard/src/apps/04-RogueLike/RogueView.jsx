@@ -1,5 +1,4 @@
 import React from 'react';
-import './Rogue.css';
 
 const RogueView = () => {
   return (
