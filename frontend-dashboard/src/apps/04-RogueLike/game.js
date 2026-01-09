@@ -3119,7 +3119,14 @@ class FuturisticBoss extends Enemy {
 class Game {
     constructor() {
         this.canvas = document.getElementById('game-canvas');
+        if (!this.canvas) {
+            throw new Error('Canvas element not found! Make sure the DOM is fully mounted.');
+        }
+        
         this.ctx = this.canvas.getContext('2d');
+        if (!this.ctx) {
+            throw new Error('Could not get canvas 2D context');
+        }
 
         // Cacher le curseur par défaut sur le canvas
         this.canvas.style.cursor = 'none';
@@ -3625,59 +3632,77 @@ class Game {
     }
     
     setupEventListeners() {
+        console.log('🎮 Setting up event listeners...');
+        
+        // Helper function to safely add event listener
+        const safeAddListener = (id, event, handler) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener(event, handler);
+                console.log(`✅ Listener added for ${id}`);
+            } else {
+                console.warn(`⚠️ Element not found: ${id}`);
+            }
+        };
+
         // Menu principal
-        document.getElementById('play-btn').addEventListener('click', () => {
+        safeAddListener('play-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('class-selection');
         });
 
-        document.getElementById('lore-btn').addEventListener('click', () => {
+        safeAddListener('lore-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('lore-screen');
         });
 
-        document.getElementById('credits-btn').addEventListener('click', () => {
+        safeAddListener('credits-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('credits-screen');
         });
 
-        document.getElementById('quit-btn').addEventListener('click', () => {
+        safeAddListener('quit-btn', 'click', () => {
             this.playSound('click');
             window.close();
         });
 
         // Boutons retour et navigation lore
-        document.getElementById('lore-back-btn').addEventListener('click', () => {
+        safeAddListener('lore-back-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('main-menu');
         });
 
-        document.getElementById('lore-next-btn').addEventListener('click', () => {
+        safeAddListener('lore-next-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('lore-screen-2');
         });
 
-        document.getElementById('lore-prev-btn').addEventListener('click', () => {
+        safeAddListener('lore-prev-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('lore-screen');
         });
 
-        document.getElementById('lore-back-btn-2').addEventListener('click', () => {
+        safeAddListener('lore-back-btn-2', 'click', () => {
             this.playSound('click');
             this.showScreen('main-menu');
         });
 
-        document.getElementById('credits-skip-btn').addEventListener('click', () => {
+        safeAddListener('credits-skip-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('main-menu');
         });
 
         // Sélection de classe
-        document.querySelectorAll('.class-card').forEach(card => {
+        const classCards = document.querySelectorAll('.classCard, [class*="classCard"]');
+        console.log(`🎴 Found ${classCards.length} class cards`);
+        classCards.forEach(card => {
             card.addEventListener('click', () => {
                 this.playSound('click');
-                const classType = card.dataset.class;
-                this.startGame(classType);
+                const classType = card.dataset.class || card.getAttribute('data-class');
+                console.log(`🎯 Class selected: ${classType}`);
+                if (classType) {
+                    this.startGame(classType);
+                }
             });
         });
         
@@ -3708,24 +3733,26 @@ class Game {
         });
         
         // Boutons restart
-        document.getElementById('restart-btn').addEventListener('click', () => {
+        safeAddListener('restart-btn', 'click', () => {
             this.playSound('click');
-            window.location.href = 'https://zionnix.github.io/rogue-like/';
+            this.showScreen('main-menu');
+            this.currentLevel = 1;
         });
 
-        document.getElementById('victory-restart-btn').addEventListener('click', () => {
+        safeAddListener('victory-restart-btn', 'click', () => {
             this.playSound('click');
-            window.location.href = 'https://zionnix.github.io/rogue-like/';
+            this.showScreen('main-menu');
+            this.currentLevel = 1;
         });
 
         // Boutons retour au menu pendant le jeu
-        document.getElementById('back-to-menu-btn').addEventListener('click', () => {
+        safeAddListener('back-to-menu-btn', 'click', () => {
             this.playSound('click');
             this.state = 'menu';
             this.showScreen('main-menu');
         });
 
-        document.getElementById('class-back-btn').addEventListener('click', () => {
+        safeAddListener('class-back-btn', 'click', () => {
             this.playSound('click');
             this.showScreen('main-menu');
         });
@@ -3740,46 +3767,55 @@ class Game {
         };
 
         // Event listeners pour le dialogue
-        document.getElementById('zone-dialogue').addEventListener('click', (e) => {
-            if (e.target.id !== 'dialogue-finish-btn') {
-                this.skipDialogueTyping();
-            }
-        });
+        const zoneDialogue = document.getElementById('zone-dialogue');
+        if (zoneDialogue) {
+            zoneDialogue.addEventListener('click', (e) => {
+                if (e.target.id !== 'dialogue-finish-btn') {
+                    this.skipDialogueTyping();
+                }
+            });
+        }
 
-        document.getElementById('dialogue-finish-btn').addEventListener('click', () => {
+        safeAddListener('dialogue-finish-btn', 'click', () => {
             this.playSound('click');
             this.finishDialogue();
         });
 
         // Event listeners pour le dialogue de seconde vie
-        document.getElementById('second-life-dialogue').addEventListener('click', (e) => {
-            if (e.target.id !== 'second-dialogue-finish-btn') {
-                this.nextSecondLifeDialogueMessage();
-            }
-        });
+        const secondLifeDialogue = document.getElementById('second-life-dialogue');
+        if (secondLifeDialogue) {
+            secondLifeDialogue.addEventListener('click', (e) => {
+                if (e.target.id !== 'second-dialogue-finish-btn') {
+                    this.nextSecondLifeDialogueMessage();
+                }
+            });
+        }
 
-        document.getElementById('second-dialogue-finish-btn').addEventListener('click', () => {
+        safeAddListener('second-dialogue-finish-btn', 'click', () => {
             this.playSound('click');
             this.nextSecondLifeDialogueMessage();
         });
 
         // Event listeners pour le dialogue avec le boss
-        document.getElementById('boss-dialogue').addEventListener('click', (e) => {
-            console.log('[DEBUG] boss-dialogue clicked, target:', e.target.id);
-            if (e.target.id !== 'boss-dialogue-finish-btn') {
-                // Déterminer quel type de dialogue est actif
-                console.log('[DEBUG] Has currentBossDefeatDialogue:', !!this.currentBossDefeatDialogue);
-                if (this.currentBossDefeatDialogue) {
-                    console.log('[DEBUG] Calling nextBossDefeatDialogueMessage');
-                    this.nextBossDefeatDialogueMessage();
-                } else {
-                    console.log('[DEBUG] Calling nextBossDialogueMessage');
-                    this.nextBossDialogueMessage();
+        const bossDialogue = document.getElementById('boss-dialogue');
+        if (bossDialogue) {
+            bossDialogue.addEventListener('click', (e) => {
+                console.log('[DEBUG] boss-dialogue clicked, target:', e.target.id);
+                if (e.target.id !== 'boss-dialogue-finish-btn') {
+                    // Déterminer quel type de dialogue est actif
+                    console.log('[DEBUG] Has currentBossDefeatDialogue:', !!this.currentBossDefeatDialogue);
+                    if (this.currentBossDefeatDialogue) {
+                        console.log('[DEBUG] Calling nextBossDefeatDialogueMessage');
+                        this.nextBossDefeatDialogueMessage();
+                    } else {
+                        console.log('[DEBUG] Calling nextBossDialogueMessage');
+                        this.nextBossDialogueMessage();
+                    }
                 }
-            }
-        });
+            });
+        }
 
-        document.getElementById('boss-dialogue-finish-btn').addEventListener('click', () => {
+        safeAddListener('boss-dialogue-finish-btn', 'click', () => {
             this.playSound('click');
             // Déterminer quel type de dialogue est actif
             if (this.currentBossDefeatDialogue) {
@@ -3788,6 +3824,8 @@ class Game {
                 this.nextBossDialogueMessage();
             }
         });
+        
+        console.log('✅ All event listeners setup complete!');
     }
 
     // Afficher le dialogue de zone

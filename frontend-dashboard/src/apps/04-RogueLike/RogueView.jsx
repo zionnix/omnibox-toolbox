@@ -11,16 +11,25 @@ const RogueView = () => {
     if (containerMountedRef.current) return;
     containerMountedRef.current = true;
 
-    // Petit délai pour s'assurer que le DOM est prêt
+    // Délai plus long pour s'assurer que le DOM React est complètement monté
     const initTimeout = setTimeout(() => {
       try {
+        // Vérifier que les éléments essentiels existent
+        const playBtn = document.getElementById('play-btn');
+        const canvas = document.getElementById('game-canvas');
+        
+        if (!playBtn || !canvas) {
+          console.error('❌ Éléments DOM manquants:', { playBtn: !!playBtn, canvas: !!canvas });
+          return;
+        }
+
         // Créer et démarrer le jeu
         gameInstanceRef.current = new Game();
         console.log('✅ RogueLike game initialized');
       } catch (error) {
         console.error('❌ Error initializing game:', error);
       }
-    }, 100);
+    }, 200);
 
     // Cleanup
     return () => {
