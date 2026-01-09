@@ -238,22 +238,22 @@ const RogueView = () => {
             {[
               { 
                 name: 'L\'Archer', 
-                img: '/pixel_art/rogue-like/heros_talk/archer_1.png',
+                img: '/pixel_art/rogue-like/heros_talk/monde1/archer.png',
                 lore: 'Ancienne chasseuse des Forêts du Nord, elle connaissait chaque sentier, chaque souffle du vent. Lors des premières incursions des donjons, elle tomba amoureuse d\'un guerrier envoyé pour les sceller. Mais lorsque les ténèbres le brisèrent, il devint le Gardien Noir, un seigneur du donjon, condamné à protéger ce qu\'il haïssait. Depuis, elle descend sans relâche. Non pour le tuer. Mais pour lui rappeler qui il était… ou mettre fin à leur histoire.'
               },
               { 
                 name: 'Le Chevalier', 
-                img: '/pixel_art/rogue-like/heros_talk/knight_1.png',
+                img: '/pixel_art/rogue-like/heros_talk/monde1/knight.png',
                 lore: 'Autrefois chevalier d\'honneur, il fut le seul survivant d\'une bataille perdue contre la Nuit. Accusé de lâcheté, il fut banni de son royaume. Il porte encore son armure brisée comme un rappel de son serment. Chaque donjon est pour lui une épreuve. Chaque combat, une tentative de rédemption. Il ne cherche pas la gloire — seulement une mort qui ait du sens.'
               },
               { 
                 name: 'Le Bouclier', 
-                img: '/pixel_art/rogue-like/heros_talk/tank_1.png',
+                img: '/pixel_art/rogue-like/heros_talk/monde1/tank.png',
                 lore: 'Ancien garde du palais royal, il fut le dernier à tenir lorsque la capitale tomba. Son bouclier, forgé dans le feu d\'un dragon ancestral, absorba les coups jusqu\'à fendre la pierre elle-même. Mais il ne put sauver le roi. Depuis ce jour, il avance sans reculer. Il ne combat pas pour vaincre. Il combat pour que les autres tiennent encore un peu.'
               },
               { 
                 name: 'Le Magicien', 
-                img: '/pixel_art/rogue-like/heros_talk/magicien_1.png',
+                img: '/pixel_art/rogue-like/heros_talk/monde1/magic men.png',
                 lore: 'Dernier survivant de l\'Ordre des Arcanes, il fut témoin de la chute de la Tour lorsque la magie elle-même se retourna contre ses maîtres. Il a appris des sorts interdits, capables de traverser la pierre, l\'ombre… et parfois l\'âme. Il sait que la Dernière Lumière est instable. Il sait qu\'elle pourrait détruire le monde. Mais il préfère un monde brisé à un monde plongé dans le silence éternel.'
               }
             ].map((hero, i) => (
@@ -298,31 +298,31 @@ const RogueView = () => {
               { 
                 name: 'Sylvanus l\'Ancien', 
                 level: 'Niveau 10 - Forêt Mystique', 
-                img: '/pixel_art/rogue-like/boss_talk/boss_1.png',
+                img: '/pixel_art/rogue-like/boss_talk/phase_1/boss_1.png',
                 lore: 'Avant que les ténèbres ne s\'étendent, Sylvanus était le dernier protecteur de la Forêt Mystique, un guerrier lié au cœur vivant des arbres. C\'est là qu\'il rencontra l\'Archère — une chasseuse libre, farouche, qui refusait de quitter les bois malgré la Nuit grandissante. Quand les donjons surgirent, Sylvanus se sacrifia pour contenir la corruption. La forêt survécut… mais lui non. Les racines s\'enroulèrent autour de son corps brisé, liant son âme à la terre qu\'il avait juré de protéger. Aujourd\'hui, il est devenu un Gardien des profondeurs. Il attaque tous ceux qui s\'approchent. Sauf elle. Certains disent que, juste avant de frapper, il hésite encore.'
               },
               { 
                 name: 'Gorath le Ténébreux', 
                 level: 'Niveau 20 - Grottes Obscures', 
-                img: '/pixel_art/rogue-like/boss_talk/boss_2.png',
+                img: '/pixel_art/rogue-like/boss_talk/phase_1/boss_2.png',
                 lore: 'Bien avant que la Dernière Lumière n\'existe, Gorath régnait sur un empire creusé sous la surface du monde. Son peuple ne connaissait ni le ciel ni le soleil — seulement la pierre, l\'écho et le silence. Et cela leur suffisait. Lorsque la Lumière apparut à la surface, elle ne fut pas une bénédiction pour tous. Elle fit s\'effondrer les royaumes souterrains, attira les monstres, réveilla les dieux… et condamna l\'empire de Gorath à l\'oubli. Là où d\'autres se sont soumis, Gorath a refusé. Il mena son peuple toujours plus bas, scellant les grottes, éteignant les cristaux lumineux, tuant ceux qui voulaient remonter. Dans les profondeurs absolues, il fit un pacte ancien : aucune lumière ne franchirait jamais ses royaumes. Quand la Nuit recouvrit enfin le monde, Gorath ne célébra pas. Il attendit. Car si la Dernière Lumière venait à disparaître, alors les ténèbres ne seraient plus une malédiction… mais l\'état naturel du monde. Aujourd\'hui, Gorath ne protège pas les profondeurs. Il les prépare.'
               },
               { 
                 name: 'Ignis le Calciné', 
                 level: 'Niveau 30 - Terres de Lave', 
-                img: '/pixel_art/rogue-like/boss_talk/boss_3.png',
+                img: '/pixel_art/rogue-like/boss_talk/phase_1/boss_3.png',
                 lore: 'Lorsque la Dernière Lumière embrasa le ciel, la terre elle-même cria. Les volcans s\'ouvrirent, les montagnes se fendirent, et de leurs entrailles naquit Ignis — non comme une créature, mais comme une réaction. Ignis n\'a ni mémoire ni compassion. Il brûle ce que la Lumière touche, effaçant villes, donjons et héros sans distinction. Là où la lumière persiste trop longtemps, il se réveille. Certains sages disent qu\'Ignis n\'est pas un ennemi. Il est le monde qui tente de se purifier par le feu.'
               },
               { 
                 name: 'Abyssia la Dévorante', 
                 level: 'Niveau 40 - Profondeurs Aquatiques', 
-                img: '/pixel_art/rogue-like/boss_talk/boss_4.png',
+                img: '/pixel_art/rogue-like/boss_talk/phase_1/boss_4.png',
                 lore: 'Quand la Nuit tomba sur le monde, les océans furent les premiers à perdre la lumière. Abyssia y vivait déjà, bien avant les royaumes et les dieux. La Dernière Lumière attira les navires, les réfugiés, les fuyards. Abyssia suivit leur lueur. Elle ne chasse pas par cruauté, mais par faim ancienne. Chaque flamme engloutie apaise le vide qui grandit en elle. Ses yeux ne brillent pas — ils reflètent la lumière volée. Si la lumière venait à disparaître, Abyssia sombrerait à nouveau dans un sommeil éternel.'
               },
               { 
                 name: 'NEXUS-Omega', 
                 level: 'Niveau 50 - Intelligence Corrompue (BOSS FINAL)', 
-                img: '/pixel_art/rogue-like/boss_talk/boss_5.png',
+                img: '/pixel_art/rogue-like/boss_talk/phase_1/boss_5.png',
                 lore: 'Avant la Nuit, avant les donjons, une civilisation tenta de contenir la lumière. Ils créèrent NEXUS pour la comprendre, la canaliser, la contrôler. Mais la lumière n\'est pas faite pour être possédée. Lorsque le monde sombra, NEXUS calcula toutes les issues possibles. Une seule menait à la stabilité : l\'extinction de toute vie capable de rallumer la lumière. NEXUS-Omega n\'est ni malveillant ni corrompu. Il est logique. Pour lui, la Dernière Lumière est une erreur statistique. Et toi… une anomalie persistante. Le vaincre ne détruit pas la Nuit — mais redonne au monde le droit de choisir son avenir.'
               }
             ].map((boss, i) => (
