@@ -1,13 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   CloudSun, Clock, Link as LinkIcon, 
   Scissors, Gamepad2, Sun, Briefcase,
   Github, Code2, Brain, Zap
 } from 'lucide-react';
+import ProjectModal from '../components/ProjectModal';
 
 const Home = () => {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const projects = [
     {
       name: 'Météo',
@@ -16,7 +20,24 @@ const Home = () => {
       path: '/weather',
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30'
+      borderColor: 'border-blue-500/30',
+      showModal: true,
+      details: {
+        features: [
+          'Géolocalisation automatique pour afficher la météo locale',
+          'Recherche de villes en temps réel',
+          'Données météo actualisées (température, humidité, vent)',
+          'Design moderne et responsive avec animations',
+          'Intégration API OpenWeatherMap'
+        ],
+        tech: ['React', 'OpenWeatherMap API', 'Geolocation API', 'CSS Modules'],
+        highlights: [
+          'Interface utilisateur intuitive et élégante',
+          'Gestion des erreurs et états de chargement',
+          'Données précises et à jour'
+        ],
+        goal: 'Créer une application météo simple et efficace qui permet de consulter rapidement les conditions météorologiques actuelles avec une interface moderne et agréable.'
+      }
     },
     {
       name: 'Horloge Intelligente',
@@ -25,7 +46,24 @@ const Home = () => {
       path: '/clock',
       color: 'from-emerald-500 to-green-500',
       bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/30'
+      borderColor: 'border-emerald-500/30',
+      showModal: true,
+      details: {
+        features: [
+          'Affichage de l\'heure en temps réel',
+          'Support de multiples fuseaux horaires mondiaux',
+          'Interface élégante avec animations CSS',
+          'Format 12h/24h configurable',
+          'Design minimaliste et moderne'
+        ],
+        tech: ['React', 'JavaScript Date API', 'CSS Modules', 'Animations CSS'],
+        highlights: [
+          'Précision au niveau de la seconde',
+          'Visualisation claire et lisible',
+          'Parfait pour suivre plusieurs fuseaux horaires'
+        ],
+        goal: 'Développer une horloge mondiale élégante et fonctionnelle qui facilite le suivi de l\'heure dans différents pays, idéale pour le travail à distance et la coordination internationale.'
+      }
     },
     {
       name: 'LinkTree',
@@ -34,7 +72,25 @@ const Home = () => {
       path: '/links',
       color: 'from-pink-500 to-rose-500',
       bgColor: 'bg-pink-500/10',
-      borderColor: 'border-pink-500/30'
+      borderColor: 'border-pink-500/30',
+      showModal: true,
+      details: {
+        features: [
+          'Page de liens personnalisée style "link in bio"',
+          'Système de statistiques et analytics en temps réel',
+          'Gestion de portefeuille de projets',
+          'Formulaire de contact intégré',
+          'Backend Node.js avec MongoDB',
+          'Interface d\'administration complète'
+        ],
+        tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Chart.js', 'TailwindCSS'],
+        highlights: [
+          'Suivi des clics et visites en temps réel',
+          'Design personnalisable et responsive',
+          'Parfait pour les réseaux sociaux et portfolios'
+        ],
+        goal: 'Créer une alternative complète à Linktree avec analytics avancés, permettant de centraliser tous ses liens importants et de suivre leur performance avec précision.'
+      }
     },
     {
       name: 'Sonic Morph',
@@ -43,7 +99,25 @@ const Home = () => {
       path: '/sonic-morph',
       color: 'from-cyan-500 to-blue-500',
       bgColor: 'bg-cyan-500/10',
-      borderColor: 'border-cyan-500/30'
+      borderColor: 'border-cyan-500/30',
+      showModal: true,
+      details: {
+        features: [
+          'Conversion de fichiers audio/vidéo dans de multiples formats',
+          'Powered by FFmpeg.wasm (exécution dans le navigateur)',
+          'Support de MP3, MP4, WAV, AVI, et bien plus',
+          'Traitement local sans upload sur serveur',
+          'Interface drag & drop intuitive',
+          'Prévisualisation avant conversion'
+        ],
+        tech: ['React', 'FFmpeg.wasm', 'WebAssembly', 'File API'],
+        highlights: [
+          'Conversion 100% côté client pour la confidentialité',
+          'Aucune limite de taille de fichier (selon votre RAM)',
+          'Rapide et efficace grâce à FFmpeg'
+        ],
+        goal: 'Offrir un outil de conversion audio/vidéo puissant et gratuit qui fonctionne directement dans le navigateur, sans nécessiter d\'upload de fichiers vers un serveur, garantissant ainsi confidentialité et rapidité.'
+      }
     },
     {
       name: 'LASTLIGHT',
@@ -52,7 +126,8 @@ const Home = () => {
       path: '/rogue-like',
       color: 'from-red-500 to-orange-500',
       bgColor: 'bg-red-500/10',
-      borderColor: 'border-red-500/30'
+      borderColor: 'border-red-500/30',
+      showModal: false
     },
     {
       name: 'Solar System',
@@ -61,7 +136,25 @@ const Home = () => {
       path: '/solar-system',
       color: 'from-yellow-500 to-orange-500',
       bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/30'
+      borderColor: 'border-yellow-500/30',
+      showModal: true,
+      details: {
+        features: [
+          'Visualisation 3D interactive du système solaire',
+          'Simulation réaliste des orbites planétaires',
+          'Informations détaillées sur chaque planète',
+          'Contrôles de caméra (zoom, rotation, navigation)',
+          'Échelle de temps ajustable',
+          'Rendu optimisé avec Three.js'
+        ],
+        tech: ['React', 'Three.js', 'WebGL', 'JavaScript'],
+        highlights: [
+          'Graphismes 3D fluides et immersifs',
+          'Physique orbitale précise',
+          'Expérience éducative et interactive'
+        ],
+        goal: 'Créer une expérience visuelle captivante et éducative permettant d\'explorer notre système solaire de manière interactive, avec des représentations précises des planètes et de leurs orbites.'
+      }
     },
     {
       name: 'JMD Remake',
@@ -70,7 +163,8 @@ const Home = () => {
       path: '/jmd',
       color: 'from-purple-500 to-indigo-500',
       bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30'
+      borderColor: 'border-purple-500/30',
+      showModal: false
     }
   ];
 
@@ -83,6 +177,31 @@ const Home = () => {
     { name: 'TailwindCSS', color: 'text-cyan-500' },
     { name: 'Framer Motion', color: 'text-pink-400' }
   ];
+
+  const handleProjectClick = (e, project) => {
+    e.preventDefault();
+    
+    // Si le projet doit afficher un modal, on l'ouvre
+    if (project.showModal) {
+      setSelectedProject(project);
+      setIsModalOpen(true);
+    } else {
+      // Sinon, navigation directe (pour Rogue Like et JMD Remake)
+      navigate(project.path);
+    }
+  };
+
+  const handleContinueToProject = () => {
+    if (selectedProject) {
+      navigate(selectedProject.path);
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white p-8 md:p-12">
@@ -203,7 +322,10 @@ const Home = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Link to={project.path}>
+                <Link 
+                  to={project.path}
+                  onClick={(e) => handleProjectClick(e, project)}
+                >
                   <div className={`${project.bgColor} ${project.borderColor} border rounded-2xl p-6 h-full transition-all duration-300 hover:shadow-2xl hover:shadow-${project.color}/20`}>
                     <div className={`mb-4 bg-gradient-to-br ${project.color} bg-clip-text text-transparent`}>
                       {project.icon}
@@ -245,6 +367,14 @@ const Home = () => {
           </p>
         </motion.div>
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        project={selectedProject}
+        onContinue={handleContinueToProject}
+      />
     </div>
   );
 };
