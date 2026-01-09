@@ -6,6 +6,32 @@ const SolarSystem = () => {
   const [activePlanet, setActivePlanet] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
   const [showDisplay, setShowDisplay] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Mettre à jour l'heure chaque seconde
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   const planetData = {
     mercury: { name: "Mercure", temp: "167°C", year: "88 jours", sunDistance: "57,9 millions km", earthDistance: "91,7 millions km", rotation: "58,6 jours" },
@@ -42,6 +68,10 @@ const SolarSystem = () => {
       {/* Header */}
       <header className={styles.header}>
         <h1 className={styles.title}>Système Solaire</h1>
+        <div className={styles.timeDisplay}>
+          <div className={styles.currentDate}>{formatDate(currentTime)}</div>
+          <div className={styles.currentTime}>{formatTime(currentTime)}</div>
+        </div>
       </header>
 
       {/* Panel gauche */}
