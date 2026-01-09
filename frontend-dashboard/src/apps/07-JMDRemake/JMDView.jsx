@@ -124,6 +124,19 @@ const JMDView = () => {
     { number: 11, label: "projets réussis" }
   ];
 
+  const certifications = [
+    { name: "Meta Certified Digital Marketing Associate", icon: "🎯", color: "#0081FB" },
+    { name: "Google Analytics Certified", icon: "📊", color: "#F4B400" },
+    { name: "Canva Essentials", icon: "🎨", color: "#00C4CC" },
+    { name: "Google Ads Display Certified", icon: "📱", color: "#4285F4" },
+    { name: "Canva Graphic Design 101", icon: "✏️", color: "#8B3DFF" },
+    { name: "Google Ads Search Certified", icon: "🔍", color: "#34A853" },
+    { name: "Canva AI in the Classroom", icon: "🤖", color: "#FF6B9D" },
+    { name: "Google Ads Creative Certified", icon: "🎭", color: "#EA4335" },
+    { name: "Canva Teacher Essentials", icon: "📚", color: "#FF7A00" },
+    { name: "Google Ads Measurement Certified", icon: "📈", color: "#FBBC04" }
+  ];
+
   return (
     <div className={styles.jmd}>
       {/* Modal Pop-up */}
@@ -227,6 +240,41 @@ const JMDView = () => {
                   {stat.number}{stat.suffix || ''}
                 </h3>
                 <p className={styles.statsLabel}>{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section className={styles.certifications}>
+        <div className={styles.certificationsContainer}>
+          <motion.div
+            className={styles.certificationsHeader}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className={styles.certificationsSubtitle}>MES CERTIFICATIONS</p>
+            <h2 className={styles.certificationsTitle}>Une expertise validée par les leaders du digital</h2>
+          </motion.div>
+
+          <div className={styles.certificationsGrid}>
+            {certifications.map((cert, index) => (
+              <motion.div
+                key={index}
+                className={styles.certCard}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                style={{ borderColor: cert.color }}
+              >
+                <div className={styles.certIcon} style={{ color: cert.color }}>
+                  {cert.icon}
+                </div>
+                <h3 className={styles.certName}>{cert.name}</h3>
               </motion.div>
             ))}
           </div>
