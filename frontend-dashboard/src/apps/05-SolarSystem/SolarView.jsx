@@ -10,6 +10,24 @@ const SolarSystem = () => {
   const [realTimeMode, setRealTimeMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [speedMultiplier, setSpeedMultiplier] = useState(100000);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
+  // Détecter le hover de la sidebar
+  useEffect(() => {
+    const sidebar = document.querySelector('[class*="group"]');
+    if (!sidebar) return;
+
+    const handleMouseEnter = () => setSidebarExpanded(true);
+    const handleMouseLeave = () => setSidebarExpanded(false);
+
+    sidebar.addEventListener('mouseenter', handleMouseEnter);
+    sidebar.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      sidebar.removeEventListener('mouseenter', handleMouseEnter);
+      sidebar.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
   // Mettre à jour l'heure chaque seconde
   useEffect(() => {
@@ -114,7 +132,13 @@ const SolarSystem = () => {
       </header>
 
       {/* Panel gauche */}
-      <div className={styles.panel}>
+      <div 
+        className={styles.panel}
+        style={{
+          left: sidebarExpanded ? '280px' : '110px',
+          transition: 'left 0.3s ease'
+        }}
+      >
         <h2 className={styles.titrePanel}>Planètes</h2>
         <ul className={styles.planetList}>
           {planets.map((planet) => (
