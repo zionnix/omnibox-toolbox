@@ -7290,40 +7290,23 @@ class Game {
                     const screenX = x * CONFIG.CELL_SIZE - cameraOffsetX;
                     const screenY = y * CONFIG.CELL_SIZE - cameraOffsetY;
 
-                    // Dessiner la cellule avec les images appropriées
+                    // Dessiner la cellule (sol ou mur)
                     if (cell === 1) {
                         // Mur
-                        if (zoneImageSet.wall.complete) {
-                            ctx.drawImage(zoneImageSet.wall, screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
-                        } else {
-                            ctx.fillStyle = zoneColors[0]; // Couleur de secours
-                            ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE + 1, CONFIG.CELL_SIZE + 1);
-                        }
+                        ctx.fillStyle = zoneColors[0];
+                        ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
                     } else {
                         // Sol (chambre ou couloir)
                         const cellType = this.dungeon.cellType[gridY][gridX];
-                        const imageToUse = isHealingRoom ? zoneImageSet.chamber : (cellType === 'chamber' ? zoneImageSet.chamber : zoneImageSet.path);
-
-                        if (imageToUse && imageToUse.complete) {
-                            // Rotation pour les couloirs verticaux
-                            if (cellType === 'path' && this.dungeon.cellOrientation[gridY][gridX] === 'vertical') {
-                                ctx.save();
-                                ctx.translate(screenX + CONFIG.CELL_SIZE / 2, screenY + CONFIG.CELL_SIZE / 2);
-                                ctx.rotate(Math.PI / 2);
-                                ctx.drawImage(imageToUse, -CONFIG.CELL_SIZE / 2, -CONFIG.CELL_SIZE / 2, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
-                                ctx.restore();
-                            } else {
-                                ctx.drawImage(imageToUse, screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
-                            }
-
-                            ctx.globalAlpha = 1; // Réinitialiser l'alpha
+                        if (isHealingRoom) {
+                            // Salle de soins - couleur verte
+                            ctx.fillStyle = '#2d5016';
                         } else {
-                            // Image non chargée - utiliser couleur de secours
-                            ctx.fillStyle = cellType === 'chamber' ? zoneColors[1] : '#444';
-                            ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE + 1, CONFIG.CELL_SIZE + 1);
+                            // Couleur selon le type de cellule
+                            ctx.fillStyle = cellType === 'chamber' ? zoneColors[1] : zoneColors[2];
                         }
+                        ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
                     }
-                    */
                 }
             }
         }
@@ -7420,8 +7403,347 @@ class Game {
             }
         }
         
-        // Le reste du code de render()...
-        // (Tout le code d'affichage du joueur, des ennemis, etc. continue...)
+        // Dessiner les ennemis
+        for (const enemy of this.enemies) {
+            const ex = (enemy.x - this.camera.x) * CONFIG.CELL_SIZE;
+            const ey = (enemy.y - this.camera.y) * CONFIG.CELL_SIZE;
+
+            if (ex >= -CONFIG.CELL_SIZE && ex < this.canvas.width &&
+                ey >= -CONFIG.CELL_SIZE && ey < this.canvas.height) {
+
+                // Dessiner le sprite de l'ennemi
+                const zone = Math.ceil(this.currentLevel / CONFIG.LEVELS_PER_ZONE);
+                const enemySprites = this.enemySprites[zone];
+                
+                if (enemySprites && enemySprites[enemy.combatType]) {
+                    const sprite = enemySprites[enemy.combatType][enemy.spriteIndex];
+                    const offsetSize = (CONFIG.CELL_SIZE - CONFIG.SPRITE_SIZE) / 2;
+
+                    if (sprite && sprite.complete) {
+                        ctx.save();
+                        ctx.imageSmoothingEnabled = false;
+                        ctx.drawImage(
+                            sprite,
+                            ex + offsetSize,
+                            ey + offsetSize,
+                            CONFIG.SPRITE_SIZE,
+                            CONFIG.SPRITE_SIZE
+                        );
+                        ctx.restore();
+                    } else {
+                        // Fallback si sprite pas chargé
+                        ctx.fillStyle = '#ff0000';
+                        ctx.fillRect(ex, ey, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+                    }
+                } else {
+                    // Fallback si pas de sprite
+                    ctx.fillStyle = '#ff0000';
+                    ctx.fillRect(ex, ey, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+                }
+
+                // Barre de vie des ennemis
+                const healthPercent = enemy.health / enemy.maxHealth;
+                ctx.fillStyle = '#8B0000';
+                ctx.fillRect(ex, ey - 6, CONFIG.CELL_SIZE, 4);
+                ctx.fillStyle = healthPercent > 0.5 ? '#00ff00' : (healthPercent > 0.25 ? '#ff9800' : '#ff0000');
+                ctx.fillRect(ex, ey - 6, CONFIG.CELL_SIZE * healthPercent, 4);
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(ex, ey - 6, CONFIG.CELL_SIZE, 4);
+            }
+        }
+
+        // Dessiner le boss
+        if (this.currentBoss) {
+            const boss = this.currentBoss;
+            const bx = (boss.x - this.camera.x) * CONFIG.CELL_SIZE;
+            const by = (boss.y - this.camera.y) * CONFIG.CELL_SIZE;
+
+            if (bx >= -CONFIG.CELL_SIZE * 2 && bx < this.canvas.width &&
+                by >= -CONFIG.CELL_SIZE * 2 && by < this.canvas.height) {
+
+                // Dessiner le sprite du boss
+                const bossSprite = this.bossSprites[boss.zone];
+                const bossSize = CONFIG.CELL_SIZE * 2;
+
+                if (bossSprite && bossSprite.complete) {
+                    ctx.save();
+                    ctx.imageSmoothingEnabled = false;
+                    ctx.drawImage(bossSprite, bx, by, bossSize, bossSize);
+                    ctx.restore();
+                } else {
+                    // Fallback
+                    ctx.fillStyle = '#8B008B';
+                    ctx.fillRect(bx, by, bossSize, bossSize);
+                }
+
+                // Barre de vie du boss
+                const healthPercent = boss.health / boss.maxHealth;
+                const barWidth = bossSize;
+                const barHeight = 8;
+                const barY = by - 12;
+
+                ctx.fillStyle = '#8B0000';
+                ctx.fillRect(bx, barY, barWidth, barHeight);
+                ctx.fillStyle = healthPercent > 0.5 ? '#00ff00' : (healthPercent > 0.25 ? '#ff9800' : '#ff0000');
+                ctx.fillRect(bx, barY, barWidth * healthPercent, barHeight);
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(bx, barY, barWidth, barHeight);
+            }
+        }
+  
+        // Dessiner le joueur
+        const px = (this.player.x - this.camera.x) * CONFIG.CELL_SIZE;
+        const py = (this.player.y - this.camera.y) * CONFIG.CELL_SIZE;
+        
+        const playerSpriteOffset = (CONFIG.SPRITE_SIZE - CONFIG.CELL_SIZE) / 2;
+        
+        const sprite = this.sprites[this.player.classType];
+        if (sprite && sprite.complete) {
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(
+                sprite,
+                px - playerSpriteOffset,
+                py - playerSpriteOffset,
+                CONFIG.SPRITE_SIZE,
+                CONFIG.SPRITE_SIZE
+            );
+        } else {
+            ctx.fillStyle = this.player.color;
+            ctx.fillRect(
+                px - playerSpriteOffset,
+                py - playerSpriteOffset,
+                CONFIG.SPRITE_SIZE,
+                CONFIG.SPRITE_SIZE
+            );
+        }
+
+        // Effet visuel du bouclier si actif
+        if (this.player.perkEffects.shieldActive) {
+            const shieldPulse = 1 + Math.sin(Date.now() / 200) * 0.1;
+            const shieldRadius = (CONFIG.CELL_SIZE * 0.7) * shieldPulse;
+
+            const gradient = ctx.createRadialGradient(
+                px + CONFIG.CELL_SIZE / 2,
+                py + CONFIG.CELL_SIZE / 2,
+                shieldRadius * 0.5,
+                px + CONFIG.CELL_SIZE / 2,
+                py + CONFIG.CELL_SIZE / 2,
+                shieldRadius
+            );
+            gradient.addColorStop(0, 'rgba(52, 152, 219, 0.4)');
+            gradient.addColorStop(0.7, 'rgba(52, 152, 219, 0.2)');
+            gradient.addColorStop(1, 'rgba(52, 152, 219, 0)');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(
+                px + CONFIG.CELL_SIZE / 2,
+                py + CONFIG.CELL_SIZE / 2,
+                shieldRadius,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+
+            ctx.strokeStyle = 'rgba(52, 152, 219, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(
+                px + CONFIG.CELL_SIZE / 2,
+                py + CONFIG.CELL_SIZE / 2,
+                shieldRadius * 0.9,
+                0,
+                Math.PI * 2
+            );
+            ctx.stroke();
+        }
+
+        // Dessiner les anneaux magiques
+        if (this.player.perkEffects.ringsActive && this.player.perkLevels.magic_rings > 0) {
+            const level = this.player.perkLevels.magic_rings;
+            const numRings = Math.min(level, 5);
+            const ringRange = 3 * CONFIG.CELL_SIZE;
+            const ringSize = CONFIG.CELL_SIZE * 0.4;
+            const playerCenterX = px + CONFIG.CELL_SIZE / 2;
+            const playerCenterY = py + CONFIG.CELL_SIZE / 2;
+
+            const glowGradient = ctx.createRadialGradient(
+                playerCenterX, playerCenterY, ringRange * 0.8,
+                playerCenterX, playerCenterY, ringRange * 1.2
+            );
+            glowGradient.addColorStop(0, 'rgba(155, 89, 182, 0)');
+            glowGradient.addColorStop(0.5, 'rgba(155, 89, 182, 0.1)');
+            glowGradient.addColorStop(1, 'rgba(155, 89, 182, 0)');
+            ctx.fillStyle = glowGradient;
+            ctx.beginPath();
+            ctx.arc(playerCenterX, playerCenterY, ringRange * 1.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let i = 0; i < numRings; i++) {
+                const angle = this.player.perkEffects.ringsRotation + (i * Math.PI * 2 / numRings);
+                const ringX = playerCenterX + Math.cos(angle) * ringRange;
+                const ringY = playerCenterY + Math.sin(angle) * ringRange;
+
+                const trailLength = 5;
+                for (let t = 0; t < trailLength; t++) {
+                    const trailAngle = angle - (t * 0.1);
+                    const trailX = playerCenterX + Math.cos(trailAngle) * ringRange;
+                    const trailY = playerCenterY + Math.sin(trailAngle) * ringRange;
+                    const trailAlpha = 0.3 * (1 - t / trailLength);
+
+                    ctx.fillStyle = `rgba(155, 89, 182, ${trailAlpha})`;
+                    ctx.beginPath();
+                    ctx.arc(trailX, trailY, ringSize * (1 - t * 0.1), 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                const ringGradient = ctx.createRadialGradient(
+                    ringX, ringY, 0,
+                    ringX, ringY, ringSize
+                );
+                ringGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+                ringGradient.addColorStop(0.3, 'rgba(200, 150, 255, 0.8)');
+                ringGradient.addColorStop(0.7, 'rgba(155, 89, 182, 0.6)');
+                ringGradient.addColorStop(1, 'rgba(100, 50, 150, 0.3)');
+
+                ctx.fillStyle = ringGradient;
+                ctx.beginPath();
+                ctx.arc(ringX, ringY, ringSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(200, 150, 255, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(ringX, ringY, ringSize, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                ctx.beginPath();
+                ctx.arc(ringX - ringSize * 0.2, ringY - ringSize * 0.2, ringSize * 0.2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.strokeStyle = 'rgba(155, 89, 182, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.arc(playerCenterX, playerCenterY, ringRange, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        // Indicateur de portée
+        if (this.player.range !== Infinity) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(
+                px + CONFIG.CELL_SIZE / 2,
+                py + CONFIG.CELL_SIZE / 2,
+                this.player.range * CONFIG.CELL_SIZE,
+                0,
+                Math.PI * 2
+            );
+            ctx.stroke();
+        }
+        
+        // Indicateur de cible
+        const targetX = Math.floor(this.camera.x + this.mousePos.x / CONFIG.CELL_SIZE);
+        const targetY = Math.floor(this.camera.y + this.mousePos.y / CONFIG.CELL_SIZE);
+        const distance = Math.hypot(targetX - this.player.x, targetY - this.player.y);
+        const maxRange = this.player.range === Infinity ? 100 : this.player.range;
+        const inRange = distance <= maxRange;
+
+        let fillColor, strokeColor;
+        if (inRange) {
+            fillColor = 'rgba(255, 255, 255, 0.3)';
+            strokeColor = 'rgba(255, 255, 255, 1)';
+        } else {
+            fillColor = 'rgba(0, 0, 0, 0.6)';
+            strokeColor = 'rgba(0, 0, 0, 1)';
+        }
+
+        ctx.fillStyle = fillColor;
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(
+            (targetX - this.camera.x) * CONFIG.CELL_SIZE + CONFIG.CELL_SIZE / 2,
+            (targetY - this.camera.y) * CONFIG.CELL_SIZE + CONFIG.CELL_SIZE / 2,
+            CONFIG.CELL_SIZE / 2,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+        ctx.stroke();
+        
+        // Dessiner les taches de sang
+        if (this.bloodStains && this.bloodStains.length > 0) {
+            for (const stain of this.bloodStains) {
+                const stainX = (stain.x - this.camera.x) * CONFIG.CELL_SIZE;
+                const stainY = (stain.y - this.camera.y) * CONFIG.CELL_SIZE;
+
+                if (stainX >= -CONFIG.CELL_SIZE && stainX < this.canvas.width &&
+                    stainY >= -CONFIG.CELL_SIZE && stainY < this.canvas.height) {
+                    ctx.save();
+                    ctx.globalAlpha = stain.alpha;
+                    ctx.fillStyle = '#8B0000';
+
+                    ctx.beginPath();
+                    const centerX = stainX + CONFIG.CELL_SIZE / 2;
+                    const centerY = stainY + CONFIG.CELL_SIZE / 2;
+                    const radius = CONFIG.CELL_SIZE * stain.size / 2;
+
+                    for (let i = 0; i < 8; i++) {
+                        const angle = (i / 8) * Math.PI * 2;
+                        const variance = 0.7 + Math.random() * 0.6;
+                        const x = centerX + Math.cos(angle) * radius * variance;
+                        const y = centerY + Math.sin(angle) * radius * variance;
+
+                        if (i === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+        }
+
+        // Dessiner les particules
+        if (this.particles && this.particles.length > 0) {
+            for (const particle of this.particles) {
+                const particleX = (particle.x - this.camera.x) * CONFIG.CELL_SIZE;
+                const particleY = (particle.y - this.camera.y) * CONFIG.CELL_SIZE;
+
+                if (particleX >= 0 && particleX < this.canvas.width &&
+                    particleY >= 0 && particleY < this.canvas.height) {
+                    ctx.save();
+                    ctx.globalAlpha = particle.life / particle.maxLife;
+                    ctx.fillStyle = particle.color;
+                    ctx.beginPath();
+                    ctx.arc(particleX, particleY, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+        }
+
+        // Dessiner les effets du boss
+        this.renderBossEffects(ctx, this.camera, CONFIG.CELL_SIZE);
+
+        // Dessiner les animations
+        for (const anim of this.animations) {
+            anim.render(ctx, this.camera, CONFIG.CELL_SIZE);
+        }
+
+        // Dessiner les textes flottants
+        this.renderFloatingTexts(ctx);
     }
 }
 
