@@ -7270,8 +7270,6 @@ class Game {
                     gridY >= 0 && gridY < CONFIG.GRID_SIZE) {
 
                     const cell = this.dungeon.grid[gridY][gridX];
-                    const screenX = x * CONFIG.CELL_SIZE;
-                    const screenY = y * CONFIG.CELL_SIZE;
 
                     // Vérifier si on est dans une salle de soins
                     let isHealingRoom = false;
