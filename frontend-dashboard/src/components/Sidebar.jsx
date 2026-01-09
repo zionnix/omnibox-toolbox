@@ -1,12 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CloudSun, Clock, Link as LinkIcon, 
-  Scissors, Gamepad2, Sun, LayoutDashboard, Settings, Briefcase 
+  Scissors, Gamepad2, Sun, LayoutDashboard, Settings, Briefcase,
+  X, Info, Palette, Zap, Github
 } from 'lucide-react';
+import { useState } from 'react';
 
 const Sidebar = () => {
   const location = useLocation();
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const menuItems = [
     { name: 'Météo', icon: <CloudSun size={22}/>, path: '/weather', color: 'text-blue-400' },
@@ -58,9 +61,141 @@ const Sidebar = () => {
         })}
       </nav>
 
-      <div className="mt-auto text-gray-600">
+      <button 
+        onClick={() => setShowSettingsModal(true)}
+        className="mt-auto text-gray-600 hover:text-white transition-colors"
+      >
         <Settings size={22} className="hover:rotate-90 transition-transform duration-500 cursor-pointer" />
-      </div>
+      </button>
+
+      {/* Modal des paramètres */}
+      <AnimatePresence>
+        {showSettingsModal && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSettingsModal(false)}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+            />
+            
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] max-h-[80vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] overflow-hidden"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/10">
+                <div className="flex items-center gap-3">
+                  <Settings className="text-brand-blue" size={28} />
+                  <h2 className="text-2xl font-bold text-white">Paramètres</h2>
+                </div>
+                <button
+                  onClick={() => setShowSettingsModal(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(80vh-80px)]">
+                {/* À propos */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-brand-blue">
+                    <Info size={20} />
+                    <h3 className="text-lg font-semibold">À propos</h3>
+                  </div>
+                  <div className="pl-7 space-y-2 text-gray-300">
+                    <p><strong className="text-white">OmniBox Dashboard</strong></p>
+                    <p className="text-sm">Collection d'applications web utilitaires</p>
+                    <p className="text-sm">Version 1.0.0</p>
+                  </div>
+                </div>
+
+                {/* Applications disponibles */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-brand-blue">
+                    <Zap size={20} />
+                    <h3 className="text-lg font-semibold">Applications</h3>
+                  </div>
+                  <div className="pl-7 grid grid-cols-2 gap-2 text-sm text-gray-300">
+                    <div className="flex items-center gap-2">
+                      <CloudSun size={16} className="text-blue-400" />
+                      <span>Météo</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock size={16} className="text-emerald-400" />
+                      <span>Horloge</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <LinkIcon size={16} className="text-pink-400" />
+                      <span>LinkTree</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Scissors size={16} className="text-cyan-400" />
+                      <span>Sonic Morph</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Gamepad2 size={16} className="text-red-400" />
+                      <span>Rogue-Like</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Sun size={16} className="text-yellow-400" />
+                      <span>Solar System</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Briefcase size={16} className="text-purple-400" />
+                      <span>JMD Remake</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Design */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-brand-blue">
+                    <Palette size={20} />
+                    <h3 className="text-lg font-semibold">Design</h3>
+                  </div>
+                  <div className="pl-7 space-y-2 text-gray-300 text-sm">
+                    <p>Thème sombre moderne avec effets glassmorphism</p>
+                    <p>Animations fluides via Framer Motion</p>
+                    <p>Interface responsive et intuitive</p>
+                  </div>
+                </div>
+
+                {/* Liens */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-brand-blue">
+                    <Github size={20} />
+                    <h3 className="text-lg font-semibold">Liens utiles</h3>
+                  </div>
+                  <div className="pl-7 space-y-2">
+                    <a 
+                      href="https://github.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-sm text-gray-300 hover:text-brand-blue transition-colors"
+                    >
+                      <Github size={16} />
+                      <span>Voir sur GitHub</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Footer info */}
+                <div className="pt-4 border-t border-white/10 text-center text-xs text-gray-500">
+                  <p>Développé avec ⚡ React + Vite + Tailwind CSS</p>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
