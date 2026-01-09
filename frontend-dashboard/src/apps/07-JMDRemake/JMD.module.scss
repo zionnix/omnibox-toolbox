@@ -371,9 +371,13 @@ $transition-base: all 0.3s ease;
 
   &Grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: $spacing-md;
+    grid-template-columns: repeat(5, 1fr);
+    gap: $spacing-sm;
     margin-bottom: $spacing-xl;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     @media (max-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
@@ -389,7 +393,7 @@ $transition-base: all 0.3s ease;
   background: rgba(26, 26, 46, 0.8);
   border: 2px solid $color-border;
   border-radius: $border-radius-md;
-  padding: $spacing-lg;
+  padding: $spacing-md $spacing-sm;
   text-align: center;
   transition: $transition-base;
   position: relative;
@@ -413,16 +417,16 @@ $transition-base: all 0.3s ease;
 }
 
 .certIcon {
-  font-size: 4rem;
-  margin-bottom: $spacing-md;
+  font-size: 3rem;
+  margin-bottom: $spacing-sm;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .certName {
   color: $color-text;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 // Services Section
