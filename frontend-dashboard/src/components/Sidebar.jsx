@@ -86,7 +86,8 @@ const Sidebar = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[85vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] flex flex-col"
+              style={{ left: 'calc(50% + 40px)' }}
+              className="fixed top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[85vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] flex flex-col"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/10">
