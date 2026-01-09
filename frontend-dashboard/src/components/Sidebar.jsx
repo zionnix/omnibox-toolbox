@@ -81,14 +81,14 @@ const Sidebar = () => {
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
             />
             
-            {/* Modal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              style={{ left: 'calc(50% + 40px)' }}
-              className="fixed top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[85vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 z-[101] flex flex-col"
-            >
+            {/* Modal Popup */}
+            <div className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="popup pointer-events-auto w-[700px] h-[85vh] bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl border border-white/10 flex flex-col"
+              >
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-white/10">
                 <div className="flex items-center gap-3">
