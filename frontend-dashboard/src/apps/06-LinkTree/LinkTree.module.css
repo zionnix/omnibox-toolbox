@@ -1,5 +1,5 @@
 /* LinkTree - Esthétique japonaise inspirée du papier washi et des sakura */
-@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root {
   --washi: #fdfaf1;
@@ -14,7 +14,7 @@
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  font-family: 'Ma Shan Zheng', 'Segoe UI', sans-serif;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
   transition: background-color 0.3s ease;
 }
 
@@ -128,7 +128,7 @@
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 6rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--crimson);
@@ -141,7 +141,7 @@
 }
 
 .subtitle {
-  font-size: 1.3rem;
+  font-size: 2.6rem;
   opacity: 0.7;
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
@@ -168,11 +168,11 @@
   border-radius: 25px;
   background: transparent;
   color: var(--crimson);
-  font-size: 1.1rem;
+  font-size: 2.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Ma Shan Zheng', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .container.dark .themeToggle,
@@ -228,8 +228,8 @@
   margin-bottom: 1rem;
   border: 2px solid rgba(188, 47, 50, 0.3);
   border-radius: 10px;
-  font-size: 1.1rem;
-  font-family: 'Ma Shan Zheng', sans-serif;
+  font-size: 2.2rem;
+  font-family: 'Poppins', sans-serif;
   background: rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
 }
@@ -258,11 +258,11 @@
   color: var(--washi);
   border: none;
   border-radius: 10px;
-  font-size: 1.1rem;
+  font-size: 2.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Ma Shan Zheng', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .submitBtn:hover {
@@ -335,7 +335,7 @@
 }
 
 .linkTitle {
-  font-size: 1.4rem;
+  font-size: 2.8rem;
   font-weight: 600;
   color: var(--ink);
   letter-spacing: 0.5px;
@@ -366,7 +366,7 @@
 }
 
 .linkClicks {
-  font-size: 0.85rem;
+  font-size: 1.7rem;
   color: var(--ink);
 }
 

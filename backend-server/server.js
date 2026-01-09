@@ -5,7 +5,8 @@ const connectDB = require('./config/db'); // Ajouté : Import de la connexion DB
 
 const app = express();
 
-// --- CONNEXION BASE DE DONNÉES ---
+// --- データベース接続中... ---
+// (connexion à la base de données...)
 // On utilise ta config db.js au lieu de mongoose.connect directement
 connectDB(); 
 
