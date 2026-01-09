@@ -231,9 +231,11 @@ const RogueView = () => {
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '40px',
-            marginBottom: '80px'
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '50px',
+            marginBottom: '80px',
+            maxWidth: '1400px',
+            margin: '0 auto 80px auto'
           }}>
             {[
               { 
@@ -261,18 +263,18 @@ const RogueView = () => {
                 background: '#0f1629',
                 border: '1px solid #2a3f5f',
                 borderRadius: '8px',
-                padding: '25px',
+                padding: '40px',
                 textAlign: 'center'
               }}>
                 <img src={hero.img} alt={hero.name} style={{
-                  width: '140px',
-                  height: '140px',
+                  width: '220px',
+                  height: '220px',
                   objectFit: 'contain',
-                  marginBottom: '20px',
+                  marginBottom: '25px',
                   imageRendering: 'pixelated'
                 }} />
-                <h3 style={{ color: '#f4c542', marginBottom: '15px', fontSize: '20px' }}>{hero.name}</h3>
-                <p style={{ fontSize: '14px', lineHeight: '1.7', color: '#c5c5c5', textAlign: 'left' }}>
+                <h3 style={{ color: '#f4c542', marginBottom: '20px', fontSize: '26px' }}>{hero.name}</h3>
+                <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#c5c5c5', textAlign: 'left' }}>
                   {hero.lore}
                 </p>
               </div>
@@ -290,9 +292,11 @@ const RogueView = () => {
           </h2>
           
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '40px'
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '60px',
+            maxWidth: '1200px',
+            margin: '0 auto'
           }}>
             {[
               { 
@@ -330,21 +334,32 @@ const RogueView = () => {
                 background: '#0f1629',
                 border: '1px solid #2a3f5f',
                 borderRadius: '8px',
-                padding: '25px'
+                padding: '40px',
+                display: 'flex',
+                flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
+                alignItems: 'center',
+                gap: '40px'
               }}>
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <div style={{ 
+                  minWidth: '250px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
                   <img src={boss.img} alt={boss.name} style={{
-                    width: '120px',
-                    height: '120px',
+                    width: '220px',
+                    height: '220px',
                     objectFit: 'contain',
                     imageRendering: 'pixelated'
                   }} />
                 </div>
-                <h3 style={{ color: '#f4c542', marginBottom: '8px', fontSize: '18px' }}>{boss.name}</h3>
-                <p style={{ color: '#8ba3c7', fontSize: '14px', marginBottom: '15px' }}>{boss.level}</p>
-                <p style={{ fontSize: '14px', lineHeight: '1.7', color: '#c5c5c5', textAlign: 'left' }}>
-                  {boss.lore}
-                </p>
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ color: '#f4c542', marginBottom: '10px', fontSize: '24px' }}>{boss.name}</h3>
+                  <p style={{ color: '#8ba3c7', fontSize: '16px', marginBottom: '20px' }}>{boss.level}</p>
+                  <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#c5c5c5' }}>
+                    {boss.lore}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
