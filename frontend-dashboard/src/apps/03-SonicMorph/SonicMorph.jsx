@@ -3,7 +3,15 @@ import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 import { Upload, Music, Image as ImageIcon, Download, Video, Loader2, ArrowLeft, CheckCircle, FileText, Clock, Scissors } from 'lucide-react';
 import styles from './SonicMorph.module.css';
 
-const ffmpeg = createFFmpeg({ log: false });
+const ffmpeg = createFFmpeg({ 
+  log: true,
+  progress: ({ ratio }) => {
+    // Le ratio est entre 0 et 1
+    if (ratio > 0 && ratio <= 1) {
+      window.ffmpegProgress = Math.round(ratio * 100);
+    }
+  }
+});
 
 function SonicMorph() {
   const [mode, setMode] = useState('home');
@@ -12,6 +20,8 @@ function SonicMorph() {
   const [targetFormat, setTargetFormat] = useState('');
   const [converting, setConverting] = useState(false);
   const [results, setResults] = useState([]);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('');
   
   // États pour le découpage Vidéo/GIF
   const [videoDuration, setVideoDuration] = useState(0);
@@ -30,11 +40,33 @@ function SonicMorph() {
   const load = async () => { 
     try { 
       if (!ffmpeg.isLoaded()) {
-        await ffmpeg.load(); 
+        setProgressMessage('Chargement de FFmpeg...');
+        
+        // Simuler la progression du chargement
+        const loadInterval = setInterval(() => {
+          setLoadingProgress(prev => {
+            if (prev >= 90) return prev;
+            return prev + Math.random() * 15;
+          });
+        }, 200);
+        
+        await ffmpeg.load();
+        
+        clearInterval(loadInterval);
+        setLoadingProgress(100);
+        
+        setTimeout(() => {
+          setReady(true);
+          setLoadingProgress(0);
+          setProgressMessage('');
+        }, 300);
+      } else {
+        setReady(true);
       }
-      setReady(true); 
     } catch(e) { 
-      console.error("Erreur d'initialisation FFmpeg:", e); 
+      console.error("Erreur d'initialisation FFmpeg:", e);
+      setProgressMessage('Erreur de chargement');
+      setLoadingProgress(0);
     } 
   };
 
@@ -66,15 +98,27 @@ function SonicMorph() {
   const runBulkConversion = async () => {
     if (!ready) return;
     setConverting(true);
+    setLoadingProgress(0);
     const newResults = [];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const outputName = `morph_${i}.${targetFormat}`;
       const inputName = `input_${i}`;
+      
+      setProgressMessage(`Conversion ${i + 1}/${files.length}: ${file.name}`);
+      setLoadingProgress(0);
+      window.ffmpegProgress = 0;
 
       try {
         ffmpeg.FS('writeFile', inputName, await fetchFile(file));
+        
+        // Intervalle pour mettre à jour la progression en temps réel
+        const progressInterval = setInterval(() => {
+          if (window.ffmpegProgress) {
+            setLoadingProgress(window.ffmpegProgress);
+          }
+        }, 100);
         
         if (targetFormat === 'gif' && mode === 'video') {
           // Commande optimisée pour GIF de haute qualité
@@ -89,16 +133,22 @@ function SonicMorph() {
           await ffmpeg.run('-i', inputName, outputName);
         }
 
+        clearInterval(progressInterval);
+        setLoadingProgress(100);
+        
         const data = ffmpeg.FS('readFile', outputName);
         const url = URL.createObjectURL(new Blob([data.buffer]));
         newResults.push({ name: `${file.name.split('.')[0]}.${targetFormat}`, url });
         ffmpeg.FS('unlink', inputName);
       } catch (err) { 
-        console.error("Erreur de transmutation:", err); 
+        console.error("Erreur de transmutation:", err);
+        clearInterval(progressInterval);
       }
     }
     setResults(newResults);
     setConverting(false);
+    setLoadingProgress(0);
+    setProgressMessage('');
   };
 
   const reset = () => { setFiles([]); setResults([]); setTargetFormat(''); setStartPoint(0); setGifLength(5); };
@@ -232,6 +282,21 @@ function SonicMorph() {
                 `Transmuter en ${targetFormat.toUpperCase()}`
               )}
             </button>
+            
+            {(converting || (!ready && loadingProgress > 0)) && (
+              <div className={styles.progressContainer}>
+                <div className={styles.progressBar}>
+                  <div 
+                    className={styles.progressFill} 
+                    style={{ width: `${loadingProgress}%` }}
+                  />
+                </div>
+                <div className={styles.progressInfo}>
+                  <span className={styles.progressPercent}>{Math.round(loadingProgress)}%</span>
+                  {progressMessage && <span className={styles.progressMessage}>{progressMessage}</span>}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className={styles.resultsSection}>
