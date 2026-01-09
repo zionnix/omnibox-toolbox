@@ -422,6 +422,15 @@ $transition-base: all 0.3s ease;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
+.certImage {
+  width: 100%;
+  height: auto;
+  max-width: 120px;
+  margin: 0 auto;
+  display: block;
+  border-radius: $border-radius-sm;
+}
+
 .certName {
   color: $color-text;
   font-size: 0.95rem;

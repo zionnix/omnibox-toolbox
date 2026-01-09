@@ -125,16 +125,16 @@ const JMDView = () => {
   ];
 
   const certifications = [
-    { name: "Meta Certified Digital Marketing Associate", icon: "🎯", color: "#0081FB" },
-    { name: "Google Analytics Certified", icon: "📊", color: "#F4B400" },
-    { name: "Canva Essentials", icon: "🎨", color: "#00C4CC" },
-    { name: "Google Ads Display Certified", icon: "📱", color: "#4285F4" },
-    { name: "Canva Graphic Design 101", icon: "✏️", color: "#8B3DFF" },
-    { name: "Google Ads Search Certified", icon: "🔍", color: "#34A853" },
-    { name: "Canva AI in the Classroom", icon: "🤖", color: "#FF6B9D" },
-    { name: "Google Ads Creative Certified", icon: "🎭", color: "#EA4335" },
-    { name: "Canva Teacher Essentials", icon: "📚", color: "#FF7A00" },
-    { name: "Google Ads Measurement Certified", icon: "📈", color: "#FBBC04" }
+    { name: "Meta Certified Digital Marketing Associate", image: "/png/jmd-remake/Meta-Certification.png", color: "#0081FB" },
+    { name: "Google Analytics Certified", image: "/png/jmd-remake/Google-Analytics.png", color: "#F4B400" },
+    { name: "Canva Essentials", image: "/png/jmd-remake/Canva-Essentials.png", color: "#00C4CC" },
+    { name: "Google Ads Display Certified", image: "/png/jmd-remake/Google-Ads-Display.png", color: "#4285F4" },
+    { name: "Canva Graphic Design 101", image: "/png/jmd-remake/Canva-Graphic-Design-101.png", color: "#8B3DFF" },
+    { name: "Google Ads Search Certified", image: "/png/jmd-remake/Google-Ads-Search.png", color: "#34A853" },
+    { name: "Canva AI in the Classroom", image: "/png/jmd-remake/Canva-Ai-in-the-Classroom.png", color: "#FF6B9D" },
+    { name: "Google Ads Creative Certified", image: "/png/jmd-remake/Google-Ads-Creative.png", color: "#EA4335" },
+    { name: "Canva Teacher Essentials", image: "/png/jmd-remake/Canva-Teacher-Essentials.png", color: "#FF7A00" },
+    { name: "Google Ads Measurement Certified", image: "/png/jmd-remake/Google-Ads-Measurement.png", color: "#FBBC04" }
   ];
 
   return (
@@ -259,7 +259,7 @@ const JMDView = () => {
             <p className={styles.certificationsSubtitle}>MES CERTIFICATIONS</p>
             <h2 className={styles.certificationsTitle}>Une expertise validée par les leaders du digital</h2>
           </motion.div>
-
+  
           <div className={styles.certificationsGrid}>
             {certifications.map((cert, index) => (
               <motion.div
@@ -271,8 +271,8 @@ const JMDView = () => {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 style={{ borderColor: cert.color }}
               >
-                <div className={styles.certIcon} style={{ color: cert.color }}>
-                  {cert.icon}
+                <div className={styles.certIcon}>
+                  <img src={cert.image} alt={cert.name} className={styles.certImage} />
                 </div>
                 <h3 className={styles.certName}>{cert.name}</h3>
               </motion.div>
