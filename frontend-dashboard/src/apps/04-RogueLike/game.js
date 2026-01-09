@@ -3908,7 +3908,6 @@ class Game {
         setTimeout(() => {
             this.resizeCanvas();
             this.updateHUD();
-            this.render();
             
             if (!this.gameLoopStarted) {
                 this.gameLoopStarted = true;
@@ -7086,6 +7085,343 @@ class Game {
             
             ctx.restore();
         }
+    }
+    
+    gameLoop(currentTime) {
+        // Continue la boucle même en pause
+        requestAnimationFrame((time) => this.gameLoop(time));
+
+        // Ne pas mettre à jour le jeu si pas en mode 'playing'
+        if (this.state !== 'playing') {
+            return;
+        }
+
+        const deltaTime = (currentTime - this.lastTime) / 1000;
+        this.lastTime = currentTime;
+
+        // Mise à jour du cooldown de déplacement
+        if (this.movementCooldown > 0) {
+            this.movementCooldown -= deltaTime;
+            if (this.movementCooldown < 0) {
+                this.movementCooldown = 0;
+            }
+        }
+
+        // Mise à jour
+        this.player.update(deltaTime);
+        this.player.updatePerks(deltaTime); // Mise à jour des perks
+        this.updateMagicRingsCollision(); // Collision des anneaux magiques
+
+        // Attaque automatique pour Chevalier et Tank lorsqu'un ennemi est à portée
+        if (this.player && (this.player.classType === 'knight' || this.player.classType === 'tank')) {
+            // Ne rien faire si pas prêt à attaquer
+            if (this.player.canAttack()) {
+                // Trouver l'ennemi le plus proche dans la portée du joueur (généralement 1 case)
+                const maxRange = this.player.range === Infinity ? 100 : this.player.range;
+                let nearest = null;
+                let minDist = Infinity;
+                for (const enemy of this.enemies) {
+                    const d = Math.hypot(enemy.x - this.player.x, enemy.y - this.player.y);
+                    if (d <= maxRange + 0.5 && d < minDist) {
+                        minDist = d;
+                        nearest = enemy;
+                    }
+                }
+
+                if (nearest) {
+                    // Animation de coup de mêlée
+                    const meleeAnim = new MeleeAnimation(
+                        this.player.x, this.player.y,
+                        nearest.x, nearest.y,
+                        this.player.classType === 'knight' ? 'knight' : 'tank'
+                    );
+
+                    // Appliquer les dégâts
+                    meleeAnim.onComplete = () => {
+                        if (!this.enemies.includes(nearest)) return;
+
+                        // Calculer les dégâts
+                        const { damage, isCritical } = this.player.getCalculatedDamage();
+                        const killed = nearest.takeDamage(damage);
+
+                        // Compter les dégâts
+                        if (this.player) this.player.totalDamageDealt += damage;
+
+                        // Afficher les dégâts
+                        if (isCritical) {
+                            this.addFloatingText(nearest.x, nearest.y, `-${damage} CRIT!`, '#ffcc00');
+                            this.createCriticalEffect(nearest.x, nearest.y);
+                        } else {
+                            this.addFloatingText(nearest.x, nearest.y, `-${damage}`, '#ff6b6b');
+                        }
+
+                        this.playSound('swordHit');
+
+                        // Knockback
+                        if (this.player.perkEffects.knockbackDistance > 0 && !killed) {
+                            this.applyKnockback(nearest, this.player.perkEffects.knockbackDistance);
+                        }
+
+                        if (killed) {
+                            // Retirer l'ennemi et donner XP
+                            const isBoss = nearest.isBoss || false;
+                            if (!isBoss) {
+                                // Soins à la mort pour Chevalier et Tank: récupère la vie du monstre (limitée par la vie max du joueur)
+                                const healAmount = Math.min(nearest.maxHealth, this.player.maxHealth - this.player.health);
+                                if (healAmount > 0) {
+                                    this.player.health = Math.min(this.player.maxHealth, this.player.health + healAmount);
+                                    this.addFloatingText(this.player.x, this.player.y, `+${healAmount} ❤`, '#00ff00');
+                                }
+                                this.enemies = this.enemies.filter(e => e !== nearest);
+                                this.player.gainXP(nearest.xpValue);
+                                this.addFloatingText(this.player.x, this.player.y, `+${nearest.xpValue} XP`, '#ffd93d');
+                            }
+                        }
+                    };
+
+                    this.animations.push(meleeAnim);
+
+                    // Déclencher le cooldown de l'attaque
+                    this.player.attack();
+                }
+            }
+        }
+
+        this.updateEnemies(deltaTime);
+        this.updateBossLogic(deltaTime); // Mise à jour spécifique au boss
+        this.updateAmbientSounds(deltaTime); // Mise à jour des sons d'ambiance
+
+        // Vérifier si le boss 5 a <= 0 PV
+        if (this.currentBoss && this.currentBoss.zone === 5 && this.currentBoss.health <= 0) {
+            game.victory();
+            return;
+        }
+
+        // Mettre à jour les soigneurs
+        for (const healer of this.healers) {
+            healer.update(deltaTime);
+        }
+
+        this.updateFloatingTexts(deltaTime);
+        this.updateParticles(deltaTime);
+        this.updateHUD();
+        
+        // Mise à jour de l'animation de marche
+        if (this.player.isWalking) {
+            this.player.walkAnimTimer += deltaTime;
+            if (this.player.walkAnimTimer >= this.player.walkAnimSpeed) {
+                this.player.walkAnimTimer = 0;
+                // Arrêter l'animation après un court moment si pas de mouvement
+                this.player.isWalking = false;
+            }
+        }
+        
+        // Mise à jour des animations
+        this.animations = this.animations.filter(anim => {
+            anim.update(deltaTime);
+            return !anim.finished;
+        });
+        
+        // Mise à jour caméra
+        this.camera.x = Math.max(0, Math.min(
+            this.player.x - this.viewportWidth / 2,
+            CONFIG.GRID_SIZE - this.viewportWidth
+        ));
+        this.camera.y = Math.max(0, Math.min(
+            this.player.y - this.viewportHeight / 2,
+            CONFIG.GRID_SIZE - this.viewportHeight
+        ));
+        
+        // Rendu
+        this.render();
+    }
+    
+    render() {
+        const ctx = this.ctx;
+        
+        // Vérifications de sécurité
+        if (!this.dungeon || !this.player) {
+            console.error('Dungeon ou Player non initialisé!');
+            return;
+        }
+        
+        if (!this.dungeon.grid) {
+            console.error('Dungeon.grid non initialisé!');
+            return;
+        }
+        
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Debug: afficher un fond pour vérifier que le canvas fonctionne
+        ctx.fillStyle = '#333';
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        const zone = Math.ceil(this.currentLevel / CONFIG.LEVELS_PER_ZONE) || 1;
+        const zoneData = CONFIG.ZONES[zone] || CONFIG.ZONES[1];
+        const zoneColors = zoneData.colors;
+
+        // Dessiner le donjon
+        for (let y = 0; y < this.viewportHeight; y++) {
+            for (let x = 0; x < this.viewportWidth; x++) {
+                const gridX = Math.floor(this.camera.x + x);
+                const gridY = Math.floor(this.camera.y + y);
+
+                if (gridX >= 0 && gridX < CONFIG.GRID_SIZE &&
+                    gridY >= 0 && gridY < CONFIG.GRID_SIZE) {
+
+                    const cell = this.dungeon.grid[gridY][gridX];
+                    const screenX = x * CONFIG.CELL_SIZE;
+                    const screenY = y * CONFIG.CELL_SIZE;
+
+                    // Vérifier si on est dans une salle de soins
+                    let isHealingRoom = false;
+                    for (const room of this.healingRooms) {
+                        if (gridX >= room.x && gridX < room.x + room.width &&
+                            gridY >= room.y && gridY < room.y + room.height) {
+                            isHealingRoom = true;
+                            break;
+                        }
+                    }
+
+                    // Calculer la position à l'écran en tenant compte du décalage de la caméra
+                    const cameraOffsetX = (this.camera.x - Math.floor(this.camera.x)) * CONFIG.CELL_SIZE;
+                    const cameraOffsetY = (this.camera.y - Math.floor(this.camera.y)) * CONFIG.CELL_SIZE;
+
+                    const screenX = x * CONFIG.CELL_SIZE - cameraOffsetX;
+                    const screenY = y * CONFIG.CELL_SIZE - cameraOffsetY;
+
+                    // Dessiner la cellule avec les images appropriées
+                    if (cell === 1) {
+                        // Mur
+                        if (zoneImageSet.wall.complete) {
+                            ctx.drawImage(zoneImageSet.wall, screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+                        } else {
+                            ctx.fillStyle = zoneColors[0]; // Couleur de secours
+                            ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE + 1, CONFIG.CELL_SIZE + 1);
+                        }
+                    } else {
+                        // Sol (chambre ou couloir)
+                        const cellType = this.dungeon.cellType[gridY][gridX];
+                        const imageToUse = isHealingRoom ? zoneImageSet.chamber : (cellType === 'chamber' ? zoneImageSet.chamber : zoneImageSet.path);
+
+                        if (imageToUse && imageToUse.complete) {
+                            // Rotation pour les couloirs verticaux
+                            if (cellType === 'path' && this.dungeon.cellOrientation[gridY][gridX] === 'vertical') {
+                                ctx.save();
+                                ctx.translate(screenX + CONFIG.CELL_SIZE / 2, screenY + CONFIG.CELL_SIZE / 2);
+                                ctx.rotate(Math.PI / 2);
+                                ctx.drawImage(imageToUse, -CONFIG.CELL_SIZE / 2, -CONFIG.CELL_SIZE / 2, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+                                ctx.restore();
+                            } else {
+                                ctx.drawImage(imageToUse, screenX, screenY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+                            }
+
+                            ctx.globalAlpha = 1; // Réinitialiser l'alpha
+                        } else {
+                            // Image non chargée - utiliser couleur de secours
+                            ctx.fillStyle = cellType === 'chamber' ? zoneColors[1] : '#444';
+                            ctx.fillRect(screenX, screenY, CONFIG.CELL_SIZE + 1, CONFIG.CELL_SIZE + 1);
+                        }
+                    }
+                    */
+                }
+            }
+        }
+        
+        // Dessiner la sortie
+        const exitX = (this.exit.x - this.camera.x) * CONFIG.CELL_SIZE;
+        const exitY = (this.exit.y - this.camera.y) * CONFIG.CELL_SIZE;
+        const exitUnlocked = this.enemies.length === 0;
+        
+        if (exitX >= 0 && exitX < this.canvas.width && 
+            exitY >= 0 && exitY < this.canvas.height) {
+            
+            // Couleur de la sortie selon si elle est déverrouillée ou non
+            if (exitUnlocked) {
+                ctx.fillStyle = '#ffd93d'; // Jaune doré - sortie active
+            } else {
+                ctx.fillStyle = '#555555'; // Gris - sortie verrouillée
+            }
+            ctx.fillRect(exitX, exitY, CONFIG.CELL_SIZE, CONFIG.CELL_SIZE);
+            
+            // Étoile ou cadenas pour la sortie
+            ctx.fillStyle = exitUnlocked ? '#000' : '#888';
+            ctx.font = `${Math.floor(CONFIG.CELL_SIZE * 0.5)}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(exitUnlocked ? '★' : '🔒', exitX + CONFIG.CELL_SIZE / 2, exitY + CONFIG.CELL_SIZE / 2);
+        }
+        
+        // Dessiner les soigneurs
+        for (const healer of this.healers) {
+            const hx = (healer.x - this.camera.x) * CONFIG.CELL_SIZE;
+            const hy = (healer.y - this.camera.y) * CONFIG.CELL_SIZE;
+
+            if (hx >= 0 && hx < this.canvas.width &&
+                hy >= 0 && hy < this.canvas.height) {
+
+                // Animation de flottement
+                const floatOffset = Math.sin(healer.animationTimer * 2) * 4;
+
+                // Dessiner le sprite du soigneur
+                const sprite = this.sprites.healer;
+                const offsetSize = (CONFIG.CELL_SIZE - CONFIG.SPRITE_SIZE) / 2;
+
+                if (sprite && sprite.complete && sprite.naturalWidth > 0) {
+                    ctx.save();
+                    ctx.imageSmoothingEnabled = false;
+
+                    // Aura de soin si pas encore utilisé
+                    if (!healer.hasHealed) {
+                        const pulse = 0.8 + Math.sin(healer.animationTimer * 3) * 0.2;
+                        ctx.globalAlpha = 0.3 * pulse;
+                        ctx.fillStyle = '#2ecc71';
+                        ctx.beginPath();
+                        ctx.arc(
+                            hx + CONFIG.CELL_SIZE / 2,
+                            hy + CONFIG.CELL_SIZE / 2 + floatOffset,
+                            CONFIG.CELL_SIZE * 0.8,
+                            0,
+                            Math.PI * 2
+                        );
+                        ctx.fill();
+                        ctx.globalAlpha = 1;
+                    }
+
+                    // Dessiner le sprite
+                    ctx.drawImage(
+                        sprite,
+                        hx + offsetSize,
+                        hy + offsetSize + floatOffset,
+                        CONFIG.SPRITE_SIZE,
+                        CONFIG.SPRITE_SIZE
+                    );
+
+                    ctx.restore();
+
+                    // Indicateur visuel au-dessus
+                    if (!healer.hasHealed) {
+                        ctx.fillStyle = '#2ecc71';
+                        ctx.font = `${Math.floor(CONFIG.CELL_SIZE * 0.4)}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('💚', hx + CONFIG.CELL_SIZE / 2, hy - 10 + floatOffset);
+                    } else {
+                        // Griser si déjà utilisé
+                        ctx.globalAlpha = 0.5;
+                        ctx.fillStyle = '#888';
+                        ctx.font = `${Math.floor(CONFIG.CELL_SIZE * 0.3)}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('✓', hx + CONFIG.CELL_SIZE / 2, hy - 10 + floatOffset);
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+        }
+        
+        // Le reste du code de render()...
+        // (Tout le code d'affichage du joueur, des ennemis, etc. continue...)
     }
 }
 
