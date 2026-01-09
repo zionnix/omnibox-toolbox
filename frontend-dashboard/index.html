@@ -12,6 +12,16 @@
     <div id="root"></div>
     <!-- Service Worker pour Cross-Origin Isolation (nécessaire pour FFmpeg.wasm) -->
     <script src="/coi-serviceworker.js"></script>
+    <script>
+      // Enable credentialless mode to allow cross-origin images without CORP headers
+      if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+        navigator.serviceWorker.register('/coi-serviceworker.js').then(registration => {
+          if (registration.active) {
+            registration.active.postMessage({ type: 'coepCredentialless', value: true });
+          }
+        });
+      }
+    </script>
     <script type="module" src="/src/apps/main.jsx"></script>
   </body>
 </html>

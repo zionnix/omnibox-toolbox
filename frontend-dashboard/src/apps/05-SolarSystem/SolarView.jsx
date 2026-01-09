@@ -7,14 +7,27 @@ const SolarSystem = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showDisplay, setShowDisplay] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [realTimeMode, setRealTimeMode] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [speedMultiplier, setSpeedMultiplier] = useState(100000);
 
   // Mettre à jour l'heure chaque seconde
   useEffect(() => {
+    if (paused) return;
+    
     const timer = setInterval(() => {
-      setCurrentTime(new Date());
+      setCurrentTime(prevTime => {
+        if (realTimeMode) {
+          // Mode temps réel : chaque seconde = 1 seconde
+          return new Date();
+        } else {
+          // Mode accéléré : chaque seconde = speedMultiplier secondes
+          return new Date(prevTime.getTime() + speedMultiplier * 1000);
+        }
+      });
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [paused, realTimeMode, speedMultiplier]);
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('fr-FR', {
@@ -177,6 +190,64 @@ const SolarSystem = () => {
       >
         {paused ? '▶️ Reprendre' : '⏸ Pause'}
       </button>
+
+      {/* Bouton paramètres en bas à gauche */}
+      <button
+        className={styles.settingsButton}
+        onClick={() => setShowSettings(!showSettings)}
+        title="Paramètres"
+      >
+        ⚙️
+      </button>
+
+      {/* Menu des paramètres */}
+      <div className={`${styles.settingsMenu} ${showSettings ? styles.active : ''}`}>
+        <h3 className={styles.settingsTitle}>Paramètres</h3>
+        
+        {/* Switch Temps Réel / Accéléré */}
+        <div className={styles.settingItem}>
+          <label className={styles.settingLabel}>
+            <span>Mode de simulation</span>
+            <div className={styles.switchContainer}>
+              <span className={styles.switchLabel}>{realTimeMode ? 'Temps Réel' : 'Accéléré'}</span>
+              <button
+                className={`${styles.switch} ${realTimeMode ? styles.switchOn : ''}`}
+                onClick={() => setRealTimeMode(!realTimeMode)}
+              >
+                <span className={styles.switchSlider}></span>
+              </button>
+            </div>
+          </label>
+        </div>
+
+        {/* Vitesse accélérée (visible seulement en mode accéléré) */}
+        {!realTimeMode && (
+          <div className={styles.settingItem}>
+            <label className={styles.settingLabel}>
+              <span>Vitesse (x secondes/sec)</span>
+              <input
+                type="range"
+                min="3600"
+                max="500000"
+                step="1000"
+                value={speedMultiplier}
+                onChange={(e) => setSpeedMultiplier(Number(e.target.value))}
+                className={styles.slider}
+              />
+              <span className={styles.speedValue}>{(speedMultiplier / 3600).toFixed(1)}h/sec</span>
+            </label>
+          </div>
+        )}
+
+        {/* Info temps réel */}
+        <div className={styles.settingInfo}>
+          {realTimeMode ? (
+            <p>Les planètes tournent à leur vitesse réelle (très lent)</p>
+          ) : (
+            <p>Les planètes tournent {(speedMultiplier / 86400).toFixed(0)} jours par seconde</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

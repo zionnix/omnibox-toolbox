@@ -516,7 +516,7 @@ export default function WeatherApp() {
                 {forecast.cards.map((card, idx) => (
                   <div key={idx} className={styles.forecastCard}>
                     <div className={styles.fDay}>{card.label}</div>
-                    <img src={`http://openweathermap.org/img/wn/${card.icon}@2x.png`} alt="" />
+                    <img src={`https://openweathermap.org/img/wn/${card.icon}@2x.png`} alt="" crossOrigin="anonymous" />
                     <div className={styles.fTemp}>
                       {Math.round(convertTemp(card.min))} / {Math.round(convertTemp(card.max))}°{currentUnit}
                     </div>
