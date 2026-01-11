@@ -13,6 +13,8 @@ const AdminDashboard = () => {
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const auth = localStorage.getItem('jmd_admin_auth');
@@ -78,6 +80,17 @@ const AdminDashboard = () => {
     return apt.status === filter;
   });
 
+  // Pagination
+  const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedAppointments = filteredAppointments.slice(startIndex, endIndex);
+
+  // Réinitialiser la page quand le filtre change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
   const stats = {
     total: appointments.length,
     pending: appointments.filter(a => a.status === 'pending').length,
@@ -112,7 +125,7 @@ const AdminDashboard = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="nico"
+                placeholder="Entrez votre nom d'utilisateur"
                 required
               />
             </div>
@@ -122,7 +135,7 @@ const AdminDashboard = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••"
+                placeholder="Entrez votre mot de passe"
                 required
               />
             </div>
@@ -212,6 +225,11 @@ const AdminDashboard = () => {
       <div className={styles.appointmentsList}>
         <h2 className={styles.listTitle}>
           Rendez-vous ({filteredAppointments.length})
+          {totalPages > 1 && (
+            <span style={{fontSize: '14px', fontWeight: 'normal', marginLeft: '10px'}}>
+              Page {currentPage} sur {totalPages}
+            </span>
+          )}
         </h2>
         
         {loading ? (
@@ -221,7 +239,8 @@ const AdminDashboard = () => {
             📭 Aucun rendez-vous à afficher
           </div>
         ) : (
-          filteredAppointments.map((appointment) => (
+          <>
+          {paginatedAppointments.map((appointment) => (
             <motion.div
               key={appointment._id}
               className={styles.appointmentCard}
@@ -297,7 +316,41 @@ const AdminDashboard = () => {
                 </button>
               </div>
             </motion.div>
-          ))
+          ))}
+          
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              <button
+                className={styles.paginationButton}
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+              >
+                ← Précédent
+              </button>
+              
+              <div className={styles.paginationNumbers}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    className={`${styles.pageNumber} ${currentPage === page ? styles.activePage : ''}`}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              
+              <button
+                className={styles.paginationButton}
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+              >
+                Suivant →
+              </button>
+            </div>
+          )}
+          </>
         )}
       </div>
     </div>

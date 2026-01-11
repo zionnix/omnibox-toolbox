@@ -210,7 +210,22 @@ function SonicMorph() {
               />
               <Upload className={styles.uploadIcon} size={48} />
               <h3 className={styles.uploadTitle}>Importer {mode}</h3>
-              {files.length > 0 && <p className={styles.fileName}>{files.length} fichier(s) sélectionné(s)</p>}
+              {files.length > 0 && (
+                <div className={styles.filesInfo}>
+                  <p className={styles.fileName}>{files.length} fichier(s) sélectionné(s)</p>
+                  <div className={styles.fileList}>
+                    {Array.from(files).map((file, idx) => (
+                      <div key={idx} className={styles.fileItem}>
+                        {mode === 'audio' && <Music size={16} />}
+                        {mode === 'image' && <ImageIcon size={16} />}
+                        {mode === 'video' && <Video size={16} />}
+                        {mode === 'doc' && <FileText size={16} />}
+                        <span>{file.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {mode === 'video' && files[0] && targetFormat === 'gif' && (

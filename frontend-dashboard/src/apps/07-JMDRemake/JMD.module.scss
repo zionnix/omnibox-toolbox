@@ -38,6 +38,36 @@ $transition-base: all 0.3s ease;
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+  position: relative;
+}
+
+// Admin Button - Top Right
+.adminButton {
+  position: fixed;
+  top: $spacing-md;
+  right: $spacing-md;
+  background: rgba(233, 69, 96, 0.2);
+  border: 1px solid $color-highlight;
+  color: $color-highlight;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: $transition-base;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.2);
+
+  &:hover {
+    background: $color-highlight;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+  }
 }
 
 // Modal Pop-up

@@ -49,6 +49,10 @@ const JMDView = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
+    // Calculer demain pour exclure le jour même
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
     // Premier jour du mois
     const firstDay = new Date(year, month, 1);
     // Dernier jour du mois
@@ -71,13 +75,13 @@ const JMDView = () => {
       const date = new Date(year, month, day);
       const dayOfWeek = date.getDay();
       
-      // Skip dimanche (0)
-      if (dayOfWeek !== 0 && date >= today) {
+      // Skip dimanche (0) et le jour actuel (pas de RDV le jour même)
+      if (dayOfWeek !== 0 && date >= tomorrow) {
         days.push(date);
       } else if (dayOfWeek === 0) {
         days.push(null); // Dimanche = case vide
       } else {
-        days.push(null); // Jours passés = case vide
+        days.push(null); // Jours passés ou jour actuel = case vide
       }
     }
     
@@ -181,6 +185,11 @@ const JMDView = () => {
 
   return (
     <div className={styles.jmd}>
+      {/* Admin Button - Top Right */}
+      <a href="/jmd/admin" className={styles.adminButton}>
+        🔐 Admin
+      </a>
+
       {/* Modal Pop-up */}
       <AnimatePresence>
         {showModal && (
@@ -479,22 +488,31 @@ const JMDView = () => {
                       />
                     </div>
                     <div className={styles.formGroup}>
-                      <label>Téléphone</label>
+                      <label>Téléphone (chiffres uniquement)</label>
                       <input 
                         type="tel" 
-                        placeholder="+32 XXX XX XX XX" 
+                        placeholder="Ex: 0498123456 ou +32498123456" 
+                        pattern="[0-9+]*"
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // Autoriser seulement les chiffres et le signe +
+                          if (/^[0-9+]*$/.test(value)) {
+                            setFormData({...formData, phone: value})
+                          }
+                        }}
                       />
                     </div>
                     <div className={styles.formGroup}>
-                      <label>Message</label>
+                      <label>Message (max 255 caractères)</label>
                       <textarea 
                         placeholder="Décrivez brièvement votre projet..." 
                         rows="4"
+                        maxLength="255"
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
                       ></textarea>
+                      <small style={{color: '#888', fontSize: '12px'}}>{formData.message.length}/255</small>
                     </div>
                     
                     <div className={styles.formGroup}>
@@ -672,7 +690,6 @@ const JMDView = () => {
 
           <div className={styles.footerBottom}>
             <p>&copy; 2026 Je Me Digitalise. Tous droits réservés.</p>
-            <a href="/jmd/admin" className={styles.adminLink}>Admin</a>
           </div>
         </div>
       </footer>
